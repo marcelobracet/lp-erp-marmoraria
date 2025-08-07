@@ -2,7 +2,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: "admin" | "user";
+  role: 'admin' | 'user';
   avatar?: string;
 }
 
@@ -12,7 +12,7 @@ export interface Client {
   email: string;
   phone: string;
   document: string;
-  documentType: "cpf" | "cnpj";
+  documentType: 'cpf' | 'cnpj';
   address: {
     street: string;
     number: string;
@@ -27,10 +27,10 @@ export interface Client {
 export interface Product {
   id: string;
   name: string;
-  type: "marble" | "granite" | "service";
+  type: 'marble' | 'granite' | 'service';
   description: string;
   price: number;
-  unit: "m²" | "unit";
+  unit: 'm²' | 'unit';
   active: boolean;
 }
 
@@ -42,7 +42,7 @@ export interface Quote {
     quantity: number;
     price: number;
   }[];
-  status: "draft" | "pending" | "approved" | "rejected";
+  status: 'draft' | 'pending' | 'approved' | 'rejected';
   total: number;
   createdAt: Date;
   updatedAt: Date;

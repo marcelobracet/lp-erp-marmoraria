@@ -10,6 +10,8 @@ Sistema ERP white-label para marmorarias, desenvolvido com Next.js, Material UI 
 - React Hook Form
 - Zod
 - MUI X (Charts e Data Grid)
+- Prettier (formatação de código)
+- ESLint (linting)
 
 ## Estrutura do Projeto
 
@@ -37,6 +39,32 @@ src/
    ```bash
    npm run dev
    ```
+
+## Scripts Disponíveis
+
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Gera build de produção
+- `npm run start` - Inicia o servidor de produção
+- `npm run lint` - Executa o ESLint
+- `npm run lint:fix` - Executa o ESLint e corrige problemas automaticamente
+- `npm run format` - Formata o código com Prettier
+- `npm run format:check` - Verifica se o código está formatado corretamente
+
+## Formatação de Código
+
+O projeto utiliza Prettier para formatação automática de código. As configurações estão em `.prettierrc`.
+
+Para formatar todo o código:
+
+```bash
+npm run format
+```
+
+Para verificar se o código está formatado:
+
+```bash
+npm run format:check
+```
 
 ## Personalização White-label
 
