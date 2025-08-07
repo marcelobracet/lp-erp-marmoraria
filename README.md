@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ERP Marmoraria
 
-## Getting Started
+Sistema ERP white-label para marmorarias, desenvolvido com Next.js, Material UI e React Hook Form.
 
-First, run the development server:
+## Tecnologias Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Next.js 14
+- TypeScript
+- Material UI (MUI)
+- React Hook Form
+- Zod
+- MUI X (Charts e Data Grid)
+
+## Estrutura do Projeto
+
+```
+src/
+  ├── app/              # Rotas e páginas Next.js
+  ├── components/       # Componentes reutilizáveis
+  ├── config/          # Configurações (tema, cliente)
+  ├── features/        # Funcionalidades específicas
+  ├── hooks/           # Hooks customizados
+  ├── services/        # Serviços e APIs
+  ├── types/           # Tipos e interfaces
+  └── utils/           # Funções utilitárias
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Configuração do Ambiente
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone o repositório
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Copie o arquivo `.env.example` para `.env.local` e configure as variáveis
+4. Execute o projeto em desenvolvimento:
+   ```bash
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Personalização White-label
 
-## Learn More
+O sistema é projetado para ser facilmente personalizado para diferentes clientes:
 
-To learn more about Next.js, take a look at the following resources:
+1. Configure as informações do cliente em `src/config/client.ts`
+2. Ajuste o tema em `src/config/theme.ts`
+3. Atualize logos e assets em `public/`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Funcionalidades
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Login e Autenticação
+- Dashboard com KPIs
+- Gestão de Clientes
+- Orçamentos
+- Catálogo de Produtos
+- Configurações da Empresa
 
-## Deploy on Vercel
+## Contribuição
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Crie uma branch para sua feature: `git checkout -b feature/nome-da-feature`
+2. Commit suas mudanças: `git commit -m 'feat: Adiciona nova feature'`
+3. Push para a branch: `git push origin feature/nome-da-feature`
+4. Abra um Pull Request
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Licença
+
+Este projeto está sob a licença [MIT](LICENSE).
