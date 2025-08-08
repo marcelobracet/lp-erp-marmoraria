@@ -70,6 +70,19 @@ export default function MainLayout({ children }: MainLayoutProps) {
     router.push('/login');
   };
 
+  const handleNavigation = (path: string) => {
+    console.log('Navegando para:', path);
+    console.log('Pathname atual:', pathname);
+    console.log('Router:', router);
+
+    try {
+      router.push(path);
+      console.log('Navegação executada com sucesso');
+    } catch (error) {
+      console.error('Erro na navegação:', error);
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar
@@ -156,7 +169,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
               <ListItem key={item.text} disablePadding>
                 <ListItemButton
                   selected={pathname === item.path}
-                  onClick={() => router.push(item.path)}
+                  onClick={() => handleNavigation(item.path)}
                 >
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} />
@@ -187,7 +200,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
               <ListItem key={item.text} disablePadding>
                 <ListItemButton
                   selected={pathname === item.path}
-                  onClick={() => router.push(item.path)}
+                  onClick={() => handleNavigation(item.path)}
                 >
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} />

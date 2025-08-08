@@ -20,6 +20,7 @@ import {
   IconButton,
   Chip,
   useTheme,
+  Link,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -30,6 +31,8 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useRouter } from 'next/navigation';
+import NextLink from 'next/link';
 import MainLayout from '@/components/layout/MainLayout';
 import { Client } from '@/types';
 
@@ -89,6 +92,7 @@ const mockClients: Client[] = [
 
 export default function ClientesPage() {
   const theme = useTheme();
+  const router = useRouter();
   const [clients, setClients] = useState<Client[]>(mockClients);
   const [openDialog, setOpenDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -148,6 +152,11 @@ export default function ClientesPage() {
       client.document.includes(searchTerm)
   );
 
+  const handleTestNavigation = () => {
+    console.log('Testando navegação para dashboard...');
+    router.push('/dashboard');
+  };
+
   return (
     <MainLayout>
       <Box sx={{ flexGrow: 1 }}>
@@ -160,15 +169,29 @@ export default function ClientesPage() {
           }}
         >
           <Typography variant='h4'>Clientes</Typography>
-          <Button
-            variant='contained'
-            startIcon={<AddIcon />}
-            onClick={() => handleOpenDialog()}
-          >
-            Novo Cliente
-          </Button>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <NextLink href='/dashboard' passHref>
+              <Button variant='outlined' component='a'>
+                Next.js Link Dashboard
+              </Button>
+            </NextLink>
+            <Link href='/dashboard' sx={{ textDecoration: 'none' }}>
+              <Button variant='outlined'>MUI Link Dashboard</Button>
+            </Link>
+            <Button variant='outlined' onClick={handleTestNavigation}>
+              Router Push Dashboard
+            </Button>
+            <Button
+              variant='contained'
+              startIcon={<AddIcon />}
+              onClick={() => handleOpenDialog()}
+            >
+              Novo Cliente
+            </Button>
+          </Box>
         </Box>
 
+        {/* Busca */}
         <Paper sx={{ p: 2, mb: 3 }}>
           <TextField
             fullWidth
@@ -183,6 +206,7 @@ export default function ClientesPage() {
           />
         </Paper>
 
+        {/* Tabela */}
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -232,6 +256,7 @@ export default function ClientesPage() {
           </Table>
         </TableContainer>
 
+        {/* Dialog de Cadastro/Edição */}
         <Dialog
           open={openDialog}
           onClose={handleCloseDialog}

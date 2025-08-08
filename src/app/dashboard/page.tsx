@@ -19,6 +19,7 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import MainLayout from '@/components/layout/MainLayout';
 import { DashboardMetrics } from '@/types';
 
+// Mock data para demonstração
 const mockMetrics: DashboardMetrics = {
   dailySales: 12500,
   openQuotes: 8,
@@ -75,7 +76,7 @@ export default function DashboardPage() {
         {/* KPIs */}
         <Grid container spacing={3} sx={{ mb: 4 }}>
           {kpiCards.map((card, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid key={index}>
               <Card
                 sx={{
                   height: '100%',
@@ -112,7 +113,7 @@ export default function DashboardPage() {
         </Grid>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
+          <Grid>
             <Paper sx={{ p: 3 }}>
               <Typography variant='h6' gutterBottom>
                 Vendas Mensais
@@ -127,7 +128,7 @@ export default function DashboardPage() {
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid>
             <Paper sx={{ p: 3, height: '100%' }}>
               <Typography variant='h6' gutterBottom>
                 Resumo Rápido
