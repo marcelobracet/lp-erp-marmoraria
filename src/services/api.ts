@@ -43,8 +43,12 @@ export interface Client {
   email: string;
   phone: string;
   document: string; // CPF or CNPJ
-  document_type: 'cpf' | 'cnpj';
-  address?: Address;
+  document_type: 'CPF' | 'CNPJ';
+  address: string;
+  city: string;
+  state: string;
+  zip_code: string;
+  is_active: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -54,8 +58,11 @@ export interface CreateClientRequest {
   email: string;
   phone: string;
   document: string;
-  document_type: 'cpf' | 'cnpj';
-  address?: Address;
+  document_type: 'CPF' | 'CNPJ';
+  address: string;
+  city: string;
+  state: string;
+  zip_code: string;
 }
 
 export interface UpdateClientRequest {
@@ -63,28 +70,21 @@ export interface UpdateClientRequest {
   email?: string;
   phone?: string;
   document?: string;
-  document_type?: 'cpf' | 'cnpj';
-  address?: Address;
-}
-
-export interface Address {
-  street: string;
-  number: string;
-  complement?: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  zip_code: string;
+  document_type?: 'CPF' | 'CNPJ';
+  address?: string;
+  city?: string;
+  state?: string;
+  zip_code?: string;
 }
 
 // Tipos para Produtos
 export interface Product {
   id: string;
   name: string;
-  type: 'marble' | 'granite' | 'service';
-  description?: string;
-  unit_price: number;
-  unit: 'm2' | 'ml' | 'un' | 'kg';
+  description: string;
+  type: 'Mármore' | 'Granito' | 'Serviço';
+  price: number;
+  unit: string;
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -92,26 +92,114 @@ export interface Product {
 
 export interface CreateProductRequest {
   name: string;
-  type: 'marble' | 'granite' | 'service';
-  description?: string;
-  unit_price: number;
-  unit: 'm2' | 'ml' | 'un' | 'kg';
-  is_active?: boolean;
+  description: string;
+  type: 'Mármore' | 'Granito' | 'Serviço';
+  price: number;
+  unit: string;
 }
 
 export interface UpdateProductRequest {
   name?: string;
-  type?: 'marble' | 'granite' | 'service';
   description?: string;
-  unit_price?: number;
-  unit?: 'm2' | 'ml' | 'un' | 'kg';
-  is_active?: boolean;
+  type?: 'Mármore' | 'Granito' | 'Serviço';
+  price?: number;
+  unit?: string;
+}
+
+// Tipos para Orçamentos
+export interface QuoteItem {
+  id?: string;
+  product_id: string;
+  product_name: string;
+  quantity: number;
+  unit_price: number;
+  total: number;
+}
+
+export interface Quote {
+  id: string;
+  client_id: string;
+  client?: {
+    id: string;
+    name: string;
+  };
+  client_name?: string;
+  total_value: number;
+  status: 'Pendente' | 'Aprovado' | 'Rejeitado' | 'Cancelado';
+  date: string;
+  valid_until: string;
+  notes: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateQuoteRequest {
+  client_id: string;
+  date: string;
+  valid_until: string;
+  notes: string;
+  items: Array<{
+    product_id: string;
+    quantity: number;
+  }>;
+}
+
+export interface UpdateQuoteRequest {
+  client_id?: string;
+  date?: string;
+  valid_until?: string;
+  notes?: string;
+  items?: Array<{
+    product_id: string;
+    quantity: number;
+  }>;
+}
+
+// Tipos para Configurações
+export interface Settings {
+  id: string;
+  trade_name: string;
+  legal_name: string;
+  cnpj: string;
+  phone: string;
+  email: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  zip_code: string;
+  primary_color: string;
+  secondary_color: string;
+  logo_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface UpdateSettingsRequest {
+  trade_name?: string;
+  legal_name?: string;
+  cnpj?: string;
+  phone?: string;
+  email?: string;
+  street?: string;
+  number?: string;
+  neighborhood?: string;
+  city?: string;
+  state?: string;
+  zip_code?: string;
+  primary_color?: string;
+  secondary_color?: string;
+  logo_url?: string;
 }
 
 // Tipos para Listagem
 export interface PaginatedResponse<T> {
   data?: T[];
   clients?: T[];
+  products?: T[];
+  quotes?: T[];
   total: number;
   limit: number;
   offset: number;
@@ -501,6 +589,132 @@ class ApiClient {
       return response.data;
     } catch (error) {
       console.error('Get products count error:', error);
+      throw this.handleError(error as AxiosError);
+    }
+  }
+
+  // Métodos para Orçamentos
+  public async createQuote(quoteData: CreateQuoteRequest): Promise<Quote> {
+    try {
+      const response = await this.axiosInstance.post<Quote>(
+        '/api/v1/quotes',
+        quoteData
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Create quote error:', error);
+      throw this.handleError(error as AxiosError);
+    }
+  }
+
+  public async getQuoteById(id: string): Promise<Quote> {
+    try {
+      const response = await this.axiosInstance.get<Quote>(
+        `/api/v1/quotes/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Get quote by id error:', error);
+      throw this.handleError(error as AxiosError);
+    }
+  }
+
+  public async updateQuote(
+    id: string,
+    quoteData: UpdateQuoteRequest
+  ): Promise<Quote> {
+    try {
+      const response = await this.axiosInstance.put<Quote>(
+        `/api/v1/quotes/${id}`,
+        quoteData
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Update quote error:', error);
+      throw this.handleError(error as AxiosError);
+    }
+  }
+
+  public async deleteQuote(id: string): Promise<void> {
+    try {
+      await this.axiosInstance.delete(`/api/v1/quotes/${id}`);
+    } catch (error) {
+      console.error('Delete quote error:', error);
+      throw this.handleError(error as AxiosError);
+    }
+  }
+
+  public async getQuotes(
+    limit = 10,
+    offset = 0
+  ): Promise<PaginatedResponse<Quote>> {
+    try {
+      const response = await this.axiosInstance.get<PaginatedResponse<Quote>>(
+        '/api/v1/quotes',
+        {
+          params: { limit, offset },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Get quotes error:', error);
+      throw this.handleError(error as AxiosError);
+    }
+  }
+
+  public async getQuotesCount(): Promise<CountResponse> {
+    try {
+      const response = await this.axiosInstance.get<CountResponse>(
+        '/api/v1/quotes/count'
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Get quotes count error:', error);
+      throw this.handleError(error as AxiosError);
+    }
+  }
+
+  public async updateQuoteStatus(
+    id: string,
+    status: 'Pendente' | 'Aprovado' | 'Rejeitado' | 'Cancelado'
+  ): Promise<{ message: string }> {
+    try {
+      const response = await this.axiosInstance.put<{ message: string }>(
+        `/api/v1/quotes/${id}/status`,
+        {
+          status,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Update quote status error:', error);
+      throw this.handleError(error as AxiosError);
+    }
+  }
+
+  // Métodos para Configurações
+  public async getSettings(): Promise<Settings> {
+    try {
+      const response =
+        await this.axiosInstance.get<Settings>('/api/v1/settings');
+      return response.data;
+    } catch (error) {
+      console.error('Get settings error:', error);
+      throw this.handleError(error as AxiosError);
+    }
+  }
+
+  public async updateSettings(
+    settingsData: UpdateSettingsRequest
+  ): Promise<Settings> {
+    try {
+      const response = await this.axiosInstance.put<Settings>(
+        '/api/v1/settings',
+        settingsData
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Update settings error:', error);
       throw this.handleError(error as AxiosError);
     }
   }

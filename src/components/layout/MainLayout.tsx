@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Drawer,
@@ -54,6 +54,12 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  // Verificar se estamos no cliente para evitar problemas de hidratação
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const handleDrawerToggle = () => {
     setOpen(!open);

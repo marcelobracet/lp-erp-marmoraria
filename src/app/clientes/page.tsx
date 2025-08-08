@@ -48,16 +48,11 @@ const clientSchema = z.object({
   email: z.string().email('E-mail inválido'),
   phone: z.string().min(1, 'Telefone é obrigatório'),
   document: z.string().min(1, 'CPF/CNPJ é obrigatório'),
-  document_type: z.enum(['cpf', 'cnpj']),
-  address: z.object({
-    street: z.string().min(1, 'Rua é obrigatória'),
-    number: z.string().min(1, 'Número é obrigatório'),
-    complement: z.string().optional(),
-    neighborhood: z.string().min(1, 'Bairro é obrigatório'),
-    city: z.string().min(1, 'Cidade é obrigatória'),
-    state: z.string().min(1, 'Estado é obrigatório'),
-    zip_code: z.string().min(1, 'CEP é obrigatório'),
-  }),
+  document_type: z.enum(['CPF', 'CNPJ']),
+  address: z.string().min(1, 'Endereço é obrigatório'),
+  city: z.string().min(1, 'Cidade é obrigatória'),
+  state: z.string().min(1, 'Estado é obrigatório'),
+  zip_code: z.string().min(1, 'CEP é obrigatório'),
 });
 
 type ClientFormData = z.infer<typeof clientSchema>;
@@ -86,7 +81,6 @@ export default function ClientesPage() {
     resolver: zodResolver(clientSchema),
   });
 
-  // Carregar clientes
   const loadClients = async () => {
     try {
       setLoading(true);
@@ -96,8 +90,8 @@ export default function ClientesPage() {
       const response = await apiClient.getClients(limit, offset);
       console.log('Resposta da API:', response);
 
-      // A API retorna { clients: [], total: number, limit: number, offset: number }
-      const clientsData = response.clients || [];
+      // Verificar se a API retorna { clients: [] } ou { data: [] }
+      const clientsData = response.clients || response.data || [];
       const totalCount = response.total || 0;
 
       console.log('Dados de clientes extraídos:', clientsData);
@@ -120,13 +114,13 @@ export default function ClientesPage() {
     }
   };
 
-  // Carregar clientes na inicialização e quando a página mudar
   useEffect(() => {
     loadClients();
   }, [page]);
 
   const handleOpenDialog = (client?: Client) => {
     if (client) {
+      console.log('Editando cliente:', client);
       setEditingClient(client);
       reset({
         name: client.name,
@@ -134,15 +128,10 @@ export default function ClientesPage() {
         phone: client.phone,
         document: client.document,
         document_type: client.document_type,
-        address: client.address || {
-          street: '',
-          number: '',
-          complement: '',
-          neighborhood: '',
-          city: '',
-          state: '',
-          zip_code: '',
-        },
+        address: client.address || '',
+        city: client.city || '',
+        state: client.state || '',
+        zip_code: client.zip_code || '',
       });
     } else {
       setEditingClient(null);
@@ -151,16 +140,11 @@ export default function ClientesPage() {
         email: '',
         phone: '',
         document: '',
-        document_type: 'cpf',
-        address: {
-          street: '',
-          number: '',
-          complement: '',
-          neighborhood: '',
-          city: '',
-          state: '',
-          zip_code: '',
-        },
+        document_type: 'CPF',
+        address: '',
+        city: '',
+        state: '',
+        zip_code: '',
       });
     }
     setOpenDialog(true);
@@ -179,8 +163,10 @@ export default function ClientesPage() {
       setSaving(true);
       setError(null);
 
+      console.log('Dados do formulário:', data);
+      console.log('Cliente sendo editado:', editingClient);
+
       if (editingClient) {
-        // Atualizar cliente existente
         const updateData: UpdateClientRequest = {
           name: data.name,
           email: data.email,
@@ -188,9 +174,18 @@ export default function ClientesPage() {
           document: data.document,
           document_type: data.document_type,
           address: data.address,
+          city: data.city,
+          state: data.state,
+          zip_code: data.zip_code,
         };
 
-        await apiClient.updateClient(editingClient.id, updateData);
+        console.log('Dados para atualização:', updateData);
+        console.log('ID do cliente sendo editado:', editingClient.id);
+        const updatedClient = await apiClient.updateClient(
+          editingClient.id,
+          updateData
+        );
+        console.log('Cliente atualizado na API:', updatedClient);
         setSuccess('Cliente atualizado com sucesso!');
       } else {
         // Criar novo cliente
@@ -201,6 +196,9 @@ export default function ClientesPage() {
           document: data.document,
           document_type: data.document_type,
           address: data.address,
+          city: data.city,
+          state: data.state,
+          zip_code: data.zip_code,
         };
 
         await apiClient.createClient(createData);
@@ -364,7 +362,7 @@ export default function ClientesPage() {
                             label={client.document_type.toUpperCase()}
                             size='small'
                             color={
-                              client.document_type === 'cpf'
+                              client.document_type === 'CPF'
                                 ? 'primary'
                                 : 'secondary'
                             }
@@ -453,53 +451,33 @@ export default function ClientesPage() {
                     {...register('document')}
                   />
                   <TextField
-                    label='Rua'
+                    label='Endereço'
                     fullWidth
-                    error={!!errors.address?.street}
-                    helperText={errors.address?.street?.message}
-                    {...register('address.street')}
-                    sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}
-                  />
-                  <TextField
-                    label='Número'
-                    fullWidth
-                    error={!!errors.address?.number}
-                    helperText={errors.address?.number?.message}
-                    {...register('address.number')}
-                  />
-                  <TextField
-                    label='Complemento'
-                    fullWidth
-                    {...register('address.complement')}
-                  />
-                  <TextField
-                    label='Bairro'
-                    fullWidth
-                    error={!!errors.address?.neighborhood}
-                    helperText={errors.address?.neighborhood?.message}
-                    {...register('address.neighborhood')}
+                    error={!!errors.address}
+                    helperText={errors.address?.message}
+                    {...register('address')}
                     sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}
                   />
                   <TextField
                     label='Cidade'
                     fullWidth
-                    error={!!errors.address?.city}
-                    helperText={errors.address?.city?.message}
-                    {...register('address.city')}
+                    error={!!errors.city}
+                    helperText={errors.city?.message}
+                    {...register('city')}
                   />
                   <TextField
                     label='Estado'
                     fullWidth
-                    error={!!errors.address?.state}
-                    helperText={errors.address?.state?.message}
-                    {...register('address.state')}
+                    error={!!errors.state}
+                    helperText={errors.state?.message}
+                    {...register('state')}
                   />
                   <TextField
                     label='CEP'
                     fullWidth
-                    error={!!errors.address?.zip_code}
-                    helperText={errors.address?.zip_code?.message}
-                    {...register('address.zip_code')}
+                    error={!!errors.zip_code}
+                    helperText={errors.zip_code?.message}
+                    {...register('zip_code')}
                     sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}
                   />
                 </Box>

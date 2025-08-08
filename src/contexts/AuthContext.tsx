@@ -27,11 +27,19 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false);
 
   const isAuthenticated = !!user;
 
-  // Verificar autenticação na inicialização
+  // Verificar se estamos no cliente
   useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  // Verificar autenticação na inicialização (apenas no cliente)
+  useEffect(() => {
+    if (!hasMounted) return;
+
     const checkAuth = async () => {
       try {
         if (apiClient.isAuthenticated()) {
@@ -52,7 +60,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     };
 
     checkAuth();
-  }, []);
+  }, [hasMounted]);
 
   const login = async (email: string, password: string) => {
     try {
