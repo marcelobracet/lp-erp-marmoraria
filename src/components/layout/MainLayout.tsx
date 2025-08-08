@@ -30,6 +30,7 @@ import {
   ChevronLeft,
 } from '@mui/icons-material';
 import { useRouter, usePathname } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 import clientConfig from '@/config/client';
 
 const drawerWidth = 240;
@@ -50,6 +51,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const theme = useTheme();
   const router = useRouter();
   const pathname = usePathname();
+  const { user, logout } = useAuth();
   const [open, setOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -66,21 +68,13 @@ export default function MainLayout({ children }: MainLayoutProps) {
   };
 
   const handleLogout = () => {
-    // TODO: Implementar logout
-    router.push('/login');
+    handleMenuClose();
+    logout();
   };
 
   const handleNavigation = (path: string) => {
     console.log('Navegando para:', path);
-    console.log('Pathname atual:', pathname);
-    console.log('Router:', router);
-
-    try {
-      router.push(path);
-      console.log('Navegação executada com sucesso');
-    } catch (error) {
-      console.error('Erro na navegação:', error);
-    }
+    router.push(path);
   };
 
   return (
@@ -105,34 +99,52 @@ export default function MainLayout({ children }: MainLayoutProps) {
           <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1 }}>
             {clientConfig.company.name}
           </Typography>
-          <IconButton
-            size='large'
-            aria-label='account of current user'
-            aria-controls='menu-appbar'
-            aria-haspopup='true'
-            onClick={handleMenuClick}
-            color='inherit'
-          >
-            <AccountCircle />
-          </IconButton>
-          <Menu
-            id='menu-appbar'
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-          >
-            <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
-            <MenuItem onClick={handleLogout}>Sair</MenuItem>
-          </Menu>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Typography
+              variant='body2'
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              {user?.name}
+            </Typography>
+            <IconButton
+              size='large'
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
+              onClick={handleMenuClick}
+              color='inherit'
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id='menu-appbar'
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem onClick={handleMenuClose}>
+                <Typography variant='body2' sx={{ fontWeight: 'bold' }}>
+                  {user?.email}
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleMenuClose}>
+                <Typography variant='body2' color='text.secondary'>
+                  Role: {user?.role}
+                </Typography>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleLogout}>Sair</MenuItem>
+            </Menu>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box

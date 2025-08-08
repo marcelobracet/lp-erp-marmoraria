@@ -17,6 +17,7 @@ import {
 } from '@mui/icons-material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import MainLayout from '@/components/layout/MainLayout';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { DashboardMetrics } from '@/types';
 
 // Mock data para demonstração
@@ -67,100 +68,201 @@ export default function DashboardPage() {
   ];
 
   return (
-    <MainLayout>
-      <Box sx={{ flexGrow: 1 }}>
-        <Typography variant='h4' gutterBottom>
-          Dashboard
-        </Typography>
+    <ProtectedRoute>
+      <MainLayout>
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography variant='h4' gutterBottom>
+            Dashboard
+          </Typography>
 
-        {/* KPIs */}
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          {kpiCards.map((card, index) => (
-            <Grid key={index}>
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  '&:hover': {
-                    boxShadow: 6,
-                    transform: 'translateY(-2px)',
-                    transition: 'all 0.3s ease-in-out',
-                  },
-                }}
+          {/* KPIs - Cards com tamanho fixo */}
+          <Grid container spacing={3} sx={{ mb: 4 }}>
+            {kpiCards.map((card, index) => (
+              <Grid
+                key={index}
+                sx={{ width: { xs: '100%', sm: '50%', md: '25%' } }}
               >
-                <CardContent>
-                  <Box
+                <Card
+                  sx={{
+                    height: 140,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    '&:hover': {
+                      boxShadow: 6,
+                      transform: 'translateY(-2px)',
+                      transition: 'all 0.3s ease-in-out',
+                    },
+                  }}
+                >
+                  <CardContent
                     sx={{
+                      flexGrow: 1,
                       display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      mb: 2,
+                      flexDirection: 'column',
                     }}
                   >
-                    <Typography variant='h6' color='text.secondary'>
-                      {card.title}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        mb: 2,
+                      }}
+                    >
+                      <Typography
+                        variant='h6'
+                        color='text.secondary'
+                        sx={{ fontSize: '0.875rem' }}
+                      >
+                        {card.title}
+                      </Typography>
+                      {card.icon}
+                    </Box>
+                    <Typography
+                      variant='h4'
+                      component='div'
+                      color={card.color}
+                      sx={{
+                        fontSize: '1.5rem',
+                        fontWeight: 'bold',
+                        mt: 'auto',
+                      }}
+                    >
+                      {card.value}
                     </Typography>
-                    {card.icon}
-                  </Box>
-                  <Typography variant='h4' component='div' color={card.color}>
-                    {card.value}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
 
-        <Grid container spacing={3}>
-          <Grid>
-            <Paper sx={{ p: 3 }}>
-              <Typography variant='h6' gutterBottom>
-                Vendas Mensais
-              </Typography>
-              <Box sx={{ height: 300 }}>
-                <BarChart
-                  dataset={monthlyData}
-                  xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
-                  series={[{ dataKey: 'vendas', label: 'Vendas (R$)' }]}
-                  height={300}
-                />
-              </Box>
-            </Paper>
+          {/* Gráficos - Ocupando toda a largura disponível */}
+          <Grid container spacing={3}>
+            <Grid sx={{ width: { xs: '100%', lg: '66.666667%' } }}>
+              <Paper
+                sx={{
+                  p: 3,
+                  height: { xs: 300, md: 400 },
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Typography variant='h6' gutterBottom>
+                  Vendas Mensais
+                </Typography>
+                <Box
+                  sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}
+                >
+                  <BarChart
+                    dataset={monthlyData}
+                    xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
+                    series={[{ dataKey: 'vendas', label: 'Vendas (R$)' }]}
+                    height={250}
+                    sx={{
+                      '.MuiChartsAxis-line': {
+                        stroke: theme.palette.divider,
+                      },
+                      '.MuiChartsAxis-tick': {
+                        stroke: theme.palette.divider,
+                      },
+                      '.MuiChartsAxis-label': {
+                        fill: theme.palette.text.secondary,
+                      },
+                    }}
+                  />
+                </Box>
+              </Paper>
+            </Grid>
+            <Grid sx={{ width: { xs: '100%', lg: '33.333333%' } }}>
+              <Paper
+                sx={{
+                  p: 3,
+                  height: { xs: 300, md: 400 },
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Typography variant='h6' gutterBottom>
+                  Resumo Rápido
+                </Typography>
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 3,
+                  }}
+                >
+                  <Box>
+                    <Typography
+                      variant='body2'
+                      color='text.secondary'
+                      gutterBottom
+                    >
+                      Total de Clientes
+                    </Typography>
+                    <Typography
+                      variant='h4'
+                      color='primary'
+                      sx={{ fontWeight: 'bold' }}
+                    >
+                      156
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant='body2'
+                      color='text.secondary'
+                      gutterBottom
+                    >
+                      Produtos Cadastrados
+                    </Typography>
+                    <Typography
+                      variant='h4'
+                      color='secondary'
+                      sx={{ fontWeight: 'bold' }}
+                    >
+                      42
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant='body2'
+                      color='text.secondary'
+                      gutterBottom
+                    >
+                      Orçamentos Este Mês
+                    </Typography>
+                    <Typography
+                      variant='h4'
+                      color='success.main'
+                      sx={{ fontWeight: 'bold' }}
+                    >
+                      23
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant='body2'
+                      color='text.secondary'
+                      gutterBottom
+                    >
+                      Taxa de Conversão
+                    </Typography>
+                    <Typography
+                      variant='h4'
+                      color='info.main'
+                      sx={{ fontWeight: 'bold' }}
+                    >
+                      68%
+                    </Typography>
+                  </Box>
+                </Box>
+              </Paper>
+            </Grid>
           </Grid>
-          <Grid>
-            <Paper sx={{ p: 3, height: '100%' }}>
-              <Typography variant='h6' gutterBottom>
-                Resumo Rápido
-              </Typography>
-              <Box sx={{ mt: 2 }}>
-                <Typography variant='body2' color='text.secondary' gutterBottom>
-                  Total de Clientes
-                </Typography>
-                <Typography variant='h4' color='primary'>
-                  156
-                </Typography>
-              </Box>
-              <Box sx={{ mt: 3 }}>
-                <Typography variant='body2' color='text.secondary' gutterBottom>
-                  Produtos Cadastrados
-                </Typography>
-                <Typography variant='h4' color='secondary'>
-                  42
-                </Typography>
-              </Box>
-              <Box sx={{ mt: 3 }}>
-                <Typography variant='body2' color='text.secondary' gutterBottom>
-                  Orçamentos Este Mês
-                </Typography>
-                <Typography variant='h4' color='success.main'>
-                  23
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Box>
-    </MainLayout>
+        </Box>
+      </MainLayout>
+    </ProtectedRoute>
   );
 }

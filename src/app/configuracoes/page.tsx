@@ -1,294 +1,408 @@
 'use client';
 
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
   Typography,
   Button,
   TextField,
-  Paper,
-  Grid,
   Card,
   CardContent,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Divider,
+  Grid,
+  useTheme,
   Alert,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Save as SaveIcon,
+  Upload as UploadIcon,
+  Delete as DeleteIcon,
+} from '@mui/icons-material';
 import { z } from 'zod';
 import MainLayout from '@/components/layout/MainLayout';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import clientConfig from '@/config/client';
 
-const settingsSchema = z.object({
-  company: z.object({
-    name: z.string().min(1, 'Nome da empresa é obrigatório'),
-    legalName: z.string().min(1, 'Razão social é obrigatória'),
-    cnpj: z.string().min(1, 'CNPJ é obrigatório'),
-    phone: z.string().min(1, 'Telefone é obrigatório'),
-    email: z.string().email('E-mail inválido'),
-    address: z.object({
-      street: z.string().min(1, 'Rua é obrigatória'),
-      number: z.string().min(1, 'Número é obrigatório'),
-      complement: z.string().optional(),
-      neighborhood: z.string().min(1, 'Bairro é obrigatório'),
-      city: z.string().min(1, 'Cidade é obrigatória'),
-      state: z.string().min(1, 'Estado é obrigatório'),
-      zipCode: z.string().min(1, 'CEP é obrigatório'),
-    }),
-  }),
-  theme: z.object({
-    primaryColor: z.string().min(1, 'Cor primária é obrigatória'),
-    secondaryColor: z.string().min(1, 'Cor secundária é obrigatória'),
-    logoUrl: z.string().optional(),
-  }),
+const configSchema = z.object({
+  // Informações da Empresa
+  nomeFantasia: z.string().min(1, 'Nome fantasia é obrigatório'),
+  razaoSocial: z.string().min(1, 'Razão social é obrigatória'),
+  cnpj: z.string().min(1, 'CNPJ é obrigatório'),
+  telefone: z.string().min(1, 'Telefone é obrigatório'),
+  email: z.string().email('E-mail inválido'),
+
+  // Endereço
+  rua: z.string().min(1, 'Rua é obrigatória'),
+  numero: z.string().min(1, 'Número é obrigatório'),
+  complemento: z.string().optional(),
+  bairro: z.string().min(1, 'Bairro é obrigatório'),
+  cidade: z.string().min(1, 'Cidade é obrigatória'),
+  estado: z.string().min(1, 'Estado é obrigatório'),
+  cep: z.string().min(1, 'CEP é obrigatório'),
+
+  // Personalização do Tema
+  corPrimaria: z.string().min(1, 'Cor primária é obrigatória'),
+  corSecundaria: z.string().min(1, 'Cor secundária é obrigatória'),
 });
 
-type SettingsFormData = z.infer<typeof settingsSchema>;
+type ConfigFormData = z.infer<typeof configSchema>;
 
 export default function ConfiguracoesPage() {
-  const [saved, setSaved] = useState(false);
+  const theme = useTheme();
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SettingsFormData>({
-    resolver: zodResolver(settingsSchema),
+    setValue,
+    watch,
+  } = useForm<ConfigFormData>({
+    resolver: zodResolver(configSchema),
     defaultValues: {
-      company: {
-        name: clientConfig.company.name,
-        legalName: clientConfig.company.legalName,
-        cnpj: clientConfig.company.cnpj,
-        phone: clientConfig.company.phone,
-        email: clientConfig.company.email,
-        address: {
-          street: clientConfig.company.address.street,
-          number: clientConfig.company.address.number,
-          complement: clientConfig.company.address.complement,
-          neighborhood: clientConfig.company.address.neighborhood,
-          city: clientConfig.company.address.city,
-          state: clientConfig.company.address.state,
-          zipCode: clientConfig.company.address.zipCode,
-        },
-      },
-      theme: {
-        primaryColor: clientConfig.theme.primaryColor,
-        secondaryColor: clientConfig.theme.secondaryColor,
-        logoUrl: clientConfig.theme.logoUrl,
-      },
+      nomeFantasia: clientConfig.company.name,
+      razaoSocial: clientConfig.company.legalName,
+      cnpj: clientConfig.company.cnpj,
+      telefone: clientConfig.company.contactPhone,
+      email: clientConfig.company.contactEmail,
+      rua: clientConfig.company.address.street,
+      numero: clientConfig.company.address.number,
+      complemento: clientConfig.company.address.complement || '',
+      bairro: clientConfig.company.address.neighborhood,
+      cidade: clientConfig.company.address.city,
+      estado: clientConfig.company.address.state,
+      cep: clientConfig.company.address.zipCode,
+      corPrimaria: clientConfig.theme.primaryColor,
+      corSecundaria: clientConfig.theme.secondaryColor,
     },
   });
 
-  const onSubmit = (data: SettingsFormData) => {
-    // TODO: Implementar salvamento das configurações
-    console.log('Configurações salvas:', data);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+  const watchedPrimaryColor = watch('corPrimaria');
+  const watchedSecondaryColor = watch('corSecundaria');
+
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setLogoFile(file);
+
+      // Criar preview da imagem
+      const reader = new FileReader();
+      reader.onload = e => {
+        setLogoPreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveLogo = () => {
+    setLogoFile(null);
+    setLogoPreview(null);
+  };
+
+  const onSubmit = async (data: ConfigFormData) => {
+    try {
+      // Simular salvamento
+      console.log('Dados da configuração:', data);
+      console.log('Logo file:', logoFile);
+
+      // Aqui você faria o upload do logo e salvamento das configurações
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (error) {
+      console.error('Erro ao salvar configurações:', error);
+    }
   };
 
   return (
-    <MainLayout>
-      <Box sx={{ flexGrow: 1 }}>
-        <Typography variant='h4' gutterBottom>
-          Configurações
-        </Typography>
+    <ProtectedRoute>
+      <MainLayout>
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography variant='h4' gutterBottom>
+            Configurações
+          </Typography>
 
-        {saved && (
-          <Alert severity='success' sx={{ mb: 3 }}>
-            Configurações salvas com sucesso!
-          </Alert>
-        )}
+          {saveSuccess && (
+            <Alert severity='success' sx={{ mb: 3 }}>
+              Configurações salvas com sucesso!
+            </Alert>
+          )}
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={3}>
-            {/* Informações da Empresa */}
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardContent>
-                  <Typography variant='h6' gutterBottom>
-                    Informações da Empresa
-                  </Typography>
-                  <Box sx={{ display: 'grid', gap: 2 }}>
-                    <TextField
-                      label='Nome Fantasia'
-                      fullWidth
-                      error={!!errors.company?.name}
-                      helperText={errors.company?.name?.message}
-                      {...register('company.name')}
-                    />
-                    <TextField
-                      label='Razão Social'
-                      fullWidth
-                      error={!!errors.company?.legalName}
-                      helperText={errors.company?.legalName?.message}
-                      {...register('company.legalName')}
-                    />
-                    <TextField
-                      label='CNPJ'
-                      fullWidth
-                      error={!!errors.company?.cnpj}
-                      helperText={errors.company?.cnpj?.message}
-                      {...register('company.cnpj')}
-                    />
-                    <TextField
-                      label='Telefone'
-                      fullWidth
-                      error={!!errors.company?.phone}
-                      helperText={errors.company?.phone?.message}
-                      {...register('company.phone')}
-                    />
-                    <TextField
-                      label='E-mail'
-                      fullWidth
-                      error={!!errors.company?.email}
-                      helperText={errors.company?.email?.message}
-                      {...register('company.email')}
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Endereço */}
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardContent>
-                  <Typography variant='h6' gutterBottom>
-                    Endereço
-                  </Typography>
-                  <Box sx={{ display: 'grid', gap: 2 }}>
-                    <TextField
-                      label='Rua'
-                      fullWidth
-                      error={!!errors.company?.address?.street}
-                      helperText={errors.company?.address?.street?.message}
-                      {...register('company.address.street')}
-                    />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Grid container spacing={3}>
+              {/* Informações da Empresa - Grid maior */}
+              <Grid xs={12} lg={8}>
+                <Card>
+                  <CardContent>
+                    <Typography variant='h6' gutterBottom>
+                      Informações da Empresa
+                    </Typography>
                     <Grid container spacing={2}>
-                      <Grid item xs={8}>
+                      <Grid xs={12} sm={6}>
+                        <TextField
+                          label='Nome Fantasia'
+                          fullWidth
+                          error={!!errors.nomeFantasia}
+                          helperText={errors.nomeFantasia?.message}
+                          {...register('nomeFantasia')}
+                        />
+                      </Grid>
+                      <Grid xs={12} sm={6}>
+                        <TextField
+                          label='Razão Social'
+                          fullWidth
+                          error={!!errors.razaoSocial}
+                          helperText={errors.razaoSocial?.message}
+                          {...register('razaoSocial')}
+                        />
+                      </Grid>
+                      <Grid xs={12} sm={6}>
+                        <TextField
+                          label='CNPJ'
+                          fullWidth
+                          error={!!errors.cnpj}
+                          helperText={errors.cnpj?.message}
+                          {...register('cnpj')}
+                        />
+                      </Grid>
+                      <Grid xs={12} sm={6}>
+                        <TextField
+                          label='Telefone'
+                          fullWidth
+                          error={!!errors.telefone}
+                          helperText={errors.telefone?.message}
+                          {...register('telefone')}
+                        />
+                      </Grid>
+                      <Grid xs={12}>
+                        <TextField
+                          label='E-mail'
+                          fullWidth
+                          error={!!errors.email}
+                          helperText={errors.email?.message}
+                          {...register('email')}
+                        />
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              {/* Endereço - Grid menor */}
+              <Grid xs={12} lg={4}>
+                <Card>
+                  <CardContent>
+                    <Typography variant='h6' gutterBottom>
+                      Endereço
+                    </Typography>
+                    <Grid container spacing={2}>
+                      <Grid xs={12}>
+                        <TextField
+                          label='Rua'
+                          fullWidth
+                          error={!!errors.rua}
+                          helperText={errors.rua?.message}
+                          {...register('rua')}
+                        />
+                      </Grid>
+                      <Grid xs={12} sm={6}>
                         <TextField
                           label='Número'
                           fullWidth
-                          error={!!errors.company?.address?.number}
-                          helperText={errors.company?.address?.number?.message}
-                          {...register('company.address.number')}
+                          error={!!errors.numero}
+                          helperText={errors.numero?.message}
+                          {...register('numero')}
                         />
                       </Grid>
-                      <Grid item xs={4}>
+                      <Grid xs={12} sm={6}>
                         <TextField
                           label='Complemento'
                           fullWidth
-                          {...register('company.address.complement')}
+                          {...register('complemento')}
                         />
                       </Grid>
-                    </Grid>
-                    <TextField
-                      label='Bairro'
-                      fullWidth
-                      error={!!errors.company?.address?.neighborhood}
-                      helperText={
-                        errors.company?.address?.neighborhood?.message
-                      }
-                      {...register('company.address.neighborhood')}
-                    />
-                    <Grid container spacing={2}>
-                      <Grid item xs={8}>
+                      <Grid xs={12}>
+                        <TextField
+                          label='Bairro'
+                          fullWidth
+                          error={!!errors.bairro}
+                          helperText={errors.bairro?.message}
+                          {...register('bairro')}
+                        />
+                      </Grid>
+                      <Grid xs={12} sm={6}>
                         <TextField
                           label='Cidade'
                           fullWidth
-                          error={!!errors.company?.address?.city}
-                          helperText={errors.company?.address?.city?.message}
-                          {...register('company.address.city')}
+                          error={!!errors.cidade}
+                          helperText={errors.cidade?.message}
+                          {...register('cidade')}
                         />
                       </Grid>
-                      <Grid item xs={4}>
+                      <Grid xs={12} sm={6}>
                         <TextField
                           label='Estado'
                           fullWidth
-                          error={!!errors.company?.address?.state}
-                          helperText={errors.company?.address?.state?.message}
-                          {...register('company.address.state')}
+                          error={!!errors.estado}
+                          helperText={errors.estado?.message}
+                          {...register('estado')}
+                        />
+                      </Grid>
+                      <Grid xs={12}>
+                        <TextField
+                          label='CEP'
+                          fullWidth
+                          error={!!errors.cep}
+                          helperText={errors.cep?.message}
+                          {...register('cep')}
                         />
                       </Grid>
                     </Grid>
-                    <TextField
-                      label='CEP'
-                      fullWidth
-                      error={!!errors.company?.address?.zipCode}
-                      helperText={errors.company?.address?.zipCode?.message}
-                      {...register('company.address.zipCode')}
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-            {/* Configurações de Tema */}
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
-                  <Typography variant='h6' gutterBottom>
-                    Personalização do Tema
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: 'grid',
-                      gap: 2,
-                      gridTemplateColumns: '1fr 1fr 1fr',
-                    }}
-                  >
-                    <TextField
-                      label='Cor Primária'
-                      type='color'
-                      fullWidth
-                      error={!!errors.theme?.primaryColor}
-                      helperText={errors.theme?.primaryColor?.message}
-                      {...register('theme.primaryColor')}
-                      InputProps={{
-                        style: { height: '56px' },
-                      }}
-                    />
-                    <TextField
-                      label='Cor Secundária'
-                      type='color'
-                      fullWidth
-                      error={!!errors.theme?.secondaryColor}
-                      helperText={errors.theme?.secondaryColor?.message}
-                      {...register('theme.secondaryColor')}
-                      InputProps={{
-                        style: { height: '56px' },
-                      }}
-                    />
-                    <TextField
-                      label='URL do Logo'
-                      fullWidth
-                      error={!!errors.theme?.logoUrl}
-                      helperText={errors.theme?.logoUrl?.message}
-                      {...register('theme.logoUrl')}
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
+              {/* Personalização do Tema - Grid completa */}
+              <Grid xs={12}>
+                <Card>
+                  <CardContent>
+                    <Typography variant='h6' gutterBottom>
+                      Personalização do Tema
+                    </Typography>
+                    <Grid container spacing={3}>
+                      {/* Cores */}
+                      <Grid xs={12} md={6}>
+                        <Grid container spacing={2}>
+                          <Grid xs={12} sm={6}>
+                            <TextField
+                              label='Cor Primária'
+                              fullWidth
+                              type='color'
+                              error={!!errors.corPrimaria}
+                              helperText={errors.corPrimaria?.message}
+                              {...register('corPrimaria')}
+                              InputProps={{
+                                style: {
+                                  backgroundColor: watchedPrimaryColor,
+                                  height: '56px',
+                                },
+                              }}
+                            />
+                          </Grid>
+                          <Grid xs={12} sm={6}>
+                            <TextField
+                              label='Cor Secundária'
+                              fullWidth
+                              type='color'
+                              error={!!errors.corSecundaria}
+                              helperText={errors.corSecundaria?.message}
+                              {...register('corSecundaria')}
+                              InputProps={{
+                                style: {
+                                  backgroundColor: watchedSecondaryColor,
+                                  height: '56px',
+                                },
+                              }}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Grid>
+
+                      {/* Upload de Logo */}
+                      <Grid xs={12} md={6}>
+                        <Typography variant='subtitle2' gutterBottom>
+                          Logo da Empresa
+                        </Typography>
+
+                        {/* Preview do Logo */}
+                        {logoPreview && (
+                          <Box sx={{ mb: 2, textAlign: 'center' }}>
+                            <img
+                              src={logoPreview}
+                              alt='Logo preview'
+                              style={{
+                                maxWidth: '200px',
+                                maxHeight: '100px',
+                                objectFit: 'contain',
+                                border: '1px solid #ddd',
+                                borderRadius: '8px',
+                                padding: '8px',
+                              }}
+                            />
+                          </Box>
+                        )}
+
+                        {/* Botões de Upload */}
+                        <Box sx={{ display: 'flex', gap: 1 }}>
+                          <Button
+                            variant='outlined'
+                            component='label'
+                            startIcon={<UploadIcon />}
+                            sx={{ flex: 1 }}
+                          >
+                            Upload Logo
+                            <input
+                              type='file'
+                              hidden
+                              accept='image/*'
+                              onChange={handleLogoUpload}
+                            />
+                          </Button>
+
+                          {logoFile && (
+                            <IconButton
+                              color='error'
+                              onClick={handleRemoveLogo}
+                              title='Remover logo'
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          )}
+                        </Box>
+
+                        <Typography
+                          variant='caption'
+                          color='text.secondary'
+                          sx={{ mt: 1, display: 'block' }}
+                        >
+                          Formatos aceitos: JPG, PNG, SVG. Tamanho máximo: 2MB
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Grid>
             </Grid>
 
             {/* Botões de Ação */}
-            <Grid item xs={12}>
-              <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-                <Button variant='outlined' size='large'>
-                  Cancelar
-                </Button>
-                <Button type='submit' variant='contained' size='large'>
-                  Salvar Configurações
-                </Button>
-              </Box>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
-    </MainLayout>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                justifyContent: 'flex-end',
+                mt: 3,
+              }}
+            >
+              <Button variant='outlined' type='button'>
+                Cancelar
+              </Button>
+              <Button
+                variant='contained'
+                type='submit'
+                startIcon={<SaveIcon />}
+              >
+                Salvar Configurações
+              </Button>
+            </Box>
+          </form>
+        </Box>
+      </MainLayout>
+    </ProtectedRoute>
   );
 }

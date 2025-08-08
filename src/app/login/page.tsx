@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -10,35 +11,39 @@ import {
   TextField,
   Typography,
   useTheme,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import {
   LoginFormData,
   loginSchema,
 } from '@/features/auth/schemas/login.schema';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 import clientConfig from '@/config/client';
 
 export default function LoginPage() {
   const theme = useTheme();
+  const { login, isLoading } = useAuth();
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   });
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      // Mock login - aceita qualquer credencial
-      console.log('Login mock com:', data);
-
-      // Simula um delay para parecer mais real
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Redireciona para o dashboard
-      window.location.href = '/dashboard';
+      setError(null);
+      await login(data.email, data.password);
+      router.push('/dashboard');
     } catch (error) {
-      console.error(error);
+      console.error('Login error:', error);
+      setError(error instanceof Error ? error.message : 'Erro ao fazer login');
     }
   };
 
@@ -49,17 +54,18 @@ export default function LoginPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        bgcolor: theme.palette.background.default,
+        background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+        p: 2,
       }}
     >
       <Container maxWidth='sm'>
         <Paper
-          elevation={3}
+          elevation={8}
           sx={{
             p: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            borderRadius: 2,
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(10px)',
           }}
         >
           <Box sx={{ mb: 4, textAlign: 'center' }}>
@@ -76,9 +82,19 @@ export default function LoginPage() {
             </Typography>
           </Box>
 
-          <Typography component='h2' variant='h5' sx={{ mb: 3 }}>
+          <Typography
+            component='h2'
+            variant='h5'
+            sx={{ mb: 3, textAlign: 'center' }}
+          >
             Acesso ao Sistema
           </Typography>
+
+          {error && (
+            <Alert severity='error' sx={{ mb: 3 }}>
+              {error}
+            </Alert>
+          )}
 
           <Box
             component='form'
@@ -87,35 +103,45 @@ export default function LoginPage() {
           >
             <TextField
               margin='normal'
+              required
               fullWidth
+              id='email'
               label='E-mail'
               autoComplete='email'
               autoFocus
               error={!!errors.email}
               helperText={errors.email?.message}
+              disabled={isLoading}
               {...register('email')}
             />
-
             <TextField
               margin='normal'
+              required
               fullWidth
               label='Senha'
               type='password'
+              id='password'
               autoComplete='current-password'
               error={!!errors.password}
               helperText={errors.password?.message}
+              disabled={isLoading}
               {...register('password')}
             />
-
             <Button
               type='submit'
               fullWidth
               variant='contained'
-              size='large'
-              disabled={isSubmitting}
-              sx={{ mt: 3 }}
+              sx={{ mt: 3, mb: 2, py: 1.5 }}
+              disabled={isLoading}
             >
-              {isSubmitting ? 'Entrando...' : 'Entrar'}
+              {isLoading ? (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <CircularProgress size={20} color='inherit' />
+                  Entrando...
+                </Box>
+              ) : (
+                'Entrar'
+              )}
             </Button>
           </Box>
         </Paper>
@@ -124,7 +150,7 @@ export default function LoginPage() {
           variant='body2'
           color='text.secondary'
           align='center'
-          sx={{ mt: 4 }}
+          sx={{ mt: 2, opacity: 0.8 }}
         >
           {clientConfig.system.copyrightText}
         </Typography>
