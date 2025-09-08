@@ -214,7 +214,6 @@ export interface ApiError {
   details?: Record<string, string>;
 }
 
-// Configuração da API
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 class ApiClient {
@@ -223,12 +222,13 @@ class ApiClient {
   constructor() {
     this.axiosInstance = axios.create({
       baseURL: API_BASE_URL,
+      timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: false, // Change to false for now to avoid CORS issues
     });
 
-    // Interceptor para adicionar token de autorização
     this.axiosInstance.interceptors.request.use(
       config => {
         const token = this.getAccessToken();
@@ -242,7 +242,6 @@ class ApiClient {
       }
     );
 
-    // Interceptor para lidar com erros de autenticação
     this.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => response,
       async (error: AxiosError) => {
@@ -252,7 +251,6 @@ class ApiClient {
           try {
             const refreshed = await this.refreshToken();
             if (refreshed) {
-              // Retry the original request with new token
               const token = this.getAccessToken();
               if (token && originalRequest.headers) {
                 originalRequest.headers.Authorization = `Bearer ${token}`;
@@ -270,7 +268,6 @@ class ApiClient {
     );
   }
 
-  // Gerenciamento de tokens
   private getAccessToken(): string | null {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('access_token');
@@ -319,7 +316,6 @@ class ApiClient {
     }
   }
 
-  // Métodos de autenticação
   public async login(credentials: LoginRequest): Promise<LoginResponse> {
     try {
       const response = await this.axiosInstance.post<LoginResponse>(
@@ -435,7 +431,6 @@ class ApiClient {
     }
   }
 
-  // Métodos de Clientes
   public async createClient(clientData: CreateClientRequest): Promise<Client> {
     try {
       const response = await this.axiosInstance.post<Client>(
@@ -513,7 +508,6 @@ class ApiClient {
     }
   }
 
-  // Métodos de Produtos
   public async createProduct(
     productData: CreateProductRequest
   ): Promise<Product> {
@@ -593,7 +587,6 @@ class ApiClient {
     }
   }
 
-  // Métodos para Orçamentos
   public async createQuote(quoteData: CreateQuoteRequest): Promise<Quote> {
     try {
       const response = await this.axiosInstance.post<Quote>(
@@ -692,7 +685,6 @@ class ApiClient {
     }
   }
 
-  // Métodos para Configurações
   public async getSettings(): Promise<Settings> {
     try {
       const response =
@@ -719,7 +711,6 @@ class ApiClient {
     }
   }
 
-  // Health check
   public async healthCheck(): Promise<{ status: string; time: string }> {
     try {
       const response = await this.axiosInstance.get<{
@@ -733,7 +724,6 @@ class ApiClient {
     }
   }
 
-  // Tratamento de erros
   private handleError(error: AxiosError): Error {
     if (error.response) {
       const status = error.response.status;
@@ -763,7 +753,6 @@ class ApiClient {
   }
 }
 
-// Instância singleton do cliente API
 export const apiClient = new ApiClient();
 
 export default apiClient;

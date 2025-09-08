@@ -13,7 +13,6 @@ import {
   Grid,
   useTheme,
   Alert,
-  InputAdornment,
   IconButton,
 } from '@mui/material';
 import {
@@ -27,14 +26,12 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import clientConfig from '@/config/client';
 
 const configSchema = z.object({
-  // Informações da Empresa
   nomeFantasia: z.string().min(1, 'Nome fantasia é obrigatório'),
   razaoSocial: z.string().min(1, 'Razão social é obrigatória'),
   cnpj: z.string().min(1, 'CNPJ é obrigatório'),
   telefone: z.string().min(1, 'Telefone é obrigatório'),
   email: z.string().email('E-mail inválido'),
 
-  // Endereço
   rua: z.string().min(1, 'Rua é obrigatória'),
   numero: z.string().min(1, 'Número é obrigatório'),
   complemento: z.string().optional(),
@@ -43,7 +40,6 @@ const configSchema = z.object({
   estado: z.string().min(1, 'Estado é obrigatório'),
   cep: z.string().min(1, 'CEP é obrigatório'),
 
-  // Personalização do Tema
   corPrimaria: z.string().min(1, 'Cor primária é obrigatória'),
   corSecundaria: z.string().min(1, 'Cor secundária é obrigatória'),
 });
@@ -68,8 +64,8 @@ export default function ConfiguracoesPage() {
       nomeFantasia: clientConfig.company.name,
       razaoSocial: clientConfig.company.legalName,
       cnpj: clientConfig.company.cnpj,
-      telefone: clientConfig.company.contactPhone,
-      email: clientConfig.company.contactEmail,
+      telefone: clientConfig.company.phone,
+      email: clientConfig.company.email,
       rua: clientConfig.company.address.street,
       numero: clientConfig.company.address.number,
       complemento: clientConfig.company.address.complement || '',
@@ -110,7 +106,6 @@ export default function ConfiguracoesPage() {
       console.log('Dados da configuração:', data);
       console.log('Logo file:', logoFile);
 
-      // Aqui você faria o upload do logo e salvamento das configurações
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       setSaveSuccess(true);
@@ -136,15 +131,14 @@ export default function ConfiguracoesPage() {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3}>
-              {/* Informações da Empresa - Grid maior */}
-              <Grid xs={12} lg={8}>
+              <Grid>
                 <Card>
                   <CardContent>
                     <Typography variant='h6' gutterBottom>
                       Informações da Empresa
                     </Typography>
                     <Grid container spacing={2}>
-                      <Grid xs={12} sm={6}>
+                      <Grid>
                         <TextField
                           label='Nome Fantasia'
                           fullWidth
@@ -153,7 +147,7 @@ export default function ConfiguracoesPage() {
                           {...register('nomeFantasia')}
                         />
                       </Grid>
-                      <Grid xs={12} sm={6}>
+                      <Grid>
                         <TextField
                           label='Razão Social'
                           fullWidth
@@ -162,7 +156,7 @@ export default function ConfiguracoesPage() {
                           {...register('razaoSocial')}
                         />
                       </Grid>
-                      <Grid xs={12} sm={6}>
+                      <Grid>
                         <TextField
                           label='CNPJ'
                           fullWidth
@@ -171,7 +165,7 @@ export default function ConfiguracoesPage() {
                           {...register('cnpj')}
                         />
                       </Grid>
-                      <Grid xs={12} sm={6}>
+                      <Grid>
                         <TextField
                           label='Telefone'
                           fullWidth
@@ -180,7 +174,7 @@ export default function ConfiguracoesPage() {
                           {...register('telefone')}
                         />
                       </Grid>
-                      <Grid xs={12}>
+                      <Grid>
                         <TextField
                           label='E-mail'
                           fullWidth
@@ -194,15 +188,14 @@ export default function ConfiguracoesPage() {
                 </Card>
               </Grid>
 
-              {/* Endereço - Grid menor */}
-              <Grid xs={12} lg={4}>
+              <Grid>
                 <Card>
                   <CardContent>
                     <Typography variant='h6' gutterBottom>
                       Endereço
                     </Typography>
                     <Grid container spacing={2}>
-                      <Grid xs={12}>
+                      <Grid>
                         <TextField
                           label='Rua'
                           fullWidth
@@ -211,7 +204,7 @@ export default function ConfiguracoesPage() {
                           {...register('rua')}
                         />
                       </Grid>
-                      <Grid xs={12} sm={6}>
+                      <Grid>
                         <TextField
                           label='Número'
                           fullWidth
@@ -220,14 +213,14 @@ export default function ConfiguracoesPage() {
                           {...register('numero')}
                         />
                       </Grid>
-                      <Grid xs={12} sm={6}>
+                      <Grid>
                         <TextField
                           label='Complemento'
                           fullWidth
                           {...register('complemento')}
                         />
                       </Grid>
-                      <Grid xs={12}>
+                      <Grid>
                         <TextField
                           label='Bairro'
                           fullWidth
@@ -236,7 +229,7 @@ export default function ConfiguracoesPage() {
                           {...register('bairro')}
                         />
                       </Grid>
-                      <Grid xs={12} sm={6}>
+                      <Grid>
                         <TextField
                           label='Cidade'
                           fullWidth
@@ -245,7 +238,7 @@ export default function ConfiguracoesPage() {
                           {...register('cidade')}
                         />
                       </Grid>
-                      <Grid xs={12} sm={6}>
+                      <Grid>
                         <TextField
                           label='Estado'
                           fullWidth
@@ -254,7 +247,7 @@ export default function ConfiguracoesPage() {
                           {...register('estado')}
                         />
                       </Grid>
-                      <Grid xs={12}>
+                      <Grid>
                         <TextField
                           label='CEP'
                           fullWidth
@@ -268,54 +261,15 @@ export default function ConfiguracoesPage() {
                 </Card>
               </Grid>
 
-              {/* Personalização do Tema - Grid completa */}
-              <Grid xs={12}>
+              <Grid>
                 <Card>
                   <CardContent>
                     <Typography variant='h6' gutterBottom>
                       Personalização do Tema
                     </Typography>
                     <Grid container spacing={3}>
-                      {/* Cores */}
-                      <Grid xs={12} md={6}>
-                        <Grid container spacing={2}>
-                          <Grid xs={12} sm={6}>
-                            <TextField
-                              label='Cor Primária'
-                              fullWidth
-                              type='color'
-                              error={!!errors.corPrimaria}
-                              helperText={errors.corPrimaria?.message}
-                              {...register('corPrimaria')}
-                              InputProps={{
-                                style: {
-                                  backgroundColor: watchedPrimaryColor,
-                                  height: '56px',
-                                },
-                              }}
-                            />
-                          </Grid>
-                          <Grid xs={12} sm={6}>
-                            <TextField
-                              label='Cor Secundária'
-                              fullWidth
-                              type='color'
-                              error={!!errors.corSecundaria}
-                              helperText={errors.corSecundaria?.message}
-                              {...register('corSecundaria')}
-                              InputProps={{
-                                style: {
-                                  backgroundColor: watchedSecondaryColor,
-                                  height: '56px',
-                                },
-                              }}
-                            />
-                          </Grid>
-                        </Grid>
-                      </Grid>
-
                       {/* Upload de Logo */}
-                      <Grid xs={12} md={6}>
+                      <Grid>
                         <Typography variant='subtitle2' gutterBottom>
                           Logo da Empresa
                         </Typography>
@@ -380,7 +334,6 @@ export default function ConfiguracoesPage() {
               </Grid>
             </Grid>
 
-            {/* Botões de Ação */}
             <Box
               sx={{
                 display: 'flex',

@@ -54,6 +54,7 @@ const productSchema = z.object({
   type: z.enum(['Mármore', 'Granito', 'Serviço']),
   price: z.number().min(0, 'Preço deve ser maior que zero'),
   unit: z.string().min(1, 'Unidade é obrigatória'),
+  is_active: z.boolean(),
 });
 
 type ProductFormData = z.infer<typeof productSchema>;
@@ -84,7 +85,6 @@ export default function ProdutosPage() {
     resolver: zodResolver(productSchema),
   });
 
-  // Carregar produtos
   const loadProducts = async () => {
     try {
       setLoading(true);
@@ -94,7 +94,6 @@ export default function ProdutosPage() {
       const response = await apiClient.getProducts(limit, offset);
       console.log('Resposta da API:', response);
 
-      // Verificar se a API retorna { products: [] } ou { data: [] }
       const productsData = response.products || response.data || [];
       const totalCount = response.total || 0;
 
@@ -106,16 +105,15 @@ export default function ProdutosPage() {
         console.log(`Produto ${index + 1}:`, {
           id: product.id,
           name: product.name,
-          unit_price: product.unit_price,
+          unit_price: product.price,
           type: product.type,
           unit: product.unit,
           is_active: product.is_active,
         });
       });
 
-      // Verificar se há produtos com preço 0
       const produtosComPrecoZero = productsData.filter(
-        p => !p.unit_price || p.unit_price === 0
+        p => !p.price || p.price === 0
       );
       if (produtosComPrecoZero.length > 0) {
         console.warn(
@@ -141,12 +139,10 @@ export default function ProdutosPage() {
     }
   };
 
-  // Carregar produtos na inicialização e quando a página mudar
   useEffect(() => {
     loadProducts();
   }, [page]);
 
-  // Função para criar produtos de teste se não houver nenhum
   const createTestProducts = async () => {
     try {
       console.log('Criando produtos de teste...');
@@ -154,7 +150,7 @@ export default function ProdutosPage() {
       const testProducts = [
         {
           name: 'Mármore Branco Carrara',
-          type: 'marble' as const,
+          type: 'Mármore' as const,
           description: 'Mármore branco de alta qualidade',
           unit_price: 150.0,
           unit: 'm2' as const,
@@ -162,7 +158,7 @@ export default function ProdutosPage() {
         },
         {
           name: 'Granito Preto Absoluto',
-          type: 'granite' as const,
+          type: 'Granito' as const,
           description: 'Granito preto para bancadas',
           unit_price: 200.0,
           unit: 'm2' as const,
@@ -170,7 +166,7 @@ export default function ProdutosPage() {
         },
         {
           name: 'Instalação de Pia',
-          type: 'service' as const,
+          type: 'Serviço' as const,
           description: 'Serviço de instalação de pia',
           unit_price: 80.0,
           unit: 'un' as const,
@@ -226,12 +222,12 @@ export default function ProdutosPage() {
   };
 
   const onSubmit = async (data: ProductFormData) => {
+    console.log('Enviando formulário com dados:', data);
     try {
       setSaving(true);
       setError(null);
 
       if (editingProduct) {
-        // Atualizar produto existente
         const updateData: UpdateProductRequest = {
           name: data.name,
           type: data.type,
@@ -365,7 +361,6 @@ export default function ProdutosPage() {
             </Alert>
           )}
 
-          {/* Busca */}
           <Paper sx={{ p: 2, mb: 3 }}>
             <TextField
               fullWidth
@@ -380,7 +375,6 @@ export default function ProdutosPage() {
             />
           </Paper>
 
-          {/* Tabela */}
           <TableContainer component={Paper}>
             {loading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
@@ -421,9 +415,9 @@ export default function ProdutosPage() {
                             label={product.type.toUpperCase()}
                             size='small'
                             color={
-                              product.type === 'marble'
+                              product.type === 'Mármore'
                                 ? 'primary'
-                                : product.type === 'granite'
+                                : product.type === 'Granito'
                                   ? 'secondary'
                                   : 'default'
                             }
@@ -431,7 +425,7 @@ export default function ProdutosPage() {
                         </TableCell>
                         <TableCell>{product.description || '-'}</TableCell>
                         <TableCell>
-                          R$ {(product.unit_price || 0).toLocaleString()}
+                          R$ {(product.price || 0).toLocaleString()}
                         </TableCell>
                         <TableCell>{product.unit.toUpperCase()}</TableCell>
                         <TableCell>
@@ -464,7 +458,6 @@ export default function ProdutosPage() {
             )}
           </TableContainer>
 
-          {/* Paginação */}
           {totalPages > 1 && (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
               <Pagination
@@ -476,7 +469,6 @@ export default function ProdutosPage() {
             </Box>
           )}
 
-          {/* Dialog de Cadastro/Edição */}
           <Dialog
             open={openDialog}
             onClose={handleCloseDialog}
@@ -507,11 +499,11 @@ export default function ProdutosPage() {
                     <Select
                       label='Tipo'
                       {...register('type')}
-                      defaultValue='marble'
+                      defaultValue='Mármore'
                     >
-                      <MenuItem value='marble'>Mármore</MenuItem>
-                      <MenuItem value='granite'>Granito</MenuItem>
-                      <MenuItem value='service'>Serviço</MenuItem>
+                      <MenuItem value='Mármore'>Mármore</MenuItem>
+                      <MenuItem value='Granito'>Granito</MenuItem>
+                      <MenuItem value='Serviço'>Serviço</MenuItem>
                     </Select>
                   </FormControl>
                   <TextField
@@ -526,9 +518,9 @@ export default function ProdutosPage() {
                     label='Preço Unitário'
                     fullWidth
                     type='number'
-                    error={!!errors.unit_price}
-                    helperText={errors.unit_price?.message}
-                    {...register('unit_price', { valueAsNumber: true })}
+                    error={!!errors.price}
+                    helperText={errors.price?.message}
+                    {...register('price', { valueAsNumber: true })}
                   />
                   <FormControl fullWidth error={!!errors.unit}>
                     <InputLabel>Unidade</InputLabel>
