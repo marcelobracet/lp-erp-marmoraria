@@ -42,7 +42,7 @@ export default function ProtectedRoute({
 
   // Redirecionar para login se não estiver autenticado
   if (!isAuthenticated) {
-    router.push('/login');
+    // router.push('/login');
     return null;
   }
 
