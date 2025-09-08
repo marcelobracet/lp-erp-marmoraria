@@ -1,0 +1,47 @@
+export const plans = [
+  {
+    name: 'Básico',
+    price: 'R$ 149',
+    period: '/mês',
+    description: 'Perfeito para marmorarias pequenas',
+    features: [
+      'Até 2 usuários',
+      'Gestão de estoque básica',
+      'Orçamentos ilimitados',
+      'Relatórios básicos',
+      'Suporte por email',
+    ],
+    popular: false,
+  },
+  {
+    name: 'Profissional',
+    price: 'R$ 299',
+    period: '/mês',
+    description: 'Ideal para empresas em crescimento',
+    features: [
+      'Até 10 usuários',
+      'Gestão completa de estoque',
+      'Orçamentos e contratos',
+      'Relatórios avançados',
+      'Suporte prioritário',
+      'Integração com WhatsApp',
+    ],
+    popular: true,
+  },
+  {
+    name: 'Enterprise',
+    price: 'R$ 599',
+    period: '/mês',
+    description: 'Para grandes operações',
+    features: [
+      'Usuários ilimitados',
+      'Todos os recursos',
+      'Relatórios personalizados',
+      'API completa',
+      'Suporte 24/7',
+      'Treinamento incluso',
+      'Customizações',
+    ],
+    popular: false,
+  },
+];

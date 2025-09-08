@@ -4,130 +4,23 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  ChartBarIcon,
-  CubeIcon,
-  UserGroupIcon,
-  DocumentChartBarIcon,
   CheckIcon,
   StarIcon,
   PhoneIcon,
   EnvelopeIcon,
   MapPinIcon,
   Bars3Icon,
-  XMarkIcon,
 } from '@heroicons/react/24/outline';
+import { features } from './constants/features';
+import { testimonials } from './constants/testimonials';
+import { plans } from './constants/plans';
+import { MenuMobile } from './MenuMobile';
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const features = [
-    {
-      name: 'Gestão de Estoque',
-      description:
-        'Controle completo do seu estoque de mármores e granitos com alertas automáticos de baixo estoque e histórico detalhado.',
-      icon: CubeIcon,
-    },
-    {
-      name: 'Relatórios Avançados',
-      description:
-        'Relatórios detalhados de vendas, lucros, desempenho e análises para tomada de decisões estratégicas.',
-      icon: ChartBarIcon,
-    },
-    {
-      name: 'Gestão de Clientes',
-      description:
-        'Cadastro completo de clientes com histórico de compras, preferências e comunicação centralizada.',
-      icon: UserGroupIcon,
-    },
-    {
-      name: 'Orçamentos Digitais',
-      description:
-        'Crie orçamentos profissionais rapidamente com templates personalizáveis e envio automático por email.',
-      icon: DocumentChartBarIcon,
-    },
-  ];
-
-  const testimonials = [
-    {
-      name: 'Carlos Silva',
-      company: 'Mármores Silva',
-      image:
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-      quote:
-        'O sistema revolucionou nossa gestão. Aumentamos 40% nossa produtividade e reduzimos os erros de estoque.',
-      rating: 5,
-    },
-    {
-      name: 'Ana Costa',
-      company: 'Granitos Premium',
-      image:
-        'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
-      quote:
-        'Interface intuitiva e relatórios que realmente ajudam na tomada de decisões. Recomendo para todas as marmorarias.',
-      rating: 5,
-    },
-    {
-      name: 'João Mendes',
-      company: 'Pedras Naturais JM',
-      image:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-      quote:
-        'Suporte excepcional e sistema que se adapta perfeitamente ao nosso negócio. Vale cada centavo investido.',
-      rating: 5,
-    },
-  ];
-
-  const plans = [
-    {
-      name: 'Básico',
-      price: 'R$ 149',
-      period: '/mês',
-      description: 'Perfeito para marmorarias pequenas',
-      features: [
-        'Até 2 usuários',
-        'Gestão de estoque básica',
-        'Orçamentos ilimitados',
-        'Relatórios básicos',
-        'Suporte por email',
-      ],
-      popular: false,
-    },
-    {
-      name: 'Profissional',
-      price: 'R$ 299',
-      period: '/mês',
-      description: 'Ideal para empresas em crescimento',
-      features: [
-        'Até 10 usuários',
-        'Gestão completa de estoque',
-        'Orçamentos e contratos',
-        'Relatórios avançados',
-        'Suporte prioritário',
-        'Integração com WhatsApp',
-      ],
-      popular: true,
-    },
-    {
-      name: 'Enterprise',
-      price: 'R$ 599',
-      period: '/mês',
-      description: 'Para grandes operações',
-      features: [
-        'Usuários ilimitados',
-        'Todos os recursos',
-        'Relatórios personalizados',
-        'API completa',
-        'Suporte 24/7',
-        'Treinamento incluso',
-        'Customizações',
-      ],
-      popular: false,
-    },
-  ];
-
   return (
     <div className='min-h-screen bg-white'>
-      {/* Header */}
       <header className='bg-white shadow-sm sticky top-0 z-50'>
         <nav className='mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8'>
           <div className='flex lg:flex-1'>
@@ -138,7 +31,6 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          {/* Mobile menu button */}
           <div className='flex lg:hidden'>
             <button
               type='button'
@@ -149,7 +41,6 @@ export default function LandingPage() {
             </button>
           </div>
 
-          {/* Desktop navigation */}
           <div className='hidden lg:flex lg:gap-x-12'>
             <Link
               href='#features'
@@ -177,7 +68,7 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          <div className='hidden lg:flex lg:flex-1 lg:justify-end gap-x-4'>
+          <div className='hidden lg:flex lg:items-center lg:flex-1 lg:justify-end gap-x-4'>
             <Link
               href='/login'
               className='text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600'
@@ -193,72 +84,12 @@ export default function LandingPage() {
           </div>
         </nav>
 
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className='lg:hidden'>
-            <div className='fixed inset-0 z-50' />
-            <div className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
-              <div className='flex items-center justify-between'>
-                <Link href='/' className='-m-1.5 p-1.5'>
-                  <span className='text-xl font-bold text-gray-900'>
-                    ERP Marmoraria
-                  </span>
-                </Link>
-                <button
-                  type='button'
-                  className='-m-2.5 rounded-md p-2.5 text-gray-700'
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <XMarkIcon className='h-6 w-6' />
-                </button>
-              </div>
-              <div className='mt-6 flow-root'>
-                <div className='-my-6 divide-y divide-gray-500/10'>
-                  <div className='space-y-2 py-6'>
-                    <Link
-                      href='#features'
-                      className='-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10'
-                    >
-                      Funcionalidades
-                    </Link>
-                    <Link
-                      href='#testimonials'
-                      className='-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10'
-                    >
-                      Depoimentos
-                    </Link>
-                    <Link
-                      href='#pricing'
-                      className='-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10'
-                    >
-                      Preços
-                    </Link>
-                    <Link
-                      href='#contact'
-                      className='-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10'
-                    >
-                      Contato
-                    </Link>
-                  </div>
-                  <div className='py-6'>
-                    <Link
-                      href='/login'
-                      className='-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10'
-                    >
-                      Entrar
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        {mobileMenuOpen && <MenuMobile setMobileMenuOpen={setMobileMenuOpen} />}
       </header>
 
-      {/* Hero section */}
       <div className='relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32'>
         <Image
-          src='https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0'
+          src='https://source.unsplash.com/random/600x400'
           alt='Background image'
           layout='fill'
           objectFit='cover'
@@ -292,7 +123,6 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Features section */}
       <div id='features' className='py-24 sm:py-32'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl sm:text-center'>
@@ -329,7 +159,6 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Testimonials section */}
       <div id='testimonials' className='bg-gray-50 py-24 sm:py-32'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl sm:text-center'>
@@ -383,7 +212,6 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Pricing section */}
       <div id='pricing' className='py-24 sm:py-32'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl sm:text-center'>
@@ -400,9 +228,9 @@ export default function LandingPage() {
               {plans.map(plan => (
                 <div
                   key={plan.name}
-                  className={`relative flex flex-col gap-6 sm:flex-row md:flex-col lg:flex-row ${plan.popular ? 'border-2 border-blue-600' : ''}`}
+                  className={`relative flex flex-col gap-6 sm:flex-row px-12 py-5 md:flex-col lg:flex-row ${plan.popular ? 'border-2 rounded-xl border-blue-600' : ''}`}
                 >
-                  <div className='flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white sm:shrink-0'>
+                  <div className='flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 absolute -top-5 -left-5 text-white sm:shrink-0'>
                     <CheckIcon className='h-8 w-8' aria-hidden='true' />
                   </div>
                   <div className='sm:min-w-0 sm:flex-1'>

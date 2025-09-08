@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
@@ -16,10 +15,8 @@ export default function ProtectedRoute({
   requiredRole,
   fallback,
 }: ProtectedRouteProps) {
-  const { user, isAuthenticated, isLoading } = useAuth();
-  const router = useRouter();
+  const { user, isLoading } = useAuth();
 
-  // Mostrar loading enquanto verifica autenticação
   if (isLoading) {
     return (
       <Box
@@ -40,13 +37,6 @@ export default function ProtectedRoute({
     );
   }
 
-  // Redirecionar para login se não estiver autenticado
-  if (!isAuthenticated) {
-    // router.push('/login');
-    return null;
-  }
-
-  // Verificar permissões se necessário
   if (requiredRole && user?.role !== requiredRole) {
     if (fallback) {
       return <>{fallback}</>;
