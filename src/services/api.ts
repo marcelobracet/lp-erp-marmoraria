@@ -724,6 +724,31 @@ class ApiClient {
     }
   }
 
+  public async exportReport(
+    format: 'pdf' | 'xlsx' | 'preview'
+  ): Promise<
+    | { kind: 'preview'; data: any }
+    | { kind: 'file'; blob: Blob; filename: string }
+  > {
+    try {
+      const response = await this.axiosInstance.get('/api/reports/export', {
+        params: { format },
+        responseType: format === 'preview' ? 'json' : 'blob',
+      });
+
+      if (format === 'preview') {
+        return { kind: 'preview', data: response.data };
+      }
+
+      const filename = format === 'pdf' ? 'relatorio.pdf' : 'relatorio.xlsx';
+
+      return { kind: 'file', blob: response.data as Blob, filename };
+    } catch (error) {
+      console.error('Export report error:', error);
+      throw this.handleError(error as AxiosError);
+    }
+  }
+
   private handleError(error: AxiosError): Error {
     if (error.response) {
       const status = error.response.status;

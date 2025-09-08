@@ -32,6 +32,7 @@ import {
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import clientConfig from '@/config/client';
+import ExportReport from '../ExportReport';
 
 const drawerWidth = 240;
 
@@ -147,6 +148,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
                   Role: {user?.role}
                 </Typography>
               </MenuItem>
+              <Divider />
+              <ExportReport />
               <Divider />
               <MenuItem onClick={handleLogout}>Sair</MenuItem>
             </Menu>
