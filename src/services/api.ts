@@ -125,7 +125,8 @@ export interface Quote {
   };
   client_name?: string;
   total_value: number;
-  status: 'Pendente' | 'Aprovado' | 'Rejeitado' | 'Cancelado';
+  status: 'pending' | 'approved' | 'rejected' | 'cancelled';
+  items: QuoteItem[];
   date: string;
   valid_until: string;
   notes: string;
@@ -149,7 +150,7 @@ export interface UpdateQuoteRequest {
   client_id?: string;
   date?: string;
   valid_until?: string;
-  notes?: string;
+  notes: string;
   items?: Array<{
     product_id: string;
     quantity: number;
@@ -669,7 +670,7 @@ class ApiClient {
 
   public async updateQuoteStatus(
     id: string,
-    status: 'Pendente' | 'Aprovado' | 'Rejeitado' | 'Cancelado'
+    status: 'pending' | 'approved' | 'rejected' | 'cancelled'
   ): Promise<{ message: string }> {
     try {
       const response = await this.axiosInstance.put<{ message: string }>(

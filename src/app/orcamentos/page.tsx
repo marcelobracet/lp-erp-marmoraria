@@ -1,39 +1,30 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import {
-  Box,
-  Typography,
-  Button,
-  TextField,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
-  Chip,
-  useTheme,
-  Alert,
-  CircularProgress,
-  Pagination,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Stepper,
-  Step,
-  StepLabel,
-  Card,
-  CardContent,
-  Grid,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Select from '@mui/material/Select';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import Chip from '@mui/material/Chip';
+import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
+import Pagination from '@mui/material/Pagination';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+
 import {
   Add as AddIcon,
   Search as SearchIcon,
@@ -41,6 +32,7 @@ import {
   Delete as DeleteIcon,
   Visibility as ViewIcon,
 } from '@mui/icons-material';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -51,14 +43,20 @@ import {
   Client,
   Product,
   Quote,
-  QuoteItem,
   CreateQuoteRequest,
   UpdateQuoteRequest,
 } from '@/services/api';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import MenuItem from '@mui/material/MenuItem';
+import CardContent from '@mui/material/CardContent';
+import Card from '@mui/material/Card';
 
 const quoteSchema = z.object({
   client_id: z.string().min(1, 'Cliente é obrigatório'),
   notes: z.string().optional(),
+  status: z.enum(['pending', 'approved', 'rejected', 'cancelled']).optional(),
   items: z
     .array(
       z.object({
@@ -67,20 +65,27 @@ const quoteSchema = z.object({
       })
     )
     .min(1, 'Pelo menos um item é obrigatório'),
+  valid_until: z.string().refine(val => !val || !isNaN(Date.parse(val)), {
+    message: 'Data inválida',
+  }),
+  date: z.string().refine(val => !val || !isNaN(Date.parse(val)), {
+    message: 'Data inválida',
+  }),
 });
 
 type QuoteFormData = z.infer<typeof quoteSchema>;
-
-// Mock data para orçamentos
 const mockQuotes: Quote[] = [
   {
     id: '1',
     client_id: 'c3011a54-97b4-453a-8377-f569f4229316',
     client_name: 'João Silva',
     total_value: 1500.0,
-    status: 'pending',
+    is_active: true,
     created_at: '2024-01-15T10:30:00Z',
     updated_at: '2024-01-15T10:30:00Z',
+    status: 'pending',
+    date: '2024-01-15T10:30:00Z',
+    valid_until: '2024-01-15T10:30:00Z',
     notes: 'Orçamento para bancada de cozinha',
     items: [
       {
@@ -99,29 +104,9 @@ const mockQuotes: Quote[] = [
       },
     ],
   },
-  {
-    id: '2',
-    client_id: 'dbaad96a-66a4-44c2-a84e-1f9abaf1fb63',
-    client_name: 'Empresa ABC Ltda',
-    total_value: 3200.0,
-    status: 'approved',
-    created_at: '2024-01-14T14:20:00Z',
-    updated_at: '2024-01-14T14:20:00Z',
-    notes: 'Orçamento para revestimento de fachada',
-    items: [
-      {
-        product_id: '2',
-        product_name: 'Granito Preto Absoluto',
-        quantity: 16,
-        unit_price: 200.0,
-        total: 3200.0,
-      },
-    ],
-  },
 ];
 
 export default function OrcamentosPage() {
-  const theme = useTheme();
   const [quotes, setQuotes] = useState<Quote[]>(mockQuotes);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -149,7 +134,6 @@ export default function OrcamentosPage() {
     resolver: zodResolver(quoteSchema),
   });
 
-  // Carregar orçamentos da API
   const loadQuotes = async () => {
     try {
       setLoading(true);
@@ -159,7 +143,6 @@ export default function OrcamentosPage() {
       const response = await apiClient.getQuotes(limit, offset);
       console.log('Resposta da API de orçamentos:', response);
 
-      // Verificar se a API retorna { quotes: [] } ou { data: [] }
       const quotesData = response.quotes || response.data || [];
       const totalCount = response.total || 0;
 
@@ -195,7 +178,6 @@ export default function OrcamentosPage() {
         })
       );
 
-      // Debug detalhado dos orçamentos
       quotesWithClientNames.forEach((quote, index) => {
         console.log(`Orçamento ${index + 1}:`, {
           id: quote.id,
@@ -207,7 +189,6 @@ export default function OrcamentosPage() {
         });
       });
 
-      // Verificar se há orçamentos com dados undefined
       const orcamentosComDadosUndefined = quotesWithClientNames.filter(
         q => !q.client_name || !q.id || !q.status || !q.created_at
       );
@@ -304,7 +285,6 @@ export default function OrcamentosPage() {
       console.log('Orçamento sendo editado:', editingQuote);
 
       if (editingQuote) {
-        // Atualizar orçamento existente
         const updateData: UpdateQuoteRequest = {
           client_id: data.client_id,
           notes: data.notes,
@@ -315,7 +295,6 @@ export default function OrcamentosPage() {
         await apiClient.updateQuote(editingQuote.id, updateData);
         setSuccess('Orçamento atualizado com sucesso!');
       } else {
-        // Criar novo orçamento
         const createData: CreateQuoteRequest = {
           client_id: data.client_id,
           notes: data.notes,
@@ -344,7 +323,7 @@ export default function OrcamentosPage() {
   ) => {
     return items.reduce((total, item) => {
       const product = products.find(p => p.id === item.product_id);
-      return total + (product?.unit_price || 0) * item.quantity;
+      return total + (product?.price || 0) * item.quantity;
     }, 0);
   };
 
@@ -556,7 +535,6 @@ export default function OrcamentosPage() {
             )}
           </TableContainer>
 
-          {/* Paginação */}
           {totalPages > 1 && (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
               <Pagination
@@ -568,7 +546,6 @@ export default function OrcamentosPage() {
             </Box>
           )}
 
-          {/* Dialog de Cadastro/Edição */}
           <Dialog
             open={openDialog}
             onClose={handleCloseDialog}
@@ -639,8 +616,8 @@ export default function OrcamentosPage() {
                                 {products.map(product => (
                                   <MenuItem key={product.id} value={product.id}>
                                     {product.name} - R${' '}
-                                    {(product.unit_price || 0).toLocaleString()}
-                                    /{product.unit}
+                                    {(product.price || 0).toLocaleString()}/
+                                    {product.unit}
                                   </MenuItem>
                                 ))}
                               </Select>
