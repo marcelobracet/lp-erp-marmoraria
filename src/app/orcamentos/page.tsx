@@ -30,7 +30,6 @@ import {
   Search as SearchIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
-  Visibility as ViewIcon,
 } from '@mui/icons-material';
 
 import { useForm } from 'react-hook-form';
@@ -74,40 +73,9 @@ const quoteSchema = z.object({
 });
 
 type QuoteFormData = z.infer<typeof quoteSchema>;
-const mockQuotes: Quote[] = [
-  {
-    id: '1',
-    client_id: 'c3011a54-97b4-453a-8377-f569f4229316',
-    client_name: 'João Silva',
-    total_value: 1500.0,
-    is_active: true,
-    created_at: '2024-01-15T10:30:00Z',
-    updated_at: '2024-01-15T10:30:00Z',
-    status: 'pending',
-    date: '2024-01-15T10:30:00Z',
-    valid_until: '2024-01-15T10:30:00Z',
-    notes: 'Orçamento para bancada de cozinha',
-    items: [
-      {
-        product_id: '1',
-        product_name: 'Mármore Branco Carrara',
-        quantity: 5,
-        unit_price: 150.0,
-        total: 750.0,
-      },
-      {
-        product_id: '3',
-        product_name: 'Instalação de Pia',
-        quantity: 1,
-        unit_price: 80.0,
-        total: 80.0,
-      },
-    ],
-  },
-];
 
 export default function OrcamentosPage() {
-  const [quotes, setQuotes] = useState<Quote[]>(mockQuotes);
+  const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -117,7 +85,7 @@ export default function OrcamentosPage() {
   const [success, setSuccess] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [totalQuotes, setTotalQuotes] = useState(mockQuotes.length);
+  const [totalQuotes, setTotalQuotes] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   const [clients, setClients] = useState<Client[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -149,16 +117,13 @@ export default function OrcamentosPage() {
       console.log('Dados de orçamentos extraídos:', quotesData);
       console.log('Total extraído:', totalCount);
 
-      // Buscar nomes dos clientes para os orçamentos
       const quotesWithClientNames = await Promise.all(
         quotesData.map(async quote => {
           try {
-            // Se o orçamento já tem client_name, usar ele
             if (quote.client_name) {
               return quote;
             }
 
-            // Se não tem, buscar o cliente pelo ID
             if (quote.client_id) {
               const client = await apiClient.getClientById(quote.client_id);
               return {
@@ -216,12 +181,11 @@ export default function OrcamentosPage() {
     }
   };
 
-  // Carregar clientes e produtos para o formulário
   const loadFormData = async () => {
     try {
       const [clientsResponse, productsResponse] = await Promise.all([
-        apiClient.getClients(100, 0), // Buscar todos os clientes
-        apiClient.getProducts(100, 0), // Buscar todos os produtos
+        apiClient.getClients(100, 0),
+        apiClient.getProducts(100, 0),
       ]);
 
       setClients(clientsResponse.clients || []);
@@ -307,7 +271,7 @@ export default function OrcamentosPage() {
       }
 
       handleCloseDialog();
-      loadQuotes(); // Recarregar lista
+      loadQuotes();
     } catch (error) {
       console.error('Erro ao salvar orçamento:', error);
       setError(
@@ -335,7 +299,7 @@ export default function OrcamentosPage() {
     try {
       await apiClient.deleteQuote(id);
       setSuccess('Orçamento excluído com sucesso!');
-      loadQuotes(); // Recarregar lista
+      loadQuotes();
     } catch (error) {
       console.error('Erro ao excluir orçamento:', error);
       setError(
@@ -360,7 +324,6 @@ export default function OrcamentosPage() {
     setPage(value);
   };
 
-  // Limpar mensagens de sucesso após 3 segundos
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => setSuccess(null), 3000);
@@ -442,7 +405,6 @@ export default function OrcamentosPage() {
             </Alert>
           )}
 
-          {/* Busca */}
           <Paper sx={{ p: 2, mb: 3 }}>
             <TextField
               fullWidth
@@ -457,7 +419,6 @@ export default function OrcamentosPage() {
             />
           </Paper>
 
-          {/* Tabela */}
           <TableContainer component={Paper}>
             {loading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
