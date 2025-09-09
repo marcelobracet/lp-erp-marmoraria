@@ -19,8 +19,8 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import MainLayout from '@/components/layout/MainLayout';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { DashboardMetrics } from '@/types';
+import { DASHBOARD_CONSTANTS } from '@/constants/dashboard';
 
-// Mock data para demonstração
 const mockMetrics: DashboardMetrics = {
   dailySales: 12500,
   openQuotes: 8,
@@ -29,12 +29,12 @@ const mockMetrics: DashboardMetrics = {
 };
 
 const monthlyData = [
-  { month: 'Jan', vendas: 15000 },
-  { month: 'Fev', vendas: 18000 },
-  { month: 'Mar', vendas: 22000 },
-  { month: 'Abr', vendas: 19000 },
-  { month: 'Mai', vendas: 25000 },
-  { month: 'Jun', vendas: 28000 },
+  { month: DASHBOARD_CONSTANTS.MONTHS.JAN, vendas: 15000 },
+  { month: DASHBOARD_CONSTANTS.MONTHS.FEB, vendas: 18000 },
+  { month: DASHBOARD_CONSTANTS.MONTHS.MAR, vendas: 22000 },
+  { month: DASHBOARD_CONSTANTS.MONTHS.APR, vendas: 19000 },
+  { month: DASHBOARD_CONSTANTS.MONTHS.MAY, vendas: 25000 },
+  { month: DASHBOARD_CONSTANTS.MONTHS.JUN, vendas: 28000 },
 ];
 
 export default function DashboardPage() {
@@ -42,25 +42,25 @@ export default function DashboardPage() {
 
   const kpiCards = [
     {
-      title: 'Vendas do Dia',
+      title: DASHBOARD_CONSTANTS.DAILY_SALES,
       value: `R$ ${mockMetrics.dailySales.toLocaleString()}`,
       icon: <TrendingUp color='primary' />,
       color: theme.palette.primary.main,
     },
     {
-      title: 'Orçamentos Abertos',
+      title: DASHBOARD_CONSTANTS.OPEN_QUOTES,
       value: mockMetrics.openQuotes.toString(),
       icon: <Description color='secondary' />,
       color: theme.palette.secondary.main,
     },
     {
-      title: 'Saldo em Caixa',
+      title: DASHBOARD_CONSTANTS.CASH_BALANCE,
       value: `R$ ${mockMetrics.cashBalance.toLocaleString()}`,
       icon: <AccountBalance color='success' />,
       color: theme.palette.success.main,
     },
     {
-      title: 'Receita Mensal',
+      title: DASHBOARD_CONSTANTS.MONTHLY_REVENUE,
       value: `R$ ${mockMetrics.monthlyRevenue.toLocaleString()}`,
       icon: <People color='info' />,
       color: theme.palette.info.main,
@@ -72,10 +72,9 @@ export default function DashboardPage() {
       <MainLayout>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant='h4' gutterBottom>
-            Dashboard
+            {DASHBOARD_CONSTANTS.PAGE_TITLE}
           </Typography>
 
-          {/* KPIs - Cards com tamanho fixo */}
           <Grid container spacing={3} sx={{ mb: 4 }}>
             {kpiCards.map((card, index) => (
               <Grid
@@ -136,7 +135,6 @@ export default function DashboardPage() {
             ))}
           </Grid>
 
-          {/* Gráficos - Ocupando toda a largura disponível */}
           <Grid container spacing={3}>
             <Grid sx={{ width: { xs: '100%', lg: '66.666667%' } }}>
               <Paper
@@ -148,7 +146,7 @@ export default function DashboardPage() {
                 }}
               >
                 <Typography variant='h6' gutterBottom>
-                  Vendas Mensais
+                  {DASHBOARD_CONSTANTS.MONTHLY_SALES_CHART}
                 </Typography>
                 <Box
                   sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}
@@ -156,7 +154,12 @@ export default function DashboardPage() {
                   <BarChart
                     dataset={monthlyData}
                     xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
-                    series={[{ dataKey: 'vendas', label: 'Vendas (R$)' }]}
+                    series={[
+                      {
+                        dataKey: 'vendas',
+                        label: DASHBOARD_CONSTANTS.SALES_LABEL,
+                      },
+                    ]}
                     height={250}
                     sx={{
                       '.MuiChartsAxis-line': {
@@ -183,7 +186,7 @@ export default function DashboardPage() {
                 }}
               >
                 <Typography variant='h6' gutterBottom>
-                  Resumo Rápido
+                  {DASHBOARD_CONSTANTS.QUICK_SUMMARY}
                 </Typography>
                 <Box
                   sx={{
@@ -199,7 +202,7 @@ export default function DashboardPage() {
                       color='text.secondary'
                       gutterBottom
                     >
-                      Total de Clientes
+                      {DASHBOARD_CONSTANTS.TOTAL_CLIENTS}
                     </Typography>
                     <Typography
                       variant='h4'
@@ -215,7 +218,7 @@ export default function DashboardPage() {
                       color='text.secondary'
                       gutterBottom
                     >
-                      Produtos Cadastrados
+                      {DASHBOARD_CONSTANTS.REGISTERED_PRODUCTS}
                     </Typography>
                     <Typography
                       variant='h4'
@@ -231,7 +234,7 @@ export default function DashboardPage() {
                       color='text.secondary'
                       gutterBottom
                     >
-                      Orçamentos Este Mês
+                      {DASHBOARD_CONSTANTS.QUOTES_THIS_MONTH}
                     </Typography>
                     <Typography
                       variant='h4'
@@ -247,7 +250,7 @@ export default function DashboardPage() {
                       color='text.secondary'
                       gutterBottom
                     >
-                      Taxa de Conversão
+                      {DASHBOARD_CONSTANTS.CONVERSION_RATE}
                     </Typography>
                     <Typography
                       variant='h4'
