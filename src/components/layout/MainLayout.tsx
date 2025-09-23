@@ -14,7 +14,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Avatar,
   Menu,
   MenuItem,
   useTheme,
@@ -32,7 +31,6 @@ import {
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import clientConfig from '@/config/client';
-import ExportReport from '../ExportReport';
 
 const drawerWidth = 240;
 
@@ -57,7 +55,6 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [hasMounted, setHasMounted] = useState(false);
 
-  // Verificar se estamos no cliente para evitar problemas de hidratação
   useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -149,7 +146,6 @@ export default function MainLayout({ children }: MainLayoutProps) {
                 </Typography>
               </MenuItem>
               <Divider />
-              <ExportReport />
               <Divider />
               <MenuItem onClick={handleLogout}>Sair</MenuItem>
             </Menu>

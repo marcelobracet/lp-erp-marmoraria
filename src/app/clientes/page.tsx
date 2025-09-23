@@ -23,7 +23,6 @@ import {
   Alert,
   CircularProgress,
   Pagination,
-  Grid,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -37,11 +36,11 @@ import { z } from 'zod';
 import MainLayout from '@/components/layout/MainLayout';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import {
-  apiClient,
   Client,
   CreateClientRequest,
   UpdateClientRequest,
-} from '@/services/api';
+} from '@/services/api/types/clients';
+import { clientsHandlers } from '@/services/api/handlers/clients';
 
 const clientSchema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
@@ -87,10 +86,9 @@ export default function ClientesPage() {
       const offset = (page - 1) * limit;
       console.log('Carregando clientes - página:', page, 'offset:', offset);
 
-      const response = await apiClient.getClients(limit, offset);
+      const response = await clientsHandlers.getClients(limit, offset);
       console.log('Resposta da API:', response);
 
-      // Verificar se a API retorna { clients: [] } ou { data: [] }
       const clientsData = response.clients || response.data || [];
       const totalCount = response.total || 0;
 
@@ -181,7 +179,7 @@ export default function ClientesPage() {
 
         console.log('Dados para atualização:', updateData);
         console.log('ID do cliente sendo editado:', editingClient.id);
-        const updatedClient = await apiClient.updateClient(
+        const updatedClient = await clientsHandlers.updateClient(
           editingClient.id,
           updateData
         );
@@ -201,12 +199,12 @@ export default function ClientesPage() {
           zip_code: data.zip_code,
         };
 
-        await apiClient.createClient(createData);
+        await clientsHandlers.createClient(createData);
         setSuccess('Cliente criado com sucesso!');
       }
 
       handleCloseDialog();
-      loadClients(); // Recarregar lista
+      loadClients();
     } catch (error) {
       console.error('Erro ao salvar cliente:', error);
       setError(
@@ -223,9 +221,9 @@ export default function ClientesPage() {
     }
 
     try {
-      await apiClient.deleteClient(id);
+      await clientsHandlers.deleteClient(id);
       setSuccess('Cliente excluído com sucesso!');
-      loadClients(); // Recarregar lista
+      loadClients();
     } catch (error) {
       console.error('Erro ao excluir cliente:', error);
       setError(
@@ -241,12 +239,6 @@ export default function ClientesPage() {
       client.document.includes(searchTerm)
   );
 
-  // Debug logs
-  console.log('Estado atual - clients:', clients);
-  console.log('Estado atual - filteredClients:', filteredClients);
-  console.log('Estado atual - loading:', loading);
-  console.log('Estado atual - searchTerm:', searchTerm);
-
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     value: number
@@ -254,7 +246,6 @@ export default function ClientesPage() {
     setPage(value);
   };
 
-  // Limpar mensagens de sucesso após 3 segundos
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => setSuccess(null), 3000);
@@ -304,7 +295,6 @@ export default function ClientesPage() {
             </Alert>
           )}
 
-          {/* Busca */}
           <Paper sx={{ p: 2, mb: 3 }}>
             <TextField
               fullWidth
@@ -319,7 +309,6 @@ export default function ClientesPage() {
             />
           </Paper>
 
-          {/* Tabela */}
           <TableContainer component={Paper}>
             {loading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
@@ -391,7 +380,6 @@ export default function ClientesPage() {
             )}
           </TableContainer>
 
-          {/* Paginação */}
           {totalPages > 1 && (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
               <Pagination
@@ -403,7 +391,6 @@ export default function ClientesPage() {
             </Box>
           )}
 
-          {/* Dialog de Cadastro/Edição */}
           <Dialog
             open={openDialog}
             onClose={handleCloseDialog}

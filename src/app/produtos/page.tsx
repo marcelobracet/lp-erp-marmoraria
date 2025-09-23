@@ -39,14 +39,14 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import MainLayout from '@/components/layout/MainLayout';
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import {
-  apiClient,
-  Product,
-  CreateProductRequest,
   UpdateProductRequest,
-} from '@/services/api';
+  CreateProductRequest,
+} from '@/services/api/types/products';
+import { Product } from '@/types';
+import { productsHandlers } from '@/services/api/handlers/products';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import MainLayout from '@/components/layout/MainLayout';
 
 const productSchema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
@@ -58,6 +58,21 @@ const productSchema = z.object({
 });
 
 type ProductFormData = z.infer<typeof productSchema>;
+
+const mapProductTypeToForm = (
+  type: string
+): 'Mármore' | 'Granito' | 'Serviço' => {
+  switch (type) {
+    case 'marble':
+      return 'Mármore';
+    case 'granite':
+      return 'Granito';
+    case 'service':
+      return 'Serviço';
+    default:
+      return 'Mármore';
+  }
+};
 
 export default function ProdutosPage() {
   const theme = useTheme();
@@ -91,38 +106,13 @@ export default function ProdutosPage() {
       const offset = (page - 1) * limit;
       console.log('Carregando produtos - página:', page, 'offset:', offset);
 
-      const response = await apiClient.getProducts(limit, offset);
+      const response = await productsHandlers.getProducts(limit, offset);
       console.log('Resposta da API:', response);
 
-      const productsData = response.products || response.data || [];
+      // const productsData = response.products || response.data || [];
       const totalCount = response.total || 0;
 
-      console.log('Dados de produtos extraídos:', productsData);
-      console.log('Total extraído:', totalCount);
-
-      // Debug detalhado dos produtos
-      productsData.forEach((product, index) => {
-        console.log(`Produto ${index + 1}:`, {
-          id: product.id,
-          name: product.name,
-          unit_price: product.price,
-          type: product.type,
-          unit: product.unit,
-          is_active: product.is_active,
-        });
-      });
-
-      const produtosComPrecoZero = productsData.filter(
-        p => !p.price || p.price === 0
-      );
-      if (produtosComPrecoZero.length > 0) {
-        console.warn(
-          'Produtos com preço 0 ou undefined:',
-          produtosComPrecoZero
-        );
-      }
-
-      setProducts(productsData);
+      // setProducts(productsData);
       setTotalProducts(totalCount);
       setTotalPages(Math.ceil(totalCount / limit));
 
@@ -143,62 +133,16 @@ export default function ProdutosPage() {
     loadProducts();
   }, [page]);
 
-  const createTestProducts = async () => {
-    try {
-      console.log('Criando produtos de teste...');
-
-      const testProducts = [
-        {
-          name: 'Mármore Branco Carrara',
-          type: 'Mármore' as const,
-          description: 'Mármore branco de alta qualidade',
-          unit_price: 150.0,
-          unit: 'm2' as const,
-          is_active: true,
-        },
-        {
-          name: 'Granito Preto Absoluto',
-          type: 'Granito' as const,
-          description: 'Granito preto para bancadas',
-          unit_price: 200.0,
-          unit: 'm2' as const,
-          is_active: true,
-        },
-        {
-          name: 'Instalação de Pia',
-          type: 'Serviço' as const,
-          description: 'Serviço de instalação de pia',
-          unit_price: 80.0,
-          unit: 'un' as const,
-          is_active: true,
-        },
-      ];
-
-      for (const product of testProducts) {
-        try {
-          await apiClient.createProduct(product);
-          console.log(`Produto criado: ${product.name}`);
-        } catch (error) {
-          console.log(`Produto já existe ou erro: ${product.name}`, error);
-        }
-      }
-
-      // Recarregar produtos após criar os de teste
-      loadProducts();
-    } catch (error) {
-      console.error('Erro ao criar produtos de teste:', error);
-    }
-  };
-
   const handleOpenDialog = (product?: Product) => {
     if (product) {
       setEditingProduct(product);
       reset({
         name: product.name,
-        type: product.type,
+        type: mapProductTypeToForm(product.type),
         description: product.description || '',
         price: product.price || 0,
         unit: product.unit,
+        is_active: product.active || true,
       });
     } else {
       setEditingProduct(null);
@@ -236,10 +180,9 @@ export default function ProdutosPage() {
           unit: data.unit,
         };
 
-        await apiClient.updateProduct(editingProduct.id, updateData);
+        await productsHandlers.updateProduct(editingProduct.id, updateData);
         setSuccess('Produto atualizado com sucesso!');
       } else {
-        // Criar novo produto
         const createData: CreateProductRequest = {
           name: data.name,
           type: data.type,
@@ -249,12 +192,12 @@ export default function ProdutosPage() {
         };
 
         console.log('Criando produto com dados:', createData);
-        await apiClient.createProduct(createData);
+        await productsHandlers.createProduct(createData);
         setSuccess('Produto criado com sucesso!');
       }
 
       handleCloseDialog();
-      loadProducts(); // Recarregar lista
+      loadProducts();
     } catch (error) {
       console.error('Erro ao salvar produto:', error);
       setError(
@@ -271,7 +214,7 @@ export default function ProdutosPage() {
     }
 
     try {
-      await apiClient.deleteProduct(id);
+      await productsHandlers.deleteProduct(id);
       setSuccess('Produto excluído com sucesso!');
       loadProducts(); // Recarregar lista
     } catch (error) {
@@ -296,19 +239,12 @@ export default function ProdutosPage() {
     setPage(value);
   };
 
-  // Limpar mensagens de sucesso após 3 segundos
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => setSuccess(null), 3000);
       return () => clearTimeout(timer);
     }
   }, [success]);
-
-  // Debug logs
-  console.log('Estado atual - products:', products);
-  console.log('Estado atual - filteredProducts:', filteredProducts);
-  console.log('Estado atual - loading:', loading);
-  console.log('Estado atual - searchTerm:', searchTerm);
 
   return (
     <ProtectedRoute>
@@ -324,13 +260,6 @@ export default function ProdutosPage() {
           >
             <Typography variant='h4'>Produtos</Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button
-                variant='outlined'
-                onClick={createTestProducts}
-                size='small'
-              >
-                Criar Produtos de Teste
-              </Button>
               <Button
                 variant='contained'
                 startIcon={<AddIcon />}
@@ -415,9 +344,9 @@ export default function ProdutosPage() {
                             label={product.type.toUpperCase()}
                             size='small'
                             color={
-                              product.type === 'Mármore'
+                              product.type === 'marble'
                                 ? 'primary'
-                                : product.type === 'Granito'
+                                : product.type === 'granite'
                                   ? 'secondary'
                                   : 'default'
                             }
@@ -430,9 +359,9 @@ export default function ProdutosPage() {
                         <TableCell>{product.unit.toUpperCase()}</TableCell>
                         <TableCell>
                           <Chip
-                            label={product.is_active ? 'Ativo' : 'Inativo'}
+                            label={product.active ? 'Ativo' : 'Inativo'}
                             size='small'
-                            color={product.is_active ? 'success' : 'error'}
+                            color={product.active ? 'success' : 'error'}
                           />
                         </TableCell>
                         <TableCell align='right'>

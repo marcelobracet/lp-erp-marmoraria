@@ -7,7 +7,10 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import { apiClient, User } from '@/services/api';
+import { User } from '@/services/api/types/auth';
+import { authHandlers } from '@/services/api/handlers/auth';
+import { userHandlers } from '@/services/api/handlers/user';
+import { clientsHandlers } from '@/services/api/handlers/clients';
 
 interface AuthContextType {
   user: User | null;
@@ -29,43 +32,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasMounted, setHasMounted] = useState(false);
 
-  const isAuthenticated = !!user;
-
-  // Verificar se estamos no cliente
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
-  // Verificar autenticação na inicialização (apenas no cliente)
-  useEffect(() => {
-    if (!hasMounted) return;
-
-    const checkAuth = async () => {
-      try {
-        if (apiClient.isAuthenticated()) {
-          const userData = apiClient.getUser();
-          if (userData) {
-            setUser(userData);
-          } else {
-            // Tentar buscar dados do usuário da API
-            await refreshUser();
-          }
-        }
-      } catch (error) {
-        console.error('Auth check error:', error);
-        apiClient.logout();
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, [hasMounted]);
-
   const login = async (email: string, password: string) => {
     try {
       setIsLoading(true);
-      const response = await apiClient.login({ email, password });
+      const response = await authHandlers.login({ email, password });
       setUser(response.user);
     } catch (error) {
       console.error('Login error:', error);
@@ -77,12 +51,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = () => {
     setUser(null);
-    apiClient.logout();
+    authHandlers.logout();
   };
 
   const refreshUser = async () => {
     try {
-      const userData = await apiClient.getUserProfile();
+      const userData = await userHandlers.getUserProfile();
       setUser(userData);
     } catch (error) {
       console.error('Refresh user error:', error);
@@ -92,20 +66,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const value: AuthContextType = {
     user,
-    isAuthenticated,
+    isAuthenticated: !!user,
     isLoading,
     login,
     logout,
     refreshUser,
   };
 
+  if (!hasMounted) {
+    return null;
+  }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export function useAuth() {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}
+};

@@ -37,20 +37,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import MainLayout from '@/components/layout/MainLayout';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
-import {
-  apiClient,
-  Client,
-  Product,
-  Quote,
-  CreateQuoteRequest,
-  UpdateQuoteRequest,
-} from '@/services/api';
+
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import MenuItem from '@mui/material/MenuItem';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
+import {
+  UpdateQuoteRequest,
+  CreateQuoteRequest,
+} from '@/services/api/types/quote';
+import { Quote, Product } from '@/types';
+import { Client } from '@/services/api/types/clients';
+import { quotesHandlers } from '@/services/api/handlers/quotes';
+import { clientsHandlers } from '@/services/api/handlers/clients';
+import { productsHandlers } from '@/services/api/handlers/products';
 
 const quoteSchema = z.object({
   client_id: z.string().min(1, 'Cliente é obrigatório'),
@@ -106,26 +108,21 @@ export default function OrcamentosPage() {
     try {
       setLoading(true);
       const offset = (page - 1) * limit;
-      console.log('Carregando orçamentos - página:', page, 'offset:', offset);
-
-      const response = await apiClient.getQuotes(limit, offset);
-      console.log('Resposta da API de orçamentos:', response);
-
+      const response = await quotesHandlers.getQuotes(limit, offset);
       const quotesData = response.quotes || response.data || [];
       const totalCount = response.total || 0;
 
-      console.log('Dados de orçamentos extraídos:', quotesData);
-      console.log('Total extraído:', totalCount);
-
       const quotesWithClientNames = await Promise.all(
-        quotesData.map(async quote => {
+        quotesData.map(async (quote: any) => {
           try {
-            if (quote.client_name) {
+            if (quote.client.name) {
               return quote;
             }
 
-            if (quote.client_id) {
-              const client = await apiClient.getClientById(quote.client_id);
+            if (quote.client.id) {
+              const client = await clientsHandlers.getClientById(
+                quote.client.id
+              );
               return {
                 ...quote,
                 client_name: client.name,
@@ -134,7 +131,7 @@ export default function OrcamentosPage() {
 
             return quote;
           } catch (error) {
-            console.error(`Erro ao buscar cliente ${quote.client_id}:`, error);
+            console.error(`Erro ao buscar cliente ${quote.client.id}:`, error);
             return {
               ...quote,
               client_name: 'Cliente não encontrado',
@@ -143,19 +140,8 @@ export default function OrcamentosPage() {
         })
       );
 
-      quotesWithClientNames.forEach((quote, index) => {
-        console.log(`Orçamento ${index + 1}:`, {
-          id: quote.id,
-          client_id: quote.client_id,
-          client_name: quote.client_name,
-          total_value: quote.total_value,
-          status: quote.status,
-          created_at: quote.created_at,
-        });
-      });
-
       const orcamentosComDadosUndefined = quotesWithClientNames.filter(
-        q => !q.client_name || !q.id || !q.status || !q.created_at
+        (q: Quote) => !q.client.name || !q.id || !q.status || !q.createdAt
       );
       if (orcamentosComDadosUndefined.length > 0) {
         console.warn(
@@ -184,12 +170,12 @@ export default function OrcamentosPage() {
   const loadFormData = async () => {
     try {
       const [clientsResponse, productsResponse] = await Promise.all([
-        apiClient.getClients(100, 0),
-        apiClient.getProducts(100, 0),
+        clientsHandlers.getClients(100, 0),
+        productsHandlers.getProducts(100, 0),
       ]);
 
       setClients(clientsResponse.clients || []);
-      setProducts(productsResponse.products || []);
+      // setProducts(productsResponse.products || []);
     } catch (error) {
       console.error('Erro ao carregar dados do formulário:', error);
     }
@@ -204,10 +190,10 @@ export default function OrcamentosPage() {
     if (quote) {
       setEditingQuote(quote);
       reset({
-        client_id: quote.client_id,
+        client_id: quote.client.id,
         notes: quote.notes || '',
         items: quote.items.map(item => ({
-          product_id: item.product_id,
+          product_id: item.product.id,
           quantity: item.quantity,
         })),
       });
@@ -245,35 +231,31 @@ export default function OrcamentosPage() {
       setSaving(true);
       setError(null);
 
-      console.log('Dados do orçamento:', data);
-      console.log('Orçamento sendo editado:', editingQuote);
-
       if (editingQuote) {
         const updateData: UpdateQuoteRequest = {
           client_id: data.client_id,
-          notes: data.notes,
+          notes: data.notes || '',
           items: data.items,
         };
 
-        console.log('Dados para atualização:', updateData);
-        await apiClient.updateQuote(editingQuote.id, updateData);
+        await quotesHandlers.updateQuote(editingQuote.id, updateData);
         setSuccess('Orçamento atualizado com sucesso!');
       } else {
         const createData: CreateQuoteRequest = {
           client_id: data.client_id,
-          notes: data.notes,
+          notes: data.notes || '',
           items: data.items,
+          date: '',
+          valid_until: '',
         };
 
-        console.log('Criando orçamento com dados:', createData);
-        await apiClient.createQuote(createData);
+        await quotesHandlers.createQuote(createData);
         setSuccess('Orçamento criado com sucesso!');
       }
 
       handleCloseDialog();
       loadQuotes();
     } catch (error) {
-      console.error('Erro ao salvar orçamento:', error);
       setError(
         error instanceof Error ? error.message : 'Erro ao salvar orçamento'
       );
@@ -297,7 +279,7 @@ export default function OrcamentosPage() {
     }
 
     try {
-      await apiClient.deleteQuote(id);
+      await quotesHandlers.deleteQuote(id);
       setSuccess('Orçamento excluído com sucesso!');
       loadQuotes();
     } catch (error) {
@@ -310,7 +292,7 @@ export default function OrcamentosPage() {
 
   const filteredQuotes = (quotes || []).filter(
     quote =>
-      (quote.client_name || '')
+      (quote.client.name || '')
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
       (quote.id || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -453,9 +435,9 @@ export default function OrcamentosPage() {
                     filteredQuotes.map(quote => (
                       <TableRow key={quote.id}>
                         <TableCell>{quote.id || '-'}</TableCell>
-                        <TableCell>{quote.client_name || '-'}</TableCell>
+                        <TableCell>{quote.client.name || '-'}</TableCell>
                         <TableCell>
-                          R$ {(quote.total_value || 0).toLocaleString()}
+                          R$ {(quote.total || 0).toLocaleString()}
                         </TableCell>
                         <TableCell>
                           <Chip
@@ -467,8 +449,8 @@ export default function OrcamentosPage() {
                           />
                         </TableCell>
                         <TableCell>
-                          {quote.created_at
-                            ? new Date(quote.created_at).toLocaleDateString(
+                          {quote.createdAt
+                            ? new Date(quote.createdAt).toLocaleDateString(
                                 'pt-BR'
                               )
                             : '-'}
