@@ -153,9 +153,6 @@ export default function OrcamentosPage() {
       setQuotes(quotesWithClientNames);
       setTotalQuotes(totalCount);
       setTotalPages(Math.ceil(totalCount / limit));
-
-      console.log('Orçamentos carregados:', quotesWithClientNames);
-      console.log('Total de orçamentos:', response.total);
     } catch (error) {
       console.error('Erro ao carregar orçamentos:', error);
       setError('Erro ao carregar orçamentos');

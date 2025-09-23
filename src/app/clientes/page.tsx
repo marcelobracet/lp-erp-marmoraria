@@ -84,25 +84,16 @@ export default function ClientesPage() {
     try {
       setLoading(true);
       const offset = (page - 1) * limit;
-      console.log('Carregando clientes - página:', page, 'offset:', offset);
 
       const response = await clientsHandlers.getClients(limit, offset);
-      console.log('Resposta da API:', response);
 
       const clientsData = response.clients || response.data || [];
       const totalCount = response.total || 0;
 
-      console.log('Dados de clientes extraídos:', clientsData);
-      console.log('Total extraído:', totalCount);
-
       setClients(clientsData);
       setTotalClients(totalCount);
       setTotalPages(Math.ceil(totalCount / limit));
-
-      console.log('Clientes carregados:', response.data);
-      console.log('Total de clientes:', response.total);
     } catch (error) {
-      console.error('Erro ao carregar clientes:', error);
       setError('Erro ao carregar clientes');
       setClients([]);
       setTotalClients(0);
@@ -118,7 +109,6 @@ export default function ClientesPage() {
 
   const handleOpenDialog = (client?: Client) => {
     if (client) {
-      console.log('Editando cliente:', client);
       setEditingClient(client);
       reset({
         name: client.name,
@@ -161,9 +151,6 @@ export default function ClientesPage() {
       setSaving(true);
       setError(null);
 
-      console.log('Dados do formulário:', data);
-      console.log('Cliente sendo editado:', editingClient);
-
       if (editingClient) {
         const updateData: UpdateClientRequest = {
           name: data.name,
@@ -177,13 +164,11 @@ export default function ClientesPage() {
           zip_code: data.zip_code,
         };
 
-        console.log('Dados para atualização:', updateData);
-        console.log('ID do cliente sendo editado:', editingClient.id);
         const updatedClient = await clientsHandlers.updateClient(
           editingClient.id,
           updateData
         );
-        console.log('Cliente atualizado na API:', updatedClient);
+
         setSuccess('Cliente atualizado com sucesso!');
       } else {
         // Criar novo cliente

@@ -77,7 +77,6 @@ export default function MainLayout({ children }: MainLayoutProps) {
   };
 
   const handleNavigation = (path: string) => {
-    console.log('Navegando para:', path);
     router.push(path);
   };
 

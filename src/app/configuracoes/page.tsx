@@ -103,8 +103,6 @@ export default function ConfiguracoesPage() {
   const onSubmit = async (data: ConfigFormData) => {
     try {
       // Simular salvamento
-      console.log('Dados da configuração:', data);
-      console.log('Logo file:', logoFile);
 
       await new Promise(resolve => setTimeout(resolve, 1000));
 

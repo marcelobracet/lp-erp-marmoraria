@@ -104,10 +104,8 @@ export default function ProdutosPage() {
     try {
       setLoading(true);
       const offset = (page - 1) * limit;
-      console.log('Carregando produtos - página:', page, 'offset:', offset);
 
       const response = await productsHandlers.getProducts(limit, offset);
-      console.log('Resposta da API:', response);
 
       // const productsData = response.products || response.data || [];
       const totalCount = response.total || 0;
@@ -115,9 +113,6 @@ export default function ProdutosPage() {
       // setProducts(productsData);
       setTotalProducts(totalCount);
       setTotalPages(Math.ceil(totalCount / limit));
-
-      console.log('Produtos carregados:', response.products);
-      console.log('Total de produtos:', response.total);
     } catch (error) {
       console.error('Erro ao carregar produtos:', error);
       setError('Erro ao carregar produtos');
@@ -166,7 +161,6 @@ export default function ProdutosPage() {
   };
 
   const onSubmit = async (data: ProductFormData) => {
-    console.log('Enviando formulário com dados:', data);
     try {
       setSaving(true);
       setError(null);
@@ -191,7 +185,6 @@ export default function ProdutosPage() {
           unit: data.unit,
         };
 
-        console.log('Criando produto com dados:', createData);
         await productsHandlers.createProduct(createData);
         setSuccess('Produto criado com sucesso!');
       }
