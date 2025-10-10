@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { Variants, motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -91,7 +91,7 @@ const ContactForm = () => {
           className='text-center mb-16'
         >
           <motion.h2
-            variants={itemVariants}
+            variants={itemVariants as Variants}
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
             <span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>
@@ -100,7 +100,7 @@ const ContactForm = () => {
           </motion.h2>
 
           <motion.p
-            variants={itemVariants}
+            variants={itemVariants as Variants}
             className='text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed'
           >
             {t('subtitle')}
@@ -115,12 +115,15 @@ const ContactForm = () => {
           className='max-w-4xl mx-auto'
         >
           <motion.div
-            variants={itemVariants}
+            variants={itemVariants as Variants}
             className='bg-white/5 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl'
           >
             <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
               <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                <motion.div variants={itemVariants} className='space-y-2'>
+                <motion.div
+                  variants={itemVariants as Variants}
+                  className='space-y-2'
+                >
                   <label className='block text-sm font-medium text-gray-300'>
                     {t('form.fields.name.label')}
                   </label>
@@ -142,7 +145,10 @@ const ContactForm = () => {
                   )}
                 </motion.div>
 
-                <motion.div variants={itemVariants} className='space-y-2'>
+                <motion.div
+                  variants={itemVariants as Variants}
+                  className='space-y-2'
+                >
                   <label className='block text-sm font-medium text-gray-300'>
                     {t('form.fields.email.label')}
                   </label>
@@ -164,7 +170,10 @@ const ContactForm = () => {
                   )}
                 </motion.div>
 
-                <motion.div variants={itemVariants} className='space-y-2'>
+                <motion.div
+                  variants={itemVariants as Variants}
+                  className='space-y-2'
+                >
                   <label className='block text-sm font-medium text-gray-300'>
                     {t('form.fields.phone.label')}
                   </label>
@@ -186,7 +195,10 @@ const ContactForm = () => {
                   )}
                 </motion.div>
 
-                <motion.div variants={itemVariants} className='space-y-2'>
+                <motion.div
+                  variants={itemVariants as Variants}
+                  className='space-y-2'
+                >
                   <label className='block text-sm font-medium text-gray-300'>
                     {t('form.fields.company.label')}
                   </label>
@@ -209,7 +221,10 @@ const ContactForm = () => {
                 </motion.div>
               </div>
 
-              <motion.div variants={itemVariants} className='space-y-2'>
+              <motion.div
+                variants={itemVariants as Variants}
+                className='space-y-2'
+              >
                 <label className='block text-sm font-medium text-gray-300'>
                   {t('form.fields.message.label')}
                 </label>
@@ -231,7 +246,7 @@ const ContactForm = () => {
                 )}
               </motion.div>
 
-              <motion.div variants={itemVariants} className='pt-4'>
+              <motion.div variants={itemVariants as Variants} className='pt-4'>
                 <motion.button
                   type='submit'
                   disabled={isSubmitting}
@@ -288,14 +303,14 @@ const ContactForm = () => {
 
         {/* Additional Info */}
         <motion.div
-          variants={containerVariants}
+          variants={containerVariants as Variants}
           initial='hidden'
           whileInView='visible'
           viewport={{ once: true, margin: '-100px' }}
           className='mt-16 text-center'
         >
           <motion.div
-            variants={itemVariants}
+            variants={itemVariants as Variants}
             className='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto'
           >
             {(

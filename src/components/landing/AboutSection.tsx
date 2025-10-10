@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { Variants, motion } from 'framer-motion';
 import { CheckCircle, TrendingUp, Users, Clock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -83,7 +83,7 @@ const AboutSection = () => {
           className='text-center mb-16'
         >
           <motion.h2
-            variants={itemVariants}
+            variants={itemVariants as Variants}
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
             <span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>
@@ -94,7 +94,7 @@ const AboutSection = () => {
           </motion.h2>
 
           <motion.p
-            variants={itemVariants}
+            variants={itemVariants as Variants}
             className='text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed'
           >
             {t('subtitle')}
@@ -112,7 +112,7 @@ const AboutSection = () => {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              variants={itemVariants}
+              variants={itemVariants as Variants}
               className='bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-blue-500/30 transition-all duration-300 group'
             >
               <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300'>
@@ -130,13 +130,16 @@ const AboutSection = () => {
 
         {/* Stats Section */}
         <motion.div
-          variants={containerVariants}
+          variants={containerVariants as Variants}
           initial='hidden'
           whileInView='visible'
           viewport={{ once: true, margin: '-100px' }}
           className='bg-gradient-to-r from-blue-500/10 to-purple-600/10 rounded-3xl p-8 md:p-12 border border-white/10'
         >
-          <motion.div variants={itemVariants} className='text-center mb-12'>
+          <motion.div
+            variants={itemVariants as Variants}
+            className='text-center mb-12'
+          >
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-4'>
               {t('statsSection.title')}
             </h3>
@@ -146,13 +149,13 @@ const AboutSection = () => {
           </motion.div>
 
           <motion.div
-            variants={containerVariants}
+            variants={containerVariants as Variants}
             className='grid grid-cols-2 md:grid-cols-4 gap-8'
           >
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                variants={itemVariants}
+                variants={itemVariants as Variants}
                 className='text-center'
               >
                 <div className='text-4xl md:text-5xl font-bold text-white mb-2'>
@@ -166,13 +169,13 @@ const AboutSection = () => {
 
         {/* Problem/Solution Section */}
         <motion.div
-          variants={containerVariants}
+          variants={containerVariants as Variants}
           initial='hidden'
           whileInView='visible'
           viewport={{ once: true, margin: '-100px' }}
           className='mt-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'
         >
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants as Variants}>
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-6'>
               {t('problems.title')}{' '}
               <span className='text-red-400'>
@@ -191,7 +194,7 @@ const AboutSection = () => {
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants as Variants}>
             <div className='bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-3xl p-8 border border-blue-500/30'>
               <h4 className='text-2xl font-bold text-white mb-6'>
                 {t('solutions.title')}

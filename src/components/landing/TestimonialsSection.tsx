@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { Variants, motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -69,7 +69,7 @@ const TestimonialsSection = () => {
           className='text-center mb-16'
         >
           <motion.h2
-            variants={itemVariants}
+            variants={itemVariants as Variants}
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
             <span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>
@@ -80,7 +80,7 @@ const TestimonialsSection = () => {
           </motion.h2>
 
           <motion.p
-            variants={itemVariants}
+            variants={itemVariants as Variants}
             className='text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed'
           >
             {t('subtitle')}
@@ -98,7 +98,7 @@ const TestimonialsSection = () => {
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              variants={itemVariants}
+              variants={itemVariants as Variants}
               className='text-center bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10'
             >
               <div className='text-3xl md:text-4xl font-bold text-white mb-2'>
@@ -120,7 +120,7 @@ const TestimonialsSection = () => {
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
-              variants={itemVariants}
+              variants={itemVariants as Variants}
               className='bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-blue-500/30 transition-all duration-300'
             >
               {/* Quote Icon */}
@@ -179,7 +179,7 @@ const TestimonialsSection = () => {
           className='mt-16 text-center'
         >
           <motion.div
-            variants={itemVariants}
+            variants={itemVariants as Variants}
             className='bg-gradient-to-r from-blue-500/10 to-purple-600/10 rounded-3xl p-8 md:p-12 border border-white/10'
           >
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-6'>
