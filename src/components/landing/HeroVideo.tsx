@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Play, Pause } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const HeroVideo = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const t = useTranslations('hero');
 
   useEffect(() => {
     // Auto-play video when component mounts
@@ -68,9 +70,9 @@ const HeroVideo = () => {
             transition={{ duration: 0.8, delay: 0.7 }}
             className='text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight'
           >
-            <span className='block'>Sistema de</span>
+            <span className='block'>{t('title.line1')}</span>
             <span className='block bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent'>
-              Gestão Completo
+              {t('title.line2')}
             </span>
           </motion.h1>
 
@@ -80,8 +82,7 @@ const HeroVideo = () => {
             transition={{ duration: 0.8, delay: 0.9 }}
             className='text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed'
           >
-            Gerencie sua marmoraria com eficiência. Controle de clientes,
-            orçamentos, produtos e muito mais em uma única plataforma.
+            {t('subtitle')}
           </motion.p>
 
           <motion.div
@@ -96,7 +97,7 @@ const HeroVideo = () => {
               onClick={() => scrollToNext()}
               className='bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300'
             >
-              Começar Agora
+              {t('buttons.start')}
             </motion.button>
 
             <motion.button
@@ -106,7 +107,7 @@ const HeroVideo = () => {
               className='flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-300'
             >
               {isPlaying ? <Pause size={24} /> : <Play size={24} />}
-              <span>{isPlaying ? 'Pausar' : 'Reproduzir'} Vídeo</span>
+              <span>{isPlaying ? t('buttons.pause') : t('buttons.play')}</span>
             </motion.button>
           </motion.div>
         </motion.div>

@@ -1,0 +1,434 @@
+{
+  "header": {
+    "logo": {
+      "name": "ERPDASH",
+      "subtitle": "management system"
+    },
+    "navigation": {
+      "home": "Home",
+      "about": "About",
+      "features": "Features",
+      "testimonials": "Testimonials",
+      "pricing": "Pricing",
+      "contact": "Contact"
+    },
+    "cta": "Request Demo"
+  },
+  "hero": {
+    "title": {
+      "line1": "Complete",
+      "line2": "Management System"
+    },
+    "subtitle": "Manage your marble business efficiently. Control customers, quotes, products and much more in a single platform.",
+    "buttons": {
+      "start": "Get Started",
+      "play": "Play Video",
+      "pause": "Pause Video"
+    }
+  },
+  "about": {
+    "title": {
+      "line1": "The Complete System",
+      "line2": "for your Marble Business"
+    },
+    "subtitle": "Developed specifically for marble businesses, our ERP integrates all your business processes in a single platform. From first customer contact to final delivery, everything organized and automated.",
+    "features": {
+      "clients": {
+        "title": "Customer Management",
+        "description": "Complete control of your customer relationships, order history and preferences."
+      },
+      "financial": {
+        "title": "Financial Control",
+        "description": "Track revenue, expenses and profitability in real time."
+      },
+      "quotes": {
+        "title": "Quick Quotes",
+        "description": "Create professional quotes in minutes and increase your sales."
+      },
+      "inventory": {
+        "title": "Inventory Control",
+        "description": "Manage marbles, granites and materials with precision."
+      }
+    },
+    "stats": {
+      "productivity": {
+        "value": "85%",
+        "label": "Increase in productivity"
+      },
+      "time": {
+        "value": "40%",
+        "label": "Reduction in quote time"
+      },
+      "satisfaction": {
+        "value": "95%",
+        "label": "Satisfied customers"
+      },
+      "availability": {
+        "value": "24/7",
+        "label": "System availability"
+      }
+    },
+    "problems": {
+      "title": "Do you still manage your marble business with",
+      "titleHighlight": "spreadsheets?",
+      "items": [
+        "Waste time with disorganized spreadsheets and scattered information",
+        "Can't track quote and order status",
+        "Lose sales due to lack of inventory and price control",
+        "Don't know if you're making or losing money"
+      ]
+    },
+    "solutions": {
+      "title": "With our ERP you will have:",
+      "items": [
+        {
+          "title": "Total organization:",
+          "description": "All data centralized in one place"
+        },
+        {
+          "title": "Real-time control:",
+          "description": "Track every step of your process"
+        },
+        {
+          "title": "More sales:",
+          "description": "Professional quotes and inventory control"
+        },
+        {
+          "title": "Profitability:",
+          "description": "Reports that show exactly where the profit is"
+        }
+      ]
+    }
+  },
+  "features": {
+    "title": {
+      "line1": "Powerful Features",
+      "line2": "for your Marble Business"
+    },
+    "subtitle": "Every feature was designed specifically for the daily routine of a marble business. Simple to use, but with all the robustness your business needs.",
+    "items": {
+      "quotes": {
+        "title": "Smart Quotes",
+        "description": "Create professional quotes in minutes. System automatically calculates material costs, labor and profit margin.",
+        "benefits": [
+          "Customizable templates",
+          "Automatic price calculation",
+          "Digital customer approval",
+          "Complete quote history"
+        ]
+      },
+      "crm": {
+        "title": "Integrated CRM",
+        "description": "Manage all your customer relationships. Order history, preferences and communication in one place.",
+        "benefits": [
+          "Organized customer base",
+          "Interaction history",
+          "Automatic segmentation",
+          "Marketing campaigns"
+        ]
+      },
+      "inventory": {
+        "title": "Inventory Control",
+        "description": "Precise control of marbles, granites and materials. Low stock alerts and movement tracking.",
+        "benefits": [
+          "Control by type and color",
+          "Restock alerts",
+          "Detailed movement",
+          "Supplier integration"
+        ]
+      },
+      "orders": {
+        "title": "Order Management",
+        "description": "Track each order from approval to delivery. Real-time status and automatic notifications.",
+        "benefits": [
+          "Custom workflow",
+          "Real-time status",
+          "Automatic notifications",
+          "Production reports"
+        ]
+      },
+      "reports": {
+        "title": "Financial Reports",
+        "description": "Complete dashboard with sales metrics, profitability and performance. Make decisions based on real data.",
+        "benefits": [
+          "Real-time dashboard",
+          "Profitability analysis",
+          "Sales projections",
+          "Monthly comparisons"
+        ]
+      },
+      "mobile": {
+        "title": "Mobile Access",
+        "description": "Access your system from anywhere. Responsive app that works perfectly on tablets and smartphones.",
+        "benefits": [
+          "Responsive interface",
+          "Automatic synchronization",
+          "Basic offline access",
+          "Push notifications"
+        ]
+      },
+      "security": {
+        "title": "Total Security",
+        "description": "Your data protected with bank-level encryption. Automatic backups and user access control.",
+        "benefits": [
+          "SSL encryption",
+          "Automatic backups",
+          "User control",
+          "Action audit"
+        ]
+      },
+      "integration": {
+        "title": "Easy Integration",
+        "description": "Connect with tools you already use. Data import, APIs and integrations with accounting systems.",
+        "benefits": [
+          "Data import",
+          "Open APIs",
+          "Accounting integration",
+          "Automatic webhooks"
+        ]
+      }
+    },
+    "cta": {
+      "title": "Ready to revolutionize your marble business?",
+      "subtitle": "Join hundreds of marble businesses that have already transformed their business with our system.",
+      "button": "Request Free Demo"
+    }
+  },
+  "testimonials": {
+    "title": {
+      "line1": "Real Results",
+      "line2": "from Our Customers"
+    },
+    "subtitle": "We don't talk about the results. Our customers show how the system transformed their businesses.",
+    "stats": {
+      "active": {
+        "value": "150+",
+        "label": "Active marble businesses"
+      },
+      "satisfaction": {
+        "value": "98%",
+        "label": "Customer satisfaction"
+      },
+      "sales": {
+        "value": "$2.5M+",
+        "label": "Generated sales"
+      },
+      "rating": {
+        "value": "4.9/5",
+        "label": "Average rating"
+      }
+    },
+    "items": [
+      {
+        "name": "Carlos Silva",
+        "company": "Silva & Sons Marble",
+        "location": "São Paulo, SP",
+        "text": "The system revolutionized our marble business! Before we wasted time with spreadsheets, now everything is organized. Our sales increased 60% in the first month.",
+        "result": "+60% sales"
+      },
+      {
+        "name": "Maria Santos",
+        "company": "Granitos do Sul",
+        "location": "Porto Alegre, RS",
+        "text": "The ease of creating quotes is impressive. The customer approves immediately and everything is recorded. We save 3 hours a day just with this.",
+        "result": "3h/day saved"
+      },
+      {
+        "name": "João Oliveira",
+        "company": "Premium Marbles",
+        "location": "Rio de Janeiro, RJ",
+        "text": "Inventory control changed everything. Now we know exactly what we have, what's running out and we can negotiate better with suppliers.",
+        "result": "30% inventory savings"
+      },
+      {
+        "name": "Ana Costa",
+        "company": "Stone Design",
+        "location": "Belo Horizonte, MG",
+        "text": "The financial reports are fantastic. Finally we can see where the profit is and make decisions based on real data.",
+        "result": "15% profit increase"
+      },
+      {
+        "name": "Roberto Lima",
+        "company": "Lima Marble",
+        "location": "Salvador, BA",
+        "text": "Implementation was super fast and support is excellent. In one week we were already using the system 100%. I recommend it for any marble business.",
+        "result": "1 week implementation"
+      },
+      {
+        "name": "Fernanda Rocha",
+        "company": "Rocha Granites",
+        "location": "Curitiba, PR",
+        "text": "The mobile system is perfect. I can track everything from the construction site, create quotes on site and the customer approves immediately. This made all the difference.",
+        "result": "+40% conversion"
+      }
+    ],
+    "cta": {
+      "title": "Be the next success story!",
+      "subtitle": "Join hundreds of marble businesses that have already transformed their business. Your success story can start today.",
+      "button": "Start My Transformation"
+    }
+  },
+  "pricing": {
+    "title": {
+      "line1": "Simple and",
+      "line2": "Transparent Plans"
+    },
+    "subtitle": "Choose the ideal plan for your marble business. All include a 14-day free trial, no commitment. Cancel whenever you want.",
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "price": "$97",
+        "period": "/month",
+        "description": "Perfect for small marble businesses that are starting",
+        "features": [
+          "Up to 100 customers",
+          "Unlimited quotes",
+          "Basic inventory control",
+          "Monthly reports",
+          "Email support",
+          "Automatic backup"
+        ],
+        "cta": "Start Free Trial"
+      },
+      "professional": {
+        "name": "Professional",
+        "price": "$197",
+        "period": "/month",
+        "description": "Ideal for growing marble businesses",
+        "features": [
+          "Up to 500 customers",
+          "Complete CRM",
+          "Advanced inventory control",
+          "Real-time reports",
+          "WhatsApp integration",
+          "Priority support",
+          "Personalized training",
+          "Mobile dashboard"
+        ],
+        "cta": "Most Popular"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "$397",
+        "period": "/month",
+        "description": "For large marble businesses with multiple units",
+        "features": [
+          "Unlimited customers",
+          "Multiple units",
+          "Complete API",
+          "Custom reports",
+          "Accounting integration",
+          "24/7 support",
+          "Dedicated account manager",
+          "Customizations",
+          "White-label"
+        ],
+        "cta": "Talk to Sales"
+      }
+    },
+    "trial": "14-day free trial",
+    "guarantee": {
+      "title": "30-Day Guarantee",
+      "description": "If within 30 days you are not completely satisfied with the results, we refund 100% of your money. No questions, no bureaucracy.",
+      "features": [
+        "No commitment",
+        "Complete support",
+        "Cancel whenever you want"
+      ]
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "question": "Can I cancel at any time?",
+          "answer": "Yes! There's no loyalty. You can cancel whenever you want, no fees or penalties."
+        },
+        {
+          "question": "Is my data safe?",
+          "answer": "Absolutely. We use bank-level encryption and make daily backups."
+        },
+        {
+          "question": "Do I need technical knowledge?",
+          "answer": "No! The system was made to be intuitive. We also offer complete training."
+        },
+        {
+          "question": "Does it work offline?",
+          "answer": "The system works online, but you can view basic data even without internet."
+        }
+      ]
+    }
+  },
+  "contact": {
+    "title": {
+      "line1": "Get in Touch"
+    },
+    "subtitle": "Ready to transform your marble business? Request a personalized demonstration and discover how our system can optimize your processes.",
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Full Name *",
+          "placeholder": "Your full name"
+        },
+        "email": {
+          "label": "E-mail *",
+          "placeholder": "your@email.com"
+        },
+        "phone": {
+          "label": "Phone *",
+          "placeholder": "(11) 99999-9999"
+        },
+        "company": {
+          "label": "Company Name *",
+          "placeholder": "Name of your marble business"
+        },
+        "message": {
+          "label": "Message *",
+          "placeholder": "Tell us about your needs and how we can help..."
+        }
+      },
+      "button": "Request Demo",
+      "loading": "Sending...",
+      "success": "Message sent successfully! We will contact you soon.",
+      "error": "Error sending message. Please try again."
+    },
+    "features": [
+      {
+        "icon": "⚡",
+        "title": "Fast Implementation",
+        "description": "System ready to use within 48 hours after hiring."
+      },
+      {
+        "icon": "🎯",
+        "title": "Customized",
+        "description": "Adapted specifically for the marble business segment."
+      },
+      {
+        "icon": "📱",
+        "title": "Multi-platform",
+        "description": "Access from any device, anytime."
+      }
+    ]
+  },
+  "validation": {
+    "name": {
+      "required": "Name is required",
+      "min": "Name must be at least 2 characters"
+    },
+    "email": {
+      "required": "E-mail is required",
+      "invalid": "Invalid e-mail"
+    },
+    "phone": {
+      "required": "Phone is required",
+      "min": "Phone must be at least 10 digits"
+    },
+    "company": {
+      "required": "Company name is required",
+      "min": "Company name must be at least 2 characters"
+    },
+    "message": {
+      "required": "Message is required",
+      "min": "Message must be at least 10 characters"
+    }
+  }
+}

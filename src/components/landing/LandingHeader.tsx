@@ -3,10 +3,13 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import LanguageSelector from './LanguageSelector';
 
 const LandingHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const t = useTranslations('header');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,12 +21,12 @@ const LandingHeader = () => {
   }, []);
 
   const menuItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Sobre', href: '#about' },
-    { name: 'Recursos', href: '#services' },
-    { name: 'Depoimentos', href: '#gallery' },
-    { name: 'Preços', href: '#pricing' },
-    { name: 'Contato', href: '#contact' },
+    { name: t('navigation.home'), href: '#home' },
+    { name: t('navigation.about'), href: '#about' },
+    { name: t('navigation.features'), href: '#services' },
+    { name: t('navigation.testimonials'), href: '#gallery' },
+    { name: t('navigation.pricing'), href: '#pricing' },
+    { name: t('navigation.contact'), href: '#contact' },
   ];
 
   const scrollToSection = (href: string) => {
@@ -58,8 +61,12 @@ const LandingHeader = () => {
               <div className='w-4 h-4 bg-white rounded-full'></div>
             </div>
             <div>
-              <h1 className='text-2xl font-bold text-white'>MARMOREX</h1>
-              <p className='text-xs text-gray-300 -mt-1'>sistema de gestão</p>
+              <h1 className='text-2xl font-bold text-white'>
+                {t('logo.name')}
+              </h1>
+              <p className='text-xs text-gray-300 -mt-1'>
+                {t('logo.subtitle')}
+              </p>
             </div>
           </motion.div>
 
@@ -88,20 +95,21 @@ const LandingHeader = () => {
             ))}
           </motion.nav>
 
-          {/* CTA Button */}
+          {/* Language Selector and CTA Button */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className='hidden md:block'
+            className='hidden md:flex items-center gap-4'
           >
+            <LanguageSelector />
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollToSection('#contact')}
               className='bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300'
             >
-              Solicitar Demo
+              {t('cta')}
             </motion.button>
           </motion.div>
 
@@ -153,7 +161,7 @@ const LandingHeader = () => {
               onClick={() => scrollToSection('#contact')}
               className='block w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full text-sm font-semibold mx-4'
             >
-              Solicitar Demo
+              {t('cta')}
             </motion.button>
           </div>
         </motion.div>

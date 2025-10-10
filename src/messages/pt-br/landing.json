@@ -1,0 +1,434 @@
+{
+  "header": {
+    "logo": {
+      "name": "ERPDASH",
+      "subtitle": "sistema de gestão"
+    },
+    "navigation": {
+      "home": "Home",
+      "about": "Sobre",
+      "features": "Recursos",
+      "testimonials": "Depoimentos",
+      "pricing": "Preços",
+      "contact": "Contato"
+    },
+    "cta": "Solicitar Demo"
+  },
+  "hero": {
+    "title": {
+      "line1": "Sistema de",
+      "line2": "Gestão Completo"
+    },
+    "subtitle": "Gerencie sua marmoraria com eficiência. Controle de clientes, orçamentos, produtos e muito mais em uma única plataforma.",
+    "buttons": {
+      "start": "Começar Agora",
+      "play": "Reproduzir Vídeo",
+      "pause": "Pausar Vídeo"
+    }
+  },
+  "about": {
+    "title": {
+      "line1": "O Sistema Completo",
+      "line2": "para sua Marmoraria"
+    },
+    "subtitle": "Desenvolvido especificamente para marmorarias, nosso ERP integra todos os processos do seu negócio em uma única plataforma. Do primeiro contato com o cliente até a entrega final, tudo organizado e automatizado.",
+    "features": {
+      "clients": {
+        "title": "Gestão de Clientes",
+        "description": "Controle completo do seu relacionamento com clientes, histórico de pedidos e preferências."
+      },
+      "financial": {
+        "title": "Controle Financeiro",
+        "description": "Acompanhe receitas, despesas e lucratividade em tempo real."
+      },
+      "quotes": {
+        "title": "Orçamentos Rápidos",
+        "description": "Crie orçamentos profissionais em minutos e aumente suas vendas."
+      },
+      "inventory": {
+        "title": "Controle de Estoque",
+        "description": "Gerencie mármores, granitos e materiais com precisão."
+      }
+    },
+    "stats": {
+      "productivity": {
+        "value": "85%",
+        "label": "Aumento na produtividade"
+      },
+      "time": {
+        "value": "40%",
+        "label": "Redução no tempo de orçamento"
+      },
+      "satisfaction": {
+        "value": "95%",
+        "label": "Clientes satisfeitos"
+      },
+      "availability": {
+        "value": "24/7",
+        "label": "Disponibilidade do sistema"
+      }
+    },
+    "problems": {
+      "title": "Você ainda gerencia sua marmoraria com",
+      "titleHighlight": "planilhas?",
+      "items": [
+        "Perde tempo com planilhas desorganizadas e informações espalhadas",
+        "Não consegue acompanhar o status dos orçamentos e pedidos",
+        "Perde vendas por não ter controle do estoque e preços",
+        "Não sabe se está lucrando ou perdendo dinheiro"
+      ]
+    },
+    "solutions": {
+      "title": "Com nosso ERP você terá:",
+      "items": [
+        {
+          "title": "Organização total:",
+          "description": "Todos os dados centralizados em um só lugar"
+        },
+        {
+          "title": "Controle em tempo real:",
+          "description": "Acompanhe cada etapa do seu processo"
+        },
+        {
+          "title": "Mais vendas:",
+          "description": "Orçamentos profissionais e controle de estoque"
+        },
+        {
+          "title": "Lucratividade:",
+          "description": "Relatórios que mostram exatamente onde está o lucro"
+        }
+      ]
+    }
+  },
+  "features": {
+    "title": {
+      "line1": "Recursos Poderosos",
+      "line2": "para sua Marmoraria"
+    },
+    "subtitle": "Cada funcionalidade foi pensada especificamente para o dia a dia de uma marmoraria. Simples de usar, mas com toda a robustez que seu negócio precisa.",
+    "items": {
+      "quotes": {
+        "title": "Orçamentos Inteligentes",
+        "description": "Crie orçamentos profissionais em minutos. Sistema calcula automaticamente custos de materiais, mão de obra e margem de lucro.",
+        "benefits": [
+          "Templates personalizáveis",
+          "Cálculo automático de preços",
+          "Aprovação digital do cliente",
+          "Histórico completo de orçamentos"
+        ]
+      },
+      "crm": {
+        "title": "CRM Integrado",
+        "description": "Gerencie todo o relacionamento com seus clientes. Histórico de pedidos, preferências e comunicação em um só lugar.",
+        "benefits": [
+          "Base de clientes organizada",
+          "Histórico de interações",
+          "Segmentação automática",
+          "Campanhas de marketing"
+        ]
+      },
+      "inventory": {
+        "title": "Controle de Estoque",
+        "description": "Controle preciso de mármores, granitos e materiais. Alertas de estoque baixo e rastreamento de movimentações.",
+        "benefits": [
+          "Controle por tipo e cor",
+          "Alertas de reposição",
+          "Movimentação detalhada",
+          "Integração com fornecedores"
+        ]
+      },
+      "orders": {
+        "title": "Gestão de Pedidos",
+        "description": "Acompanhe cada pedido desde a aprovação até a entrega. Status em tempo real e notificações automáticas.",
+        "benefits": [
+          "Workflow personalizado",
+          "Status em tempo real",
+          "Notificações automáticas",
+          "Relatórios de produção"
+        ]
+      },
+      "reports": {
+        "title": "Relatórios Financeiros",
+        "description": "Dashboard completo com métricas de vendas, lucratividade e performance. Tome decisões baseadas em dados reais.",
+        "benefits": [
+          "Dashboard em tempo real",
+          "Análise de lucratividade",
+          "Projeções de vendas",
+          "Comparativos mensais"
+        ]
+      },
+      "mobile": {
+        "title": "Acesso Mobile",
+        "description": "Acesse seu sistema de qualquer lugar. Aplicativo responsivo que funciona perfeitamente em tablets e smartphones.",
+        "benefits": [
+          "Interface responsiva",
+          "Sincronização automática",
+          "Acesso offline básico",
+          "Notificações push"
+        ]
+      },
+      "security": {
+        "title": "Segurança Total",
+        "description": "Seus dados protegidos com criptografia de nível bancário. Backups automáticos e controle de acesso por usuário.",
+        "benefits": [
+          "Criptografia SSL",
+          "Backups automáticos",
+          "Controle de usuários",
+          "Auditoria de ações"
+        ]
+      },
+      "integration": {
+        "title": "Integração Fácil",
+        "description": "Conecte com ferramentas que você já usa. Importação de dados, APIs e integrações com sistemas contábeis.",
+        "benefits": [
+          "Importação de dados",
+          "APIs abertas",
+          "Integração contábil",
+          "Webhooks automáticos"
+        ]
+      }
+    },
+    "cta": {
+      "title": "Pronto para revolucionar sua marmoraria?",
+      "subtitle": "Junte-se a centenas de marmorarias que já transformaram seus negócios com nosso sistema.",
+      "button": "Solicitar Demonstração Gratuita"
+    }
+  },
+  "testimonials": {
+    "title": {
+      "line1": "Resultados Reais",
+      "line2": "de Nossos Clientes"
+    },
+    "subtitle": "Não somos nós que falamos sobre os resultados. São nossos clientes que mostram como o sistema transformou seus negócios.",
+    "stats": {
+      "active": {
+        "value": "150+",
+        "label": "Marmorarias ativas"
+      },
+      "satisfaction": {
+        "value": "98%",
+        "label": "Satisfação dos clientes"
+      },
+      "sales": {
+        "value": "R$ 2.5M+",
+        "label": "Vendas geradas"
+      },
+      "rating": {
+        "value": "4.9/5",
+        "label": "Avaliação média"
+      }
+    },
+    "items": [
+      {
+        "name": "Carlos Silva",
+        "company": "Marmoraria Silva & Filhos",
+        "location": "São Paulo, SP",
+        "text": "O sistema revolucionou nossa marmoraria! Antes perdíamos tempo com planilhas, agora temos tudo organizado. Nossas vendas aumentaram 60% no primeiro mês.",
+        "result": "+60% vendas"
+      },
+      {
+        "name": "Maria Santos",
+        "company": "Granitos do Sul",
+        "location": "Porto Alegre, RS",
+        "text": "A facilidade para criar orçamentos é impressionante. O cliente aprova na hora e já fica tudo registrado. Economizamos 3 horas por dia só nisso.",
+        "result": "3h/dia economizadas"
+      },
+      {
+        "name": "João Oliveira",
+        "company": "Mármores Premium",
+        "location": "Rio de Janeiro, RJ",
+        "text": "O controle de estoque mudou tudo. Agora sabemos exatamente o que temos, o que está acabando e conseguimos negociar melhor com fornecedores.",
+        "result": "30% economia em estoque"
+      },
+      {
+        "name": "Ana Costa",
+        "company": "Design em Pedra",
+        "location": "Belo Horizonte, MG",
+        "text": "Os relatórios financeiros são fantásticos. Finalmente conseguimos ver onde está o lucro e tomar decisões baseadas em dados reais.",
+        "result": "15% aumento no lucro"
+      },
+      {
+        "name": "Roberto Lima",
+        "company": "Lima Marmoraria",
+        "location": "Salvador, BA",
+        "text": "A implementação foi super rápida e o suporte é excelente. Em uma semana já estávamos usando o sistema 100%. Recomendo para qualquer marmoraria.",
+        "result": "1 semana implementação"
+      },
+      {
+        "name": "Fernanda Rocha",
+        "company": "Rocha Granitos",
+        "location": "Curitiba, PR",
+        "text": "O sistema mobile é perfeito. Posso acompanhar tudo da obra, criar orçamentos no local e o cliente aprova na hora. Isso fez toda diferença.",
+        "result": "+40% conversão"
+      }
+    ],
+    "cta": {
+      "title": "Seja o próximo caso de sucesso!",
+      "subtitle": "Junte-se a centenas de marmorarias que já transformaram seus negócios. Sua história de sucesso pode começar hoje.",
+      "button": "Começar Minha Transformação"
+    }
+  },
+  "pricing": {
+    "title": {
+      "line1": "Planos Simples",
+      "line2": "e Transparentes"
+    },
+    "subtitle": "Escolha o plano ideal para sua marmoraria. Todos incluem teste gratuito de 14 dias, sem compromisso. Cancele quando quiser.",
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "price": "R$ 97",
+        "period": "/mês",
+        "description": "Perfeito para marmorarias pequenas que estão começando",
+        "features": [
+          "Até 100 clientes",
+          "Orçamentos ilimitados",
+          "Controle básico de estoque",
+          "Relatórios mensais",
+          "Suporte por email",
+          "Backup automático"
+        ],
+        "cta": "Começar Teste Grátis"
+      },
+      "professional": {
+        "name": "Professional",
+        "price": "R$ 197",
+        "period": "/mês",
+        "description": "Ideal para marmorarias em crescimento",
+        "features": [
+          "Até 500 clientes",
+          "CRM completo",
+          "Controle avançado de estoque",
+          "Relatórios em tempo real",
+          "Integração com WhatsApp",
+          "Suporte prioritário",
+          "Treinamento personalizado",
+          "Dashboard mobile"
+        ],
+        "cta": "Mais Popular"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "R$ 397",
+        "period": "/mês",
+        "description": "Para marmorarias grandes com múltiplas unidades",
+        "features": [
+          "Clientes ilimitados",
+          "Múltiplas unidades",
+          "API completa",
+          "Relatórios personalizados",
+          "Integração contábil",
+          "Suporte 24/7",
+          "Gerente de conta dedicado",
+          "Customizações",
+          "White-label"
+        ],
+        "cta": "Falar com Vendas"
+      }
+    },
+    "trial": "Teste gratuito por 14 dias",
+    "guarantee": {
+      "title": "Garantia de 30 Dias",
+      "description": "Se em 30 dias você não estiver completamente satisfeito com os resultados, devolvemos 100% do seu dinheiro. Sem perguntas, sem burocracias.",
+      "features": [
+        "Sem compromisso",
+        "Suporte completo",
+        "Cancele quando quiser"
+      ]
+    },
+    "faq": {
+      "title": "Perguntas Frequentes",
+      "items": [
+        {
+          "question": "Posso cancelar a qualquer momento?",
+          "answer": "Sim! Não há fidelidade. Você pode cancelar quando quiser, sem taxas ou multas."
+        },
+        {
+          "question": "Meus dados estão seguros?",
+          "answer": "Absolutamente. Usamos criptografia de nível bancário e fazemos backups diários."
+        },
+        {
+          "question": "Preciso de conhecimento técnico?",
+          "answer": "Não! O sistema foi feito para ser intuitivo. Além disso, oferecemos treinamento completo."
+        },
+        {
+          "question": "Funciona offline?",
+          "answer": "O sistema funciona online, mas você pode visualizar dados básicos mesmo sem internet."
+        }
+      ]
+    }
+  },
+  "contact": {
+    "title": {
+      "line1": "Entre em Contato"
+    },
+    "subtitle": "Pronto para transformar sua marmoraria? Solicite uma demonstração personalizada e descubra como nosso sistema pode otimizar seus processos.",
+    "form": {
+      "fields": {
+        "name": {
+          "label": "Nome Completo *",
+          "placeholder": "Seu nome completo"
+        },
+        "email": {
+          "label": "E-mail *",
+          "placeholder": "seu@email.com"
+        },
+        "phone": {
+          "label": "Telefone *",
+          "placeholder": "(11) 99999-9999"
+        },
+        "company": {
+          "label": "Nome da Empresa *",
+          "placeholder": "Nome da sua marmoraria"
+        },
+        "message": {
+          "label": "Mensagem *",
+          "placeholder": "Conte-nos sobre suas necessidades e como podemos ajudar..."
+        }
+      },
+      "button": "Solicitar Demonstração",
+      "loading": "Enviando...",
+      "success": "Mensagem enviada com sucesso! Entraremos em contato em breve.",
+      "error": "Erro ao enviar mensagem. Tente novamente."
+    },
+    "features": [
+      {
+        "icon": "⚡",
+        "title": "Implementação Rápida",
+        "description": "Sistema pronto para uso em até 48 horas após a contratação."
+      },
+      {
+        "icon": "🎯",
+        "title": "Personalizado",
+        "description": "Adaptado especificamente para o segmento de marmorarias."
+      },
+      {
+        "icon": "📱",
+        "title": "Multiplataforma",
+        "description": "Acesse de qualquer dispositivo, a qualquer hora."
+      }
+    ]
+  },
+  "validation": {
+    "name": {
+      "required": "Nome é obrigatório",
+      "min": "Nome deve ter pelo menos 2 caracteres"
+    },
+    "email": {
+      "required": "E-mail é obrigatório",
+      "invalid": "E-mail inválido"
+    },
+    "phone": {
+      "required": "Telefone é obrigatório",
+      "min": "Telefone deve ter pelo menos 10 dígitos"
+    },
+    "company": {
+      "required": "Nome da empresa é obrigatório",
+      "min": "Nome da empresa deve ter pelo menos 2 caracteres"
+    },
+    "message": {
+      "required": "Mensagem é obrigatória",
+      "min": "Mensagem deve ter pelo menos 10 caracteres"
+    }
+  }
+}
