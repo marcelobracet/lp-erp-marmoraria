@@ -68,6 +68,10 @@
         "label": "Disponibilidade do sistema"
       }
     },
+    "statsSection": {
+      "title": "Resultados Comprovados",
+      "subtitle": "Veja como nossas marmorarias parceiras estão transformando seus negócios"
+    },
     "problems": {
       "title": "Você ainda gerencia sua marmoraria com",
       "titleHighlight": "planilhas?",

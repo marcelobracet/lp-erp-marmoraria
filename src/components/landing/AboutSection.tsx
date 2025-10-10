@@ -2,39 +2,48 @@
 
 import { motion } from 'framer-motion';
 import { CheckCircle, TrendingUp, Users, Clock } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const AboutSection = () => {
+  const t = useTranslations('about');
+
   const features = [
     {
       icon: <Users size={24} />,
-      title: 'Gestão de Clientes',
-      description:
-        'Controle completo do seu relacionamento com clientes, histórico de pedidos e preferências.',
+      title: t('features.clients.title'),
+      description: t('features.clients.description'),
     },
     {
       icon: <TrendingUp size={24} />,
-      title: 'Controle Financeiro',
-      description:
-        'Acompanhe receitas, despesas e lucratividade em tempo real.',
+      title: t('features.financial.title'),
+      description: t('features.financial.description'),
     },
     {
       icon: <Clock size={24} />,
-      title: 'Orçamentos Rápidos',
-      description:
-        'Crie orçamentos profissionais em minutos e aumente suas vendas.',
+      title: t('features.quotes.title'),
+      description: t('features.quotes.description'),
     },
     {
       icon: <CheckCircle size={24} />,
-      title: 'Controle de Estoque',
-      description: 'Gerencie mármores, granitos e materiais com precisão.',
+      title: t('features.inventory.title'),
+      description: t('features.inventory.description'),
     },
   ];
 
   const stats = [
-    { number: '85%', label: 'Aumento na produtividade' },
-    { number: '40%', label: 'Redução no tempo de orçamento' },
-    { number: '95%', label: 'Clientes satisfeitos' },
-    { number: '24/7', label: 'Disponibilidade do sistema' },
+    {
+      number: t('stats.productivity.value'),
+      label: t('stats.productivity.label'),
+    },
+    { number: t('stats.time.value'), label: t('stats.time.label') },
+    {
+      number: t('stats.satisfaction.value'),
+      label: t('stats.satisfaction.label'),
+    },
+    {
+      number: t('stats.availability.value'),
+      label: t('stats.availability.label'),
+    },
   ];
 
   const containerVariants = {
@@ -78,20 +87,17 @@ const AboutSection = () => {
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
             <span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>
-              O Sistema Completo
+              {t('title.line1')}
             </span>
             <br />
-            <span className='text-white'>para sua Marmoraria</span>
+            <span className='text-white'>{t('title.line2')}</span>
           </motion.h2>
 
           <motion.p
             variants={itemVariants}
             className='text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed'
           >
-            Desenvolvido especificamente para marmorarias, nosso ERP integra
-            todos os processos do seu negócio em uma única plataforma. Do
-            primeiro contato com o cliente até a entrega final, tudo organizado
-            e automatizado.
+            {t('subtitle')}
           </motion.p>
         </motion.div>
 
@@ -132,11 +138,10 @@ const AboutSection = () => {
         >
           <motion.div variants={itemVariants} className='text-center mb-12'>
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-4'>
-              Resultados Comprovados
+              {t('statsSection.title')}
             </h3>
             <p className='text-gray-300 text-lg'>
-              Veja como nossas marmorarias parceiras estão transformando seus
-              negócios
+              {t('statsSection.subtitle')}
             </p>
           </motion.div>
 
@@ -169,90 +174,45 @@ const AboutSection = () => {
         >
           <motion.div variants={itemVariants}>
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-6'>
-              Você ainda gerencia sua marmoraria com{' '}
-              <span className='text-red-400'>planilhas?</span>
+              {t('problems.title')}{' '}
+              <span className='text-red-400'>
+                {t('problems.titleHighlight')}
+              </span>
             </h3>
             <div className='space-y-4 mb-8'>
-              <div className='flex items-start gap-3'>
-                <div className='w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                  <span className='text-white text-sm'>✗</span>
+              {(t.raw('problems.items') as string[]).map((item, index) => (
+                <div key={index} className='flex items-start gap-3'>
+                  <div className='w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
+                    <span className='text-white text-sm'>✗</span>
+                  </div>
+                  <p className='text-gray-300'>{item}</p>
                 </div>
-                <p className='text-gray-300'>
-                  Perde tempo com planilhas desorganizadas e informações
-                  espalhadas
-                </p>
-              </div>
-              <div className='flex items-start gap-3'>
-                <div className='w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                  <span className='text-white text-sm'>✗</span>
-                </div>
-                <p className='text-gray-300'>
-                  Não consegue acompanhar o status dos orçamentos e pedidos
-                </p>
-              </div>
-              <div className='flex items-start gap-3'>
-                <div className='w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                  <span className='text-white text-sm'>✗</span>
-                </div>
-                <p className='text-gray-300'>
-                  Perde vendas por não ter controle do estoque e preços
-                </p>
-              </div>
-              <div className='flex items-start gap-3'>
-                <div className='w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                  <span className='text-white text-sm'>✗</span>
-                </div>
-                <p className='text-gray-300'>
-                  Não sabe se está lucrando ou perdendo dinheiro
-                </p>
-              </div>
+              ))}
             </div>
           </motion.div>
 
           <motion.div variants={itemVariants}>
             <div className='bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-3xl p-8 border border-blue-500/30'>
               <h4 className='text-2xl font-bold text-white mb-6'>
-                Com nosso ERP você terá:
+                {t('solutions.title')}
               </h4>
               <div className='space-y-4'>
-                <div className='flex items-start gap-3'>
-                  <div className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                    <span className='text-white text-sm'>✓</span>
+                {(
+                  t.raw('solutions.items') as Array<{
+                    title: string;
+                    description: string;
+                  }>
+                ).map((item, index) => (
+                  <div key={index} className='flex items-start gap-3'>
+                    <div className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
+                      <span className='text-white text-sm'>✓</span>
+                    </div>
+                    <p className='text-gray-300'>
+                      <strong className='text-white'>{item.title}</strong>{' '}
+                      {item.description}
+                    </p>
                   </div>
-                  <p className='text-gray-300'>
-                    <strong className='text-white'>Organização total:</strong>{' '}
-                    Todos os dados centralizados em um só lugar
-                  </p>
-                </div>
-                <div className='flex items-start gap-3'>
-                  <div className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                    <span className='text-white text-sm'>✓</span>
-                  </div>
-                  <p className='text-gray-300'>
-                    <strong className='text-white'>
-                      Controle em tempo real:
-                    </strong>{' '}
-                    Acompanhe cada etapa do seu processo
-                  </p>
-                </div>
-                <div className='flex items-start gap-3'>
-                  <div className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                    <span className='text-white text-sm'>✓</span>
-                  </div>
-                  <p className='text-gray-300'>
-                    <strong className='text-white'>Mais vendas:</strong>{' '}
-                    Orçamentos profissionais e controle de estoque
-                  </p>
-                </div>
-                <div className='flex items-start gap-3'>
-                  <div className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                    <span className='text-white text-sm'>✓</span>
-                  </div>
-                  <p className='text-gray-300'>
-                    <strong className='text-white'>Lucratividade:</strong>{' '}
-                    Relatórios que mostram exatamente onde está o lucro
-                  </p>
-                </div>
+                ))}
               </div>
             </div>
           </motion.div>

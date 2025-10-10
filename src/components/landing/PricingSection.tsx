@@ -2,65 +2,42 @@
 
 import { motion } from 'framer-motion';
 import { Check, Star, Zap, Crown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const PricingSection = () => {
+  const t = useTranslations('pricing');
+
   const plans = [
     {
-      name: 'Starter',
+      name: t('plans.starter.name'),
       icon: <Zap size={24} />,
-      price: 'R$ 97',
-      period: '/mês',
-      description: 'Perfeito para marmorarias pequenas que estão começando',
-      features: [
-        'Até 100 clientes',
-        'Orçamentos ilimitados',
-        'Controle básico de estoque',
-        'Relatórios mensais',
-        'Suporte por email',
-        'Backup automático',
-      ],
-      cta: 'Começar Teste Grátis',
+      price: t('plans.starter.price'),
+      period: t('plans.starter.period'),
+      description: t('plans.starter.description'),
+      features: t.raw('plans.starter.features') as string[],
+      cta: t('plans.starter.cta'),
       popular: false,
       color: 'from-blue-500 to-blue-600',
     },
     {
-      name: 'Professional',
+      name: t('plans.professional.name'),
       icon: <Star size={24} />,
-      price: 'R$ 197',
-      period: '/mês',
-      description: 'Ideal para marmorarias em crescimento',
-      features: [
-        'Até 500 clientes',
-        'CRM completo',
-        'Controle avançado de estoque',
-        'Relatórios em tempo real',
-        'Integração com WhatsApp',
-        'Suporte prioritário',
-        'Treinamento personalizado',
-        'Dashboard mobile',
-      ],
-      cta: 'Mais Popular',
+      price: t('plans.professional.price'),
+      period: t('plans.professional.period'),
+      description: t('plans.professional.description'),
+      features: t.raw('plans.professional.features') as string[],
+      cta: t('plans.professional.cta'),
       popular: true,
       color: 'from-purple-500 to-purple-600',
     },
     {
-      name: 'Enterprise',
+      name: t('plans.enterprise.name'),
       icon: <Crown size={24} />,
-      price: 'R$ 397',
-      period: '/mês',
-      description: 'Para marmorarias grandes com múltiplas unidades',
-      features: [
-        'Clientes ilimitados',
-        'Múltiplas unidades',
-        'API completa',
-        'Relatórios personalizados',
-        'Integração contábil',
-        'Suporte 24/7',
-        'Gerente de conta dedicado',
-        'Customizações',
-        'White-label',
-      ],
-      cta: 'Falar com Vendas',
+      price: t('plans.enterprise.price'),
+      period: t('plans.enterprise.period'),
+      description: t('plans.enterprise.description'),
+      features: t.raw('plans.enterprise.features') as string[],
+      cta: t('plans.enterprise.cta'),
       popular: false,
       color: 'from-orange-500 to-red-500',
     },
@@ -104,18 +81,17 @@ const PricingSection = () => {
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
             <span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>
-              Planos Simples
+              {t('title.line1')}
             </span>
             <br />
-            <span className='text-white'>e Transparentes</span>
+            <span className='text-white'>{t('title.line2')}</span>
           </motion.h2>
 
           <motion.p
             variants={itemVariants}
             className='text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed'
           >
-            Escolha o plano ideal para sua marmoraria. Todos incluem teste
-            gratuito de 14 dias, sem compromisso. Cancele quando quiser.
+            {t('subtitle')}
           </motion.p>
         </motion.div>
 
@@ -167,9 +143,7 @@ const PricingSection = () => {
                   </span>
                   <span className='text-gray-400'>{plan.period}</span>
                 </div>
-                <p className='text-gray-400 text-sm mt-2'>
-                  Teste gratuito por 14 dias
-                </p>
+                <p className='text-gray-400 text-sm mt-2'>{t('trial')}</p>
               </div>
 
               {/* Features */}
@@ -219,32 +193,22 @@ const PricingSection = () => {
             className='bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-3xl p-8 md:p-12 border border-green-500/20'
           >
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-6'>
-              Garantia de 30 Dias
+              {t('guarantee.title')}
             </h3>
             <p className='text-xl text-gray-300 mb-8 max-w-3xl mx-auto'>
-              Se em 30 dias você não estiver completamente satisfeito com os
-              resultados, devolvemos 100% do seu dinheiro. Sem perguntas, sem
-              burocracias.
+              {t('guarantee.description')}
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-              <div className='flex items-center gap-3'>
-                <div className='w-12 h-12 bg-green-500 rounded-full flex items-center justify-center'>
-                  <Check size={24} className='text-white' />
-                </div>
-                <span className='text-gray-300'>Sem compromisso</span>
-              </div>
-              <div className='flex items-center gap-3'>
-                <div className='w-12 h-12 bg-green-500 rounded-full flex items-center justify-center'>
-                  <Check size={24} className='text-white' />
-                </div>
-                <span className='text-gray-300'>Suporte completo</span>
-              </div>
-              <div className='flex items-center gap-3'>
-                <div className='w-12 h-12 bg-green-500 rounded-full flex items-center justify-center'>
-                  <Check size={24} className='text-white' />
-                </div>
-                <span className='text-gray-300'>Cancele quando quiser</span>
-              </div>
+              {(t.raw('guarantee.features') as string[]).map(
+                (feature, index) => (
+                  <div key={index} className='flex items-center gap-3'>
+                    <div className='w-12 h-12 bg-green-500 rounded-full flex items-center justify-center'>
+                      <Check size={24} className='text-white' />
+                    </div>
+                    <span className='text-gray-300'>{feature}</span>
+                  </div>
+                )
+              )}
             </div>
           </motion.div>
         </motion.div>
@@ -261,35 +225,16 @@ const PricingSection = () => {
             variants={itemVariants}
             className='text-3xl md:text-4xl font-bold text-white text-center mb-12'
           >
-            Perguntas Frequentes
+            {t('faq.title')}
           </motion.h3>
 
           <motion.div
             variants={containerVariants}
             className='grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto'
           >
-            {[
-              {
-                question: 'Posso cancelar a qualquer momento?',
-                answer:
-                  'Sim! Não há fidelidade. Você pode cancelar quando quiser, sem taxas ou multas.',
-              },
-              {
-                question: 'Meus dados estão seguros?',
-                answer:
-                  'Absolutamente. Usamos criptografia de nível bancário e fazemos backups diários.',
-              },
-              {
-                question: 'Preciso de conhecimento técnico?',
-                answer:
-                  'Não! O sistema foi feito para ser intuitivo. Além disso, oferecemos treinamento completo.',
-              },
-              {
-                question: 'Funciona offline?',
-                answer:
-                  'O sistema funciona online, mas você pode visualizar dados básicos mesmo sem internet.',
-              },
-            ].map((faq, index) => (
+            {(
+              t.raw('faq.items') as Array<{ question: string; answer: string }>
+            ).map((faq, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}

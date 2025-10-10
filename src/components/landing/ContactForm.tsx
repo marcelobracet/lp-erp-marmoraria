@@ -6,20 +6,21 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
-
-const contactSchema = z.object({
-  name: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres'),
-  email: z.string().email('E-mail inválido'),
-  phone: z.string().min(10, 'Telefone deve ter pelo menos 10 dígitos'),
-  company: z
-    .string()
-    .min(2, 'Nome da empresa deve ter pelo menos 2 caracteres'),
-  message: z.string().min(10, 'Mensagem deve ter pelo menos 10 caracteres'),
-});
-
-type ContactFormData = z.infer<typeof contactSchema>;
+import { useTranslations } from 'next-intl';
 
 const ContactForm = () => {
+  const t = useTranslations('contact');
+  const tv = useTranslations('validation');
+
+  const contactSchema = z.object({
+    name: z.string().min(2, tv('name.min')),
+    email: z.string().email(tv('email.invalid')),
+    phone: z.string().min(10, tv('phone.min')),
+    company: z.string().min(2, tv('company.min')),
+    message: z.string().min(10, tv('message.min')),
+  });
+
+  type ContactFormData = z.infer<typeof contactSchema>;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error'
@@ -94,7 +95,7 @@ const ContactForm = () => {
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
             <span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>
-              Entre em Contato
+              {t('title.line1')}
             </span>
           </motion.h2>
 
@@ -102,9 +103,7 @@ const ContactForm = () => {
             variants={itemVariants}
             className='text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed'
           >
-            Pronto para transformar sua marmoraria? Solicite uma demonstração
-            personalizada e descubra como nosso sistema pode otimizar seus
-            processos.
+            {t('subtitle')}
           </motion.p>
         </motion.div>
 
@@ -123,13 +122,13 @@ const ContactForm = () => {
               <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                 <motion.div variants={itemVariants} className='space-y-2'>
                   <label className='block text-sm font-medium text-gray-300'>
-                    Nome Completo *
+                    {t('form.fields.name.label')}
                   </label>
                   <input
                     {...register('name')}
                     type='text'
                     className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
-                    placeholder='Seu nome completo'
+                    placeholder={t('form.fields.name.placeholder')}
                   />
                   {errors.name && (
                     <motion.p
@@ -145,13 +144,13 @@ const ContactForm = () => {
 
                 <motion.div variants={itemVariants} className='space-y-2'>
                   <label className='block text-sm font-medium text-gray-300'>
-                    E-mail *
+                    {t('form.fields.email.label')}
                   </label>
                   <input
                     {...register('email')}
                     type='email'
                     className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
-                    placeholder='seu@email.com'
+                    placeholder={t('form.fields.email.placeholder')}
                   />
                   {errors.email && (
                     <motion.p
@@ -167,13 +166,13 @@ const ContactForm = () => {
 
                 <motion.div variants={itemVariants} className='space-y-2'>
                   <label className='block text-sm font-medium text-gray-300'>
-                    Telefone *
+                    {t('form.fields.phone.label')}
                   </label>
                   <input
                     {...register('phone')}
                     type='tel'
                     className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
-                    placeholder='(11) 99999-9999'
+                    placeholder={t('form.fields.phone.placeholder')}
                   />
                   {errors.phone && (
                     <motion.p
@@ -189,13 +188,13 @@ const ContactForm = () => {
 
                 <motion.div variants={itemVariants} className='space-y-2'>
                   <label className='block text-sm font-medium text-gray-300'>
-                    Nome da Empresa *
+                    {t('form.fields.company.label')}
                   </label>
                   <input
                     {...register('company')}
                     type='text'
                     className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
-                    placeholder='Nome da sua marmoraria'
+                    placeholder={t('form.fields.company.placeholder')}
                   />
                   {errors.company && (
                     <motion.p
@@ -212,13 +211,13 @@ const ContactForm = () => {
 
               <motion.div variants={itemVariants} className='space-y-2'>
                 <label className='block text-sm font-medium text-gray-300'>
-                  Mensagem *
+                  {t('form.fields.message.label')}
                 </label>
                 <textarea
                   {...register('message')}
                   rows={5}
                   className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none'
-                  placeholder='Conte-nos sobre suas necessidades e como podemos ajudar...'
+                  placeholder={t('form.fields.message.placeholder')}
                 />
                 {errors.message && (
                   <motion.p
@@ -251,12 +250,12 @@ const ContactForm = () => {
                         }}
                         className='w-5 h-5 border-2 border-white border-t-transparent rounded-full'
                       />
-                      Enviando...
+                      {t('form.loading')}
                     </>
                   ) : (
                     <>
                       <Send size={20} />
-                      Solicitar Demonstração
+                      {t('form.button')}
                     </>
                   )}
                 </motion.button>
@@ -268,8 +267,7 @@ const ContactForm = () => {
                     className='mt-4 p-4 bg-green-500/20 border border-green-500/30 rounded-xl flex items-center gap-3 text-green-400'
                   >
                     <CheckCircle size={20} />
-                    Mensagem enviada com sucesso! Entraremos em contato em
-                    breve.
+                    {t('form.success')}
                   </motion.div>
                 )}
 
@@ -280,7 +278,7 @@ const ContactForm = () => {
                     className='mt-4 p-4 bg-red-500/20 border border-red-500/30 rounded-xl flex items-center gap-3 text-red-400'
                   >
                     <AlertCircle size={20} />
-                    Erro ao enviar mensagem. Tente novamente.
+                    {t('form.error')}
                   </motion.div>
                 )}
               </motion.div>
@@ -300,41 +298,25 @@ const ContactForm = () => {
             variants={itemVariants}
             className='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto'
           >
-            <div className='space-y-3'>
-              <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto'>
-                <span className='text-white font-bold text-xl'>⚡</span>
+            {(
+              t.raw('features') as Array<{
+                icon: string;
+                title: string;
+                description: string;
+              }>
+            ).map((feature, index) => (
+              <div key={index} className='space-y-3'>
+                <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto'>
+                  <span className='text-white font-bold text-xl'>
+                    {feature.icon}
+                  </span>
+                </div>
+                <h3 className='text-xl font-semibold text-white'>
+                  {feature.title}
+                </h3>
+                <p className='text-gray-400'>{feature.description}</p>
               </div>
-              <h3 className='text-xl font-semibold text-white'>
-                Implementação Rápida
-              </h3>
-              <p className='text-gray-400'>
-                Sistema pronto para uso em até 48 horas após a contratação.
-              </p>
-            </div>
-
-            <div className='space-y-3'>
-              <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto'>
-                <span className='text-white font-bold text-xl'>🎯</span>
-              </div>
-              <h3 className='text-xl font-semibold text-white'>
-                Personalizado
-              </h3>
-              <p className='text-gray-400'>
-                Adaptado especificamente para o segmento de marmorarias.
-              </p>
-            </div>
-
-            <div className='space-y-3'>
-              <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto'>
-                <span className='text-white font-bold text-xl'>📱</span>
-              </div>
-              <h3 className='text-xl font-semibold text-white'>
-                Multiplataforma
-              </h3>
-              <p className='text-gray-400'>
-                Acesse de qualquer dispositivo, a qualquer hora.
-              </p>
-            </div>
+            ))}
           </motion.div>
         </motion.div>
       </div>

@@ -1,7 +1,7 @@
 {
   "header": {
     "logo": {
-      "name": "ERPDASH",
+      "name": "MARMOREX",
       "subtitle": "management system"
     },
     "navigation": {
@@ -19,7 +19,7 @@
       "line1": "Complete",
       "line2": "Management System"
     },
-    "subtitle": "Manage your marble business efficiently. Control customers, quotes, products and much more in a single platform.",
+    "subtitle": "Manage your stone business efficiently. Control customers, quotes, products and much more in a single platform.",
     "buttons": {
       "start": "Get Started",
       "play": "Play Video",
@@ -29,9 +29,9 @@
   "about": {
     "title": {
       "line1": "The Complete System",
-      "line2": "for your Marble Business"
+      "line2": "for Your Stone Business"
     },
-    "subtitle": "Developed specifically for marble businesses, our ERP integrates all your business processes in a single platform. From first customer contact to final delivery, everything organized and automated.",
+    "subtitle": "Developed specifically for marble and granite businesses, our ERP integrates all your business processes in a single platform. From first customer contact to final delivery, everything organized and automated.",
     "features": {
       "clients": {
         "title": "Customer Management",
@@ -53,7 +53,7 @@
     "stats": {
       "productivity": {
         "value": "85%",
-        "label": "Increase in productivity"
+        "label": "Productivity increase"
       },
       "time": {
         "value": "40%",
@@ -68,8 +68,12 @@
         "label": "System availability"
       }
     },
+    "statsSection": {
+      "title": "Proven Results",
+      "subtitle": "See how our partner stone businesses are transforming their operations"
+    },
     "problems": {
-      "title": "Do you still manage your marble business with",
+      "title": "Do you still manage your stone business with",
       "titleHighlight": "spreadsheets?",
       "items": [
         "Waste time with disorganized spreadsheets and scattered information",
@@ -103,9 +107,9 @@
   "features": {
     "title": {
       "line1": "Powerful Features",
-      "line2": "for your Marble Business"
+      "line2": "for Your Stone Business"
     },
-    "subtitle": "Every feature was designed specifically for the daily routine of a marble business. Simple to use, but with all the robustness your business needs.",
+    "subtitle": "Every feature was designed specifically for the daily routine of a marble and granite business. Simple to use, but with all the robustness your business needs.",
     "items": {
       "quotes": {
         "title": "Smart Quotes",
@@ -121,7 +125,7 @@
         "title": "Integrated CRM",
         "description": "Manage all your customer relationships. Order history, preferences and communication in one place.",
         "benefits": [
-          "Organized customer base",
+          "Organized customer database",
           "Interaction history",
           "Automatic segmentation",
           "Marketing campaigns"
@@ -133,7 +137,7 @@
         "benefits": [
           "Control by type and color",
           "Restock alerts",
-          "Detailed movement",
+          "Detailed movement tracking",
           "Supplier integration"
         ]
       },
@@ -142,7 +146,7 @@
         "description": "Track each order from approval to delivery. Real-time status and automatic notifications.",
         "benefits": [
           "Custom workflow",
-          "Real-time status",
+          "Real-time status updates",
           "Automatic notifications",
           "Production reports"
         ]
@@ -172,16 +176,16 @@
         "description": "Your data protected with bank-level encryption. Automatic backups and user access control.",
         "benefits": [
           "SSL encryption",
-          "Automatic backups",
-          "User control",
-          "Action audit"
+          "Automatic daily backups",
+          "User access control",
+          "Action audit trail"
         ]
       },
       "integration": {
         "title": "Easy Integration",
         "description": "Connect with tools you already use. Data import, APIs and integrations with accounting systems.",
         "benefits": [
-          "Data import",
+          "Easy data import",
           "Open APIs",
           "Accounting integration",
           "Automatic webhooks"
@@ -189,8 +193,8 @@
       }
     },
     "cta": {
-      "title": "Ready to revolutionize your marble business?",
-      "subtitle": "Join hundreds of marble businesses that have already transformed their business with our system.",
+      "title": "Ready to revolutionize your stone business?",
+      "subtitle": "Join hundreds of marble and granite businesses that have already transformed their operations with our system.",
       "button": "Request Free Demo"
     }
   },
@@ -203,7 +207,7 @@
     "stats": {
       "active": {
         "value": "150+",
-        "label": "Active marble businesses"
+        "label": "Active stone businesses"
       },
       "satisfaction": {
         "value": "98%",
@@ -228,7 +232,7 @@
       },
       {
         "name": "Maria Santos",
-        "company": "Granitos do Sul",
+        "company": "Southern Granites",
         "location": "Porto Alegre, RS",
         "text": "The ease of creating quotes is impressive. The customer approves immediately and everything is recorded. We save 3 hours a day just with this.",
         "result": "3h/day saved"
@@ -249,22 +253,22 @@
       },
       {
         "name": "Roberto Lima",
-        "company": "Lima Marble",
+        "company": "Lima Marble Works",
         "location": "Salvador, BA",
-        "text": "Implementation was super fast and support is excellent. In one week we were already using the system 100%. I recommend it for any marble business.",
+        "text": "Implementation was super fast and support is excellent. In one week we were already using the system 100%. I recommend it for any stone business.",
         "result": "1 week implementation"
       },
       {
         "name": "Fernanda Rocha",
         "company": "Rocha Granites",
         "location": "Curitiba, PR",
-        "text": "The mobile system is perfect. I can track everything from the construction site, create quotes on site and the customer approves immediately. This made all the difference.",
+        "text": "The mobile system is perfect. I can track everything from the job site, create quotes on location and the customer approves immediately. This made all the difference.",
         "result": "+40% conversion"
       }
     ],
     "cta": {
       "title": "Be the next success story!",
-      "subtitle": "Join hundreds of marble businesses that have already transformed their business. Your success story can start today.",
+      "subtitle": "Join hundreds of stone businesses that have already transformed their operations. Your success story can start today.",
       "button": "Start My Transformation"
     }
   },
@@ -273,13 +277,13 @@
       "line1": "Simple and",
       "line2": "Transparent Plans"
     },
-    "subtitle": "Choose the ideal plan for your marble business. All include a 14-day free trial, no commitment. Cancel whenever you want.",
+    "subtitle": "Choose the ideal plan for your stone business. All include a 14-day free trial, no commitment. Cancel whenever you want.",
     "plans": {
       "starter": {
         "name": "Starter",
         "price": "$97",
         "period": "/month",
-        "description": "Perfect for small marble businesses that are starting",
+        "description": "Perfect for small stone businesses that are starting",
         "features": [
           "Up to 100 customers",
           "Unlimited quotes",
@@ -294,7 +298,7 @@
         "name": "Professional",
         "price": "$197",
         "period": "/month",
-        "description": "Ideal for growing marble businesses",
+        "description": "Ideal for growing stone businesses",
         "features": [
           "Up to 500 customers",
           "Complete CRM",
@@ -311,49 +315,45 @@
         "name": "Enterprise",
         "price": "$397",
         "period": "/month",
-        "description": "For large marble businesses with multiple units",
+        "description": "For large stone businesses with multiple locations",
         "features": [
           "Unlimited customers",
-          "Multiple units",
+          "Multiple locations",
           "Complete API",
           "Custom reports",
           "Accounting integration",
           "24/7 support",
           "Dedicated account manager",
-          "Customizations",
-          "White-label"
+          "Custom features",
+          "White-label option"
         ],
         "cta": "Talk to Sales"
       }
     },
     "trial": "14-day free trial",
     "guarantee": {
-      "title": "30-Day Guarantee",
-      "description": "If within 30 days you are not completely satisfied with the results, we refund 100% of your money. No questions, no bureaucracy.",
-      "features": [
-        "No commitment",
-        "Complete support",
-        "Cancel whenever you want"
-      ]
+      "title": "30-Day Money-Back Guarantee",
+      "description": "If within 30 days you are not completely satisfied with the results, we refund 100% of your money. No questions asked, no bureaucracy.",
+      "features": ["No commitment", "Complete support", "Cancel anytime"]
     },
     "faq": {
       "title": "Frequently Asked Questions",
       "items": [
         {
           "question": "Can I cancel at any time?",
-          "answer": "Yes! There's no loyalty. You can cancel whenever you want, no fees or penalties."
+          "answer": "Yes! There's no contract. You can cancel whenever you want, with no fees or penalties."
         },
         {
           "question": "Is my data safe?",
-          "answer": "Absolutely. We use bank-level encryption and make daily backups."
+          "answer": "Absolutely. We use bank-level encryption and make daily backups of all your data."
         },
         {
           "question": "Do I need technical knowledge?",
-          "answer": "No! The system was made to be intuitive. We also offer complete training."
+          "answer": "No! The system was designed to be intuitive. Plus, we offer complete training and support."
         },
         {
           "question": "Does it work offline?",
-          "answer": "The system works online, but you can view basic data even without internet."
+          "answer": "The system works online, but you can view basic data even without internet connection."
         }
       ]
     }
@@ -362,7 +362,7 @@
     "title": {
       "line1": "Get in Touch"
     },
-    "subtitle": "Ready to transform your marble business? Request a personalized demonstration and discover how our system can optimize your processes.",
+    "subtitle": "Ready to transform your stone business? Request a personalized demonstration and discover how our system can optimize your processes.",
     "form": {
       "fields": {
         "name": {
@@ -370,16 +370,16 @@
           "placeholder": "Your full name"
         },
         "email": {
-          "label": "E-mail *",
+          "label": "Email *",
           "placeholder": "your@email.com"
         },
         "phone": {
           "label": "Phone *",
-          "placeholder": "(11) 99999-9999"
+          "placeholder": "+1 (555) 123-4567"
         },
         "company": {
           "label": "Company Name *",
-          "placeholder": "Name of your marble business"
+          "placeholder": "Your stone business name"
         },
         "message": {
           "label": "Message *",
@@ -395,17 +395,17 @@
       {
         "icon": "⚡",
         "title": "Fast Implementation",
-        "description": "System ready to use within 48 hours after hiring."
+        "description": "System ready to use within 48 hours after signup."
       },
       {
         "icon": "🎯",
         "title": "Customized",
-        "description": "Adapted specifically for the marble business segment."
+        "description": "Adapted specifically for the stone and marble industry."
       },
       {
         "icon": "📱",
         "title": "Multi-platform",
-        "description": "Access from any device, anytime."
+        "description": "Access from any device, anytime, anywhere."
       }
     ]
   },
@@ -415,8 +415,8 @@
       "min": "Name must be at least 2 characters"
     },
     "email": {
-      "required": "E-mail is required",
-      "invalid": "Invalid e-mail"
+      "required": "Email is required",
+      "invalid": "Invalid email address"
     },
     "phone": {
       "required": "Phone is required",

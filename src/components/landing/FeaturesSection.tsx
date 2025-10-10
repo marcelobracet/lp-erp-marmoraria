@@ -11,104 +11,58 @@ import {
   Shield,
   Zap,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const FeaturesSection = () => {
+  const t = useTranslations('features');
   const features = [
     {
       icon: <Calculator size={32} />,
-      title: 'Orçamentos Inteligentes',
-      description:
-        'Crie orçamentos profissionais em minutos. Sistema calcula automaticamente custos de materiais, mão de obra e margem de lucro.',
-      benefits: [
-        'Templates personalizáveis',
-        'Cálculo automático de preços',
-        'Aprovação digital do cliente',
-        'Histórico completo de orçamentos',
-      ],
+      title: t('items.quotes.title'),
+      description: t('items.quotes.description'),
+      benefits: t.raw('items.quotes.benefits') as string[],
     },
     {
       icon: <Users size={32} />,
-      title: 'CRM Integrado',
-      description:
-        'Gerencie todo o relacionamento com seus clientes. Histórico de pedidos, preferências e comunicação em um só lugar.',
-      benefits: [
-        'Base de clientes organizada',
-        'Histórico de interações',
-        'Segmentação automática',
-        'Campanhas de marketing',
-      ],
+      title: t('items.crm.title'),
+      description: t('items.crm.description'),
+      benefits: t.raw('items.crm.benefits') as string[],
     },
     {
       icon: <Package size={32} />,
-      title: 'Controle de Estoque',
-      description:
-        'Controle preciso de mármores, granitos e materiais. Alertas de estoque baixo e rastreamento de movimentações.',
-      benefits: [
-        'Controle por tipo e cor',
-        'Alertas de reposição',
-        'Movimentação detalhada',
-        'Integração com fornecedores',
-      ],
+      title: t('items.inventory.title'),
+      description: t('items.inventory.description'),
+      benefits: t.raw('items.inventory.benefits') as string[],
     },
     {
       icon: <FileText size={32} />,
-      title: 'Gestão de Pedidos',
-      description:
-        'Acompanhe cada pedido desde a aprovação até a entrega. Status em tempo real e notificações automáticas.',
-      benefits: [
-        'Workflow personalizado',
-        'Status em tempo real',
-        'Notificações automáticas',
-        'Relatórios de produção',
-      ],
+      title: t('items.orders.title'),
+      description: t('items.orders.description'),
+      benefits: t.raw('items.orders.benefits') as string[],
     },
     {
       icon: <BarChart3 size={32} />,
-      title: 'Relatórios Financeiros',
-      description:
-        'Dashboard completo com métricas de vendas, lucratividade e performance. Tome decisões baseadas em dados reais.',
-      benefits: [
-        'Dashboard em tempo real',
-        'Análise de lucratividade',
-        'Projeções de vendas',
-        'Comparativos mensais',
-      ],
+      title: t('items.reports.title'),
+      description: t('items.reports.description'),
+      benefits: t.raw('items.reports.benefits') as string[],
     },
     {
       icon: <Smartphone size={32} />,
-      title: 'Acesso Mobile',
-      description:
-        'Acesse seu sistema de qualquer lugar. Aplicativo responsivo que funciona perfeitamente em tablets e smartphones.',
-      benefits: [
-        'Interface responsiva',
-        'Sincronização automática',
-        'Acesso offline básico',
-        'Notificações push',
-      ],
+      title: t('items.mobile.title'),
+      description: t('items.mobile.description'),
+      benefits: t.raw('items.mobile.benefits') as string[],
     },
     {
       icon: <Shield size={32} />,
-      title: 'Segurança Total',
-      description:
-        'Seus dados protegidos com criptografia de nível bancário. Backups automáticos e controle de acesso por usuário.',
-      benefits: [
-        'Criptografia SSL',
-        'Backups automáticos',
-        'Controle de usuários',
-        'Auditoria de ações',
-      ],
+      title: t('items.security.title'),
+      description: t('items.security.description'),
+      benefits: t.raw('items.security.benefits') as string[],
     },
     {
       icon: <Zap size={32} />,
-      title: 'Integração Fácil',
-      description:
-        'Conecte com ferramentas que você já usa. Importação de dados, APIs e integrações com sistemas contábeis.',
-      benefits: [
-        'Importação de dados',
-        'APIs abertas',
-        'Integração contábil',
-        'Webhooks automáticos',
-      ],
+      title: t('items.integration.title'),
+      description: t('items.integration.description'),
+      benefits: t.raw('items.integration.benefits') as string[],
     },
   ];
 
@@ -150,19 +104,17 @@ const FeaturesSection = () => {
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
             <span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>
-              Recursos Poderosos
+              {t('title.line1')}
             </span>
             <br />
-            <span className='text-white'>para sua Marmoraria</span>
+            <span className='text-white'>{t('title.line2')}</span>
           </motion.h2>
 
           <motion.p
             variants={itemVariants}
             className='text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed'
           >
-            Cada funcionalidade foi pensada especificamente para o dia a dia de
-            uma marmoraria. Simples de usar, mas com toda a robustez que seu
-            negócio precisa.
+            {t('subtitle')}
           </motion.p>
         </motion.div>
 
@@ -216,11 +168,10 @@ const FeaturesSection = () => {
             className='bg-gradient-to-r from-blue-500/10 to-purple-600/10 rounded-3xl p-8 md:p-12 border border-white/10'
           >
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-6'>
-              Pronto para revolucionar sua marmoraria?
+              {t('cta.title')}
             </h3>
             <p className='text-xl text-gray-300 mb-8 max-w-2xl mx-auto'>
-              Junte-se a centenas de marmorarias que já transformaram seus
-              negócios com nosso sistema.
+              {t('cta.subtitle')}
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -233,7 +184,7 @@ const FeaturesSection = () => {
               }}
               className='bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300'
             >
-              Solicitar Demonstração Gratuita
+              {t('cta.button')}
             </motion.button>
           </motion.div>
         </motion.div>
