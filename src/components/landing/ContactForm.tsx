@@ -2,306 +2,322 @@
 
 import { useState } from 'react';
 import { Variants, motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 const ContactForm = () => {
   const t = useTranslations('contact');
-  const tv = useTranslations('validation');
 
-  const contactSchema = z.object({
-    name: z.string().min(2, tv('name.min')),
-    email: z.string().email(tv('email.invalid')),
-    phone: z.string().min(10, tv('phone.min')),
-    company: z.string().min(2, tv('company.min')),
-    message: z.string().min(10, tv('message.min')),
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    message: '',
   });
 
-  type ContactFormData = z.infer<typeof contactSchema>;
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error'
   >('idle');
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
-  });
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
 
-  const onSubmit = async (data: ContactFormData) => {
+    if (!formData.name || formData.name.length < 2) {
+      newErrors.name = 'Nome deve ter pelo menos 2 caracteres';
+    }
+
+    if (!formData.email || !formData.email.includes('@')) {
+      newErrors.email = 'Email inválido';
+    }
+
+    if (!formData.phone || formData.phone.length < 10) {
+      newErrors.phone = 'Telefone deve ter pelo menos 10 dígitos';
+    }
+
+    if (!formData.company || formData.company.length < 2) {
+      newErrors.company = 'Empresa deve ter pelo menos 2 caracteres';
+    }
+
+    if (!formData.message || formData.message.length < 10) {
+      newErrors.message = 'Mensagem deve ter pelo menos 10 caracteres';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      // Simular envio do formulário
+      // Simulate form submission
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      console.log('Dados do formulário:', data);
       setSubmitStatus('success');
-      reset();
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        message: '',
+      });
     } catch (error) {
-      console.error('Erro ao enviar formulário:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+  const containerVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        staggerChildren: 0.1,
       },
     },
   };
 
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section
-      id='contact'
-      className='min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20'
+    <motion.div
+      variants={containerVariants}
+      initial='hidden'
+      whileInView='visible'
+      viewport={{ once: true }}
+      className='mx-auto max-w-2xl my-12'
     >
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <motion.div
-          variants={containerVariants}
-          initial='hidden'
-          whileInView='visible'
-          viewport={{ once: true, margin: '-100px' }}
-          className='text-center mb-16'
-        >
-          <motion.h2
-            variants={itemVariants as Variants}
-            className='text-4xl md:text-6xl font-bold text-white mb-6'
-          >
-            <span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>
-              {t('title.line1')}
-            </span>
-          </motion.h2>
+      <motion.div variants={itemVariants} className='text-center mb-8 '>
+        <h2 className='text-3xl font-bold text-white mb-4'>Entre em Contato</h2>
+        <p className='text-lg text-white'>
+          Preencha o formulário abaixo e entraremos em contato em breve.
+        </p>
+      </motion.div>
 
-          <motion.p
-            variants={itemVariants as Variants}
-            className='text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed'
-          >
-            {t('subtitle')}
-          </motion.p>
-        </motion.div>
+      <motion.form
+        variants={itemVariants}
+        onSubmit={onSubmit}
+        className='space-y-6'
+      >
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+          <div>
+            <label
+              htmlFor='name'
+              className='block text-sm font-medium text-white mb-2'
+            >
+              Nome *
+            </label>
+            <input
+              type='text'
+              id='name'
+              name='name'
+              value={formData.name}
+              onChange={handleInputChange}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                errors.name ? 'border-red-500' : 'border-white'
+              }`}
+              placeholder='Seu nome completo'
+            />
+            {errors.name && (
+              <p className='mt-1 text-sm text-red-600'>{errors.name}</p>
+            )}
+          </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial='hidden'
-          whileInView='visible'
-          viewport={{ once: true, margin: '-100px' }}
-          className='max-w-4xl mx-auto'
+          <div>
+            <label
+              htmlFor='email'
+              className='block text-sm font-medium text-white mb-2'
+            >
+              Email *
+            </label>
+            <input
+              type='email'
+              id='email'
+              name='email'
+              value={formData.email}
+              onChange={handleInputChange}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                errors.email ? 'border-red-500' : 'border-white'
+              }`}
+              placeholder='seu@email.com'
+            />
+            {errors.email && (
+              <p className='mt-1 text-sm text-red-600'>{errors.email}</p>
+            )}
+          </div>
+        </div>
+
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+          <div>
+            <label
+              htmlFor='phone'
+              className='block text-sm font-medium text-white mb-2'
+            >
+              Telefone *
+            </label>
+            <input
+              type='tel'
+              id='phone'
+              name='phone'
+              value={formData.phone}
+              onChange={handleInputChange}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                errors.phone ? 'border-red-500' : 'border-white'
+              }`}
+              placeholder='(11) 99999-9999'
+            />
+            {errors.phone && (
+              <p className='mt-1 text-sm text-red-600'>{errors.phone}</p>
+            )}
+          </div>
+
+          <div>
+            <label
+              htmlFor='company'
+              className='block text-sm font-medium text-white mb-2'
+            >
+              Empresa *
+            </label>
+            <input
+              type='text'
+              id='company'
+              name='company'
+              value={formData.company}
+              onChange={handleInputChange}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                errors.company ? 'border-red-500' : 'border-white'
+              }`}
+              placeholder='Nome da sua empresa'
+            />
+            {errors.company && (
+              <p className='mt-1 text-sm text-red-600'>{errors.company}</p>
+            )}
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor='message'
+            className='block text-sm font-medium text-white mb-2'
+          >
+            Mensagem *
+          </label>
+          <textarea
+            id='message'
+            name='message'
+            rows={5}
+            value={formData.message}
+            onChange={handleInputChange}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none ${
+              errors.message ? 'border-red-500' : 'border-white'
+            }`}
+            placeholder='Conte-nos sobre seu projeto...'
+          />
+          {errors.message && (
+            <p className='mt-1 text-sm text-red-600'>{errors.message}</p>
+          )}
+        </div>
+
+        <motion.button
+          type='submit'
+          disabled={isSubmitting}
+          className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all duration-300 ${
+            isSubmitting
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+          }`}
+          whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+          whileTap={!isSubmitting ? { scale: 0.98 } : {}}
         >
+          {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
+        </motion.button>
+
+        {submitStatus === 'success' && (
           <motion.div
-            variants={itemVariants as Variants}
-            className='bg-white/5 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl'
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className='p-4 bg-green-50 border border-green-200 rounded-lg'
           >
-            <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
-              <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                <motion.div
-                  variants={itemVariants as Variants}
-                  className='space-y-2'
+            <div className='flex items-center'>
+              <div className='flex-shrink-0'>
+                <svg
+                  className='h-5 w-5 text-green-400'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
                 >
-                  <label className='block text-sm font-medium text-gray-300'>
-                    {t('form.fields.name.label')}
-                  </label>
-                  <input
-                    {...register('name')}
-                    type='text'
-                    className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
-                    placeholder={t('form.fields.name.placeholder')}
+                  <path
+                    fillRule='evenodd'
+                    d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z'
+                    clipRule='evenodd'
                   />
-                  {errors.name && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className='text-red-400 text-sm flex items-center gap-1'
-                    >
-                      <AlertCircle size={16} />
-                      {errors.name.message}
-                    </motion.p>
-                  )}
-                </motion.div>
-
-                <motion.div
-                  variants={itemVariants as Variants}
-                  className='space-y-2'
-                >
-                  <label className='block text-sm font-medium text-gray-300'>
-                    {t('form.fields.email.label')}
-                  </label>
-                  <input
-                    {...register('email')}
-                    type='email'
-                    className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
-                    placeholder={t('form.fields.email.placeholder')}
-                  />
-                  {errors.email && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className='text-red-400 text-sm flex items-center gap-1'
-                    >
-                      <AlertCircle size={16} />
-                      {errors.email.message}
-                    </motion.p>
-                  )}
-                </motion.div>
-
-                <motion.div
-                  variants={itemVariants as Variants}
-                  className='space-y-2'
-                >
-                  <label className='block text-sm font-medium text-gray-300'>
-                    {t('form.fields.phone.label')}
-                  </label>
-                  <input
-                    {...register('phone')}
-                    type='tel'
-                    className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
-                    placeholder={t('form.fields.phone.placeholder')}
-                  />
-                  {errors.phone && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className='text-red-400 text-sm flex items-center gap-1'
-                    >
-                      <AlertCircle size={16} />
-                      {errors.phone.message}
-                    </motion.p>
-                  )}
-                </motion.div>
-
-                <motion.div
-                  variants={itemVariants as Variants}
-                  className='space-y-2'
-                >
-                  <label className='block text-sm font-medium text-gray-300'>
-                    {t('form.fields.company.label')}
-                  </label>
-                  <input
-                    {...register('company')}
-                    type='text'
-                    className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300'
-                    placeholder={t('form.fields.company.placeholder')}
-                  />
-                  {errors.company && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className='text-red-400 text-sm flex items-center gap-1'
-                    >
-                      <AlertCircle size={16} />
-                      {errors.company.message}
-                    </motion.p>
-                  )}
-                </motion.div>
+                </svg>
               </div>
-
-              <motion.div
-                variants={itemVariants as Variants}
-                className='space-y-2'
-              >
-                <label className='block text-sm font-medium text-gray-300'>
-                  {t('form.fields.message.label')}
-                </label>
-                <textarea
-                  {...register('message')}
-                  rows={5}
-                  className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none'
-                  placeholder={t('form.fields.message.placeholder')}
-                />
-                {errors.message && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className='text-red-400 text-sm flex items-center gap-1'
-                  >
-                    <AlertCircle size={16} />
-                    {errors.message.message}
-                  </motion.p>
-                )}
-              </motion.div>
-
-              <motion.div variants={itemVariants as Variants} className='pt-4'>
-                <motion.button
-                  type='submit'
-                  disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className='w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3'
-                >
-                  {isSubmitting ? (
-                    <>
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{
-                          duration: 1,
-                          repeat: Infinity,
-                          ease: 'linear',
-                        }}
-                        className='w-5 h-5 border-2 border-white border-t-transparent rounded-full'
-                      />
-                      {t('form.loading')}
-                    </>
-                  ) : (
-                    <>
-                      <Send size={20} />
-                      {t('form.button')}
-                    </>
-                  )}
-                </motion.button>
-
-                {submitStatus === 'success' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className='mt-4 p-4 bg-green-500/20 border border-green-500/30 rounded-xl flex items-center gap-3 text-green-400'
-                  >
-                    <CheckCircle size={20} />
-                    {t('form.success')}
-                  </motion.div>
-                )}
-
-                {submitStatus === 'error' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className='mt-4 p-4 bg-red-500/20 border border-red-500/30 rounded-xl flex items-center gap-3 text-red-400'
-                  >
-                    <AlertCircle size={20} />
-                    {t('form.error')}
-                  </motion.div>
-                )}
-              </motion.div>
-            </form>
+              <div className='ml-3'>
+                <p className='text-sm font-medium text-green-800'>
+                  Mensagem enviada com sucesso! Entraremos em contato em breve.
+                </p>
+              </div>
+            </div>
           </motion.div>
-        </motion.div>
-      </div>
-    </section>
+        )}
+
+        {submitStatus === 'error' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className='p-4 bg-red-50 border border-red-200 rounded-lg'
+          >
+            <div className='flex items-center'>
+              <div className='flex-shrink-0'>
+                <svg
+                  className='h-5 w-5 text-red-400'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                >
+                  <path
+                    fillRule='evenodd'
+                    d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
+                    clipRule='evenodd'
+                  />
+                </svg>
+              </div>
+              <div className='ml-3'>
+                <p className='text-sm font-medium text-red-800'>
+                  Erro ao enviar mensagem. Tente novamente.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </motion.form>
+    </motion.div>
   );
 };
 

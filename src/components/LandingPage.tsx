@@ -52,7 +52,7 @@ export default function LandingPage() {
           <div className='flex lg:flex-1'>
             <Link href='/' className='-m-1.5 p-1.5'>
               <span className='text-2xl font-bold text-gray-900'>
-                ERP Marmoraria
+                Marmoraria
               </span>
             </Link>
           </div>
@@ -102,17 +102,11 @@ export default function LandingPage() {
 
           <div className='hidden lg:flex lg:items-center lg:flex-1 lg:justify-end gap-x-4'>
             <Link
-              href='/login'
-              className='text-sm font-semibold leading-6 text-gray-900 hover:text-slate-700'
+              href='#contact'
+              className='rounded-md bg-slate-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700'
             >
-              Entrar
+              Contato
             </Link>
-            {/* <Link
-              href='/register'
-              className='rounded-md bg-slate-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700'
-            >
-              Teste Grátis
-            </Link> */}
           </div>
         </nav>
 
@@ -186,8 +180,8 @@ export default function LandingPage() {
               Funcionalidades
             </h2>
             <p className='mt-6 text-lg leading-8 text-gray-600'>
-              Descubra as principais funcionalidades do nosso sistema e como ele
-              pode ajudar sua marmoraria a crescer.
+              Descubra os principais serviços que oferecemos e como podemos
+              ajudar sua marmoraria a crescer.
             </p>
           </div>
           <div className='mt-20 max-w-lg sm:mx-auto md:max-w-none'>
@@ -222,7 +216,7 @@ export default function LandingPage() {
               Depoimentos
             </h2>
             <p className='mt-6 text-lg leading-8 text-gray-600'>
-              Veja o que nossos clientes estão dizendo sobre o ERP Marmoraria.
+              Veja o que nossos clientes estão dizendo sobre nossos serviços.
             </p>
           </div>
           <div className='mt-20 max-w-lg sm:mx-auto md:max-w-none'>
@@ -275,8 +269,8 @@ export default function LandingPage() {
               Preços
             </h2>
             <p className='mt-6 text-lg leading-8 text-gray-600'>
-              Escolha o plano que melhor se adapta às necessidades da sua
-              marmoraria.
+              Conheça nossos serviços e escolha o que melhor se adapta às
+              necessidades da sua marmoraria.
             </p>
           </div>
           <div className='mt-20 max-w-lg sm:mx-auto md:max-w-none'>
@@ -355,7 +349,7 @@ export default function LandingPage() {
                     Email
                   </p>
                   <p className='mt-2 text-base leading-7 text-gray-600'>
-                    contato@erpmarmoraria.com
+                    contato@marmoraria.com
                   </p>
                 </div>
               </div>
@@ -382,10 +376,10 @@ export default function LandingPage() {
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='flex items-center justify-between'>
             <Link href='/' className='text-2xl font-bold text-white'>
-              ERP Marmoraria
+              Marmoraria
             </Link>
             <p className='text-sm text-gray-400'>
-              &copy; 2025 ERP Marmoraria. Todos os direitos reservados.
+              &copy; 2025 Marmoraria. Todos os direitos reservados.
             </p>
           </div>
         </div>

@@ -51,9 +51,9 @@ const clientConfig: ClientConfig = {
     favicon: '/favicon.ico',
   },
   system: {
-    name: 'ERP Marmoraria',
+    name: 'Marmoraria Landing',
     version: '1.0.0',
-    copyrightText: '© 2024 ERP Marmoraria. Todos os direitos reservados.',
+    copyrightText: '© 2024 Marmoraria Landing. Todos os direitos reservados.',
   },
 };
 
