@@ -20,6 +20,9 @@ jobs:
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
 
+      - name: Authenticate Docker to Artifact Registry
+        run: gcloud auth configure-docker us-east1-docker.pkg.dev --quiet
+
       - name: Build and Push Docker Image
         run: |
           docker build -t us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/erp-repo/erp-app:latest .
