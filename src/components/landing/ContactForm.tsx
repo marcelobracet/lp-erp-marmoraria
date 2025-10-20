@@ -300,40 +300,6 @@ const ContactForm = () => {
             </form>
           </motion.div>
         </motion.div>
-
-        {/* Additional Info */}
-        <motion.div
-          variants={containerVariants as Variants}
-          initial='hidden'
-          whileInView='visible'
-          viewport={{ once: true, margin: '-100px' }}
-          className='mt-16 text-center'
-        >
-          <motion.div
-            variants={itemVariants as Variants}
-            className='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto'
-          >
-            {(
-              t.raw('features') as Array<{
-                icon: string;
-                title: string;
-                description: string;
-              }>
-            ).map((feature, index) => (
-              <div key={index} className='space-y-3'>
-                <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto'>
-                  <span className='text-white font-bold text-xl'>
-                    {feature.icon}
-                  </span>
-                </div>
-                <h3 className='text-xl font-semibold text-white'>
-                  {feature.title}
-                </h3>
-                <p className='text-gray-400'>{feature.description}</p>
-              </div>
-            ))}
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   );

@@ -1,0 +1,35 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - id: 'auth'
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/erp-repo/erp-app:latest .
+          docker push us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/erp-repo/erp-app:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy erp-app \
+            --image us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/erp-repo/erp-app:latest \
+            --region us-east1 \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 3000
