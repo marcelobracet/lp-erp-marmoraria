@@ -23,7 +23,7 @@ jobs:
       - name: Configure Docker auth for Artifact Registry
         run: gcloud auth configure-docker us-east1-docker.pkg.dev --quiet
 
-      - name: Build and Push Docker Image
+      - name: Build and Push Docker Image to Artifact Registry
         run: |
           docker build -t us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/erp-repo/erp-app:latest .
           docker push us-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/erp-repo/erp-app:latest
