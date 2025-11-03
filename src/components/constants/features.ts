@@ -13,7 +13,7 @@ export const features = [
   {
     name: 'Relatórios Avançados',
     description:
-      'Relatórios detalhados de vendas, lucros, desempenho e análises para tomada de decisões estratégicas.',
+      'Relatórios detalhados de vendas, lucros, desempenho do negócio e análises para tomada de decisões estratégicas.',
     icon: ChartBarIcon,
   },
   {
