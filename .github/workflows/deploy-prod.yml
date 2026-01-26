@@ -35,6 +35,6 @@ jobs:
         run: yarn build
 
       - name: Deploy Produção na Vercel
-        run: npx vercel deploy --prod --yes
+        run: npx vercel deploy --prod --yes --token=$VERCEL_TOKEN
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
