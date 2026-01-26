@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: clientConfig.system.name,
-  description: 'Landing page para marmorarias',
+  description: 'SaaS para marmorarias',
 };
 
 export default function RootLayout({
