@@ -112,7 +112,7 @@ const ContactForm = () => {
       initial='hidden'
       whileInView='visible'
       viewport={{ once: true }}
-      className='mx-auto max-w-2xl my-12'
+      className='mx-auto max-w-2xl my-12 px-4'
     >
       <motion.div variants={itemVariants} className='text-center mb-8 '>
         <h2 className='text-3xl font-bold text-white mb-4'>Entre em Contato</h2>
@@ -140,8 +140,8 @@ const ContactForm = () => {
               name='name'
               value={formData.name}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.name ? 'border-red-500' : 'border-white'
+              className={`w-full px-4 py-3 rounded-lg border bg-black/30 text-white placeholder:text-white/40 focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none ${
+                errors.name ? 'border-red-500' : 'border-white/15'
               }`}
               placeholder='Seu nome completo'
             />
@@ -163,8 +163,8 @@ const ContactForm = () => {
               name='email'
               value={formData.email}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.email ? 'border-red-500' : 'border-white'
+              className={`w-full px-4 py-3 rounded-lg border bg-black/30 text-white placeholder:text-white/40 focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none ${
+                errors.email ? 'border-red-500' : 'border-white/15'
               }`}
               placeholder='seu@email.com'
             />
@@ -188,8 +188,8 @@ const ContactForm = () => {
               name='phone'
               value={formData.phone}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.phone ? 'border-red-500' : 'border-white'
+              className={`w-full px-4 py-3 rounded-lg border bg-black/30 text-white placeholder:text-white/40 focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none ${
+                errors.phone ? 'border-red-500' : 'border-white/15'
               }`}
               placeholder='(11) 99999-9999'
             />
@@ -211,8 +211,8 @@ const ContactForm = () => {
               name='company'
               value={formData.company}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.company ? 'border-red-500' : 'border-white'
+              className={`w-full px-4 py-3 rounded-lg border bg-black/30 text-white placeholder:text-white/40 focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none ${
+                errors.company ? 'border-red-500' : 'border-white/15'
               }`}
               placeholder='Nome da sua empresa'
             />
@@ -235,8 +235,8 @@ const ContactForm = () => {
             rows={5}
             value={formData.message}
             onChange={handleInputChange}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none ${
-              errors.message ? 'border-red-500' : 'border-white'
+            className={`w-full px-4 py-3 rounded-lg border bg-black/30 text-white placeholder:text-white/40 focus:ring-2 focus:ring-amber-400 focus:border-transparent resize-none outline-none ${
+              errors.message ? 'border-red-500' : 'border-white/15'
             }`}
             placeholder='Conte-nos sobre seu projeto...'
           />
@@ -250,8 +250,8 @@ const ContactForm = () => {
           disabled={isSubmitting}
           className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all duration-300 ${
             isSubmitting
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+              ? 'bg-white/10 cursor-not-allowed'
+              : 'bg-amber-500 text-zinc-950 hover:bg-amber-400 focus:ring-2 focus:ring-amber-400 focus:ring-offset-0'
           }`}
           whileHover={!isSubmitting ? { scale: 1.02 } : {}}
           whileTap={!isSubmitting ? { scale: 0.98 } : {}}
@@ -263,7 +263,7 @@ const ContactForm = () => {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className='p-4 bg-green-50 border border-green-200 rounded-lg'
+            className='p-4 bg-green-500/10 border border-green-500/20 rounded-lg'
           >
             <div className='flex items-center'>
               <div className='flex-shrink-0'>
@@ -292,7 +292,7 @@ const ContactForm = () => {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className='p-4 bg-red-50 border border-red-200 rounded-lg'
+            className='p-4 bg-red-500/10 border border-red-500/20 rounded-lg'
           >
             <div className='flex items-center'>
               <div className='flex-shrink-0'>

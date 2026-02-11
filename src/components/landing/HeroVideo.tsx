@@ -2,38 +2,52 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Play, Pause } from 'lucide-react';
+import { ChevronDown, Volume2, VolumeX } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Skeleton from '@/components/ui/Skeleton';
 
 const HeroVideo = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const t = useTranslations('hero');
 
+  const heroVideoUrl =
+    process.env.NEXT_PUBLIC_HERO_VIDEO_URL || '/videos/hero-video.mp4';
+
   useEffect(() => {
-    // Auto-play video when component mounts
     if (videoRef.current) {
+      videoRef.current.muted = true;
       videoRef.current.play().catch(console.error);
-      setIsPlaying(true);
     }
   }, []);
 
-  const togglePlay = () => {
+  const toggleMute = () => {
+    const nextMuted = !isMuted;
+    setIsMuted(nextMuted);
     if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
+      videoRef.current.muted = nextMuted;
+      if (!nextMuted) {
+        videoRef.current.play().catch(console.error);
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
   const scrollToNext = () => {
-    const contactSection = document.querySelector('#contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+    const heroSection = document.querySelector<HTMLElement>('#home');
+    const fallback = document.querySelector<HTMLElement>('#about');
+
+    if (!heroSection) {
+      fallback?.scrollIntoView({ behavior: 'smooth' });
+      return;
     }
+
+    const allSections = Array.from(
+      document.querySelectorAll<HTMLElement>('section')
+    );
+    const heroIndex = allSections.findIndex(section => section.id === 'home');
+    const nextSection = heroIndex >= 0 ? allSections[heroIndex + 1] : null;
+
+    (nextSection || fallback)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -42,74 +56,102 @@ const HeroVideo = () => {
       <div className='absolute inset-0 z-0'>
         <video
           ref={videoRef}
-          className='w-full h-full object-cover'
-          muted
+          className='w-full h-full object-cover pointer-events-none'
+          muted={isMuted}
           loop
           playsInline
-          poster='/api/placeholder/1920/1080'
+          autoPlay
+          preload='metadata'
+          controls={false}
+          disablePictureInPicture
+          controlsList='nodownload noplaybackrate noremoteplayback'
         >
-          <source src='/videos/hero-video.mp4' type='video/mp4' />
+          <source src={heroVideoUrl} type='video/mp4' />
           {/* Fallback para navegadores que não suportam vídeo */}
         </video>
 
         {/* Overlay para melhorar legibilidade do texto */}
-        <div className='absolute inset-0 bg-black/40' />
+        <div className='absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/80' />
       </div>
 
       {/* Content */}
-      <div className='relative z-10 h-full flex flex-col justify-center items-center text-center px-4'>
+      <div className='relative z-10 h-full flex flex-col justify-center px-6'>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className='max-w-4xl mx-auto'
+          className='max-w-7xl mx-auto w-full'
         >
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className='text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight'
-          >
-            <span className='block'>{t('title.line1')}</span>
-            <span className='block bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent'>
-              {t('title.line2')}
-            </span>
-          </motion.h1>
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-10 items-center'>
+            <div className='text-left'>
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                className='text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.05]'
+              >
+                <span className='block'>{t('title.line1')}</span>
+                <span className='block text-amber-300'>{t('title.line2')}</span>
+              </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className='text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed'
-          >
-            {t('subtitle')}
-          </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.9 }}
+                className='text-lg md:text-xl text-zinc-200 mb-8 max-w-xl leading-relaxed'
+              >
+                {t('subtitle')}
+              </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-            className='flex flex-col sm:flex-row gap-4 justify-center items-center'
-          >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => scrollToNext()}
-              className='bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300'
-            >
-              {t('buttons.start')}
-            </motion.button>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.1 }}
+                className='flex flex-col sm:flex-row gap-4 justify-start items-start sm:items-center'
+              >
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => scrollToNext()}
+                  className='bg-amber-500 text-zinc-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-amber-400 transition'
+                >
+                  {t('buttons.start')}
+                </motion.button>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={togglePlay}
-              className='flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-300'
-            >
-              {isPlaying ? <Pause size={24} /> : <Play size={24} />}
-              <span>{isPlaying ? t('buttons.pause') : t('buttons.play')}</span>
-            </motion.button>
-          </motion.div>
+                <button
+                  onClick={toggleMute}
+                  className='inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 backdrop-blur px-4 py-3 text-white/90 hover:bg-black/55 transition'
+                >
+                  {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                  <span className='text-sm font-medium'>
+                    {isMuted ? 'Ativar áudio' : 'Mutar'}
+                  </span>
+                </button>
+              </motion.div>
+
+              <p className='mt-6 text-sm text-white/60 max-w-xl'>
+                Dica: o vídeo inicia mudo (autoplay). Você pode ativar o áudio
+                quando quiser.
+              </p>
+            </div>
+
+            <div className='hidden lg:block'>
+              <div className='rounded-3xl border border-white/10 bg-black/35 backdrop-blur-xl p-4 shadow-2xl'>
+                <div className='flex items-center justify-between px-2 pb-3'>
+                  <div className='text-sm font-semibold text-white'>
+                    Prévia do Dashboard
+                  </div>
+                  <div className='text-xs text-white/60'>imagem (skeleton)</div>
+                </div>
+                <Skeleton className='aspect-[16/10] w-full rounded-2xl' />
+                <div className='mt-4 grid grid-cols-3 gap-3'>
+                  <Skeleton className='h-16 rounded-xl' />
+                  <Skeleton className='h-16 rounded-xl' />
+                  <Skeleton className='h-16 rounded-xl' />
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
 

@@ -57,8 +57,8 @@ const LandingHeader = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className='flex items-center space-x-3'
           >
-            <div className='w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center'>
-              <div className='w-4 h-4 bg-white rounded-full'></div>
+            <div className='w-9 h-9 rounded-lg border border-white/15 bg-white/5 backdrop-blur flex items-center justify-center'>
+              <div className='w-4 h-4 rounded-sm bg-amber-400/90'></div>
             </div>
             <div>
               <h1 className='text-2xl font-bold text-white'>
@@ -88,7 +88,7 @@ const LandingHeader = () => {
               >
                 {item.name}
                 <motion.div
-                  className='absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-600 group-hover:w-full transition-all duration-300'
+                  className='absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400/90 group-hover:w-full transition-all duration-300'
                   whileHover={{ width: '100%' }}
                 />
               </motion.button>
@@ -107,7 +107,7 @@ const LandingHeader = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollToSection('#contact')}
-              className='bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300'
+              className='bg-amber-500 text-zinc-950 px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-amber-400 transition'
             >
               {t('cta')}
             </motion.button>
@@ -159,7 +159,7 @@ const LandingHeader = () => {
               }}
               transition={{ duration: 0.3, delay: menuItems.length * 0.1 }}
               onClick={() => scrollToSection('#contact')}
-              className='block w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full text-sm font-semibold mx-4'
+              className='block w-full bg-amber-500 text-zinc-950 px-6 py-3 rounded-full text-sm font-semibold mx-4 hover:bg-amber-400 transition'
             >
               {t('cta')}
             </motion.button>

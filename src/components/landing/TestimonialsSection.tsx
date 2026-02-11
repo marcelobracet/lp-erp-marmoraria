@@ -56,10 +56,7 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section
-      id='gallery'
-      className='py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800'
-    >
+    <section id='gallery' className='py-20 bg-zinc-950'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <motion.div
           variants={containerVariants}
@@ -72,9 +69,7 @@ const TestimonialsSection = () => {
             variants={itemVariants as Variants}
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
-            <span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>
-              {t('title.line1')}
-            </span>
+            <span className='text-amber-300'>{t('title.line1')}</span>
             <br />
             <span className='text-white'>{t('title.line2')}</span>
           </motion.h2>
@@ -115,16 +110,16 @@ const TestimonialsSection = () => {
           initial='hidden'
           whileInView='visible'
           viewport={{ once: true, margin: '-100px' }}
-          className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'
+          className='-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 no-scrollbar snap-x snap-mandatory md:mx-0 md:grid md:grid-cols-2 md:gap-8 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3'
         >
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
               variants={itemVariants as Variants}
-              className='bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-blue-500/30 transition-all duration-300'
+              className='bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-amber-500/30 transition-all duration-300 snap-start min-w-[85%] sm:min-w-[70%] md:min-w-0'
             >
               {/* Quote Icon */}
-              <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4'>
+              <div className='w-12 h-12 bg-amber-500/15 border border-amber-500/20 rounded-xl flex items-center justify-center mb-4'>
                 <Quote size={20} className='text-white' />
               </div>
 
@@ -151,7 +146,7 @@ const TestimonialsSection = () => {
 
               {/* Author Info */}
               <div className='flex items-center gap-3'>
-                <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold'>
+                <div className='w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white font-bold'>
                   {testimonial.name.charAt(0)}
                 </div>
                 <div>
@@ -180,7 +175,7 @@ const TestimonialsSection = () => {
         >
           <motion.div
             variants={itemVariants as Variants}
-            className='bg-gradient-to-r from-blue-500/10 to-purple-600/10 rounded-3xl p-8 md:p-12 border border-white/10'
+            className='bg-white/5 rounded-3xl p-8 md:p-12 border border-white/10'
           >
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-6'>
               {t('cta.title')}
@@ -197,7 +192,7 @@ const TestimonialsSection = () => {
                   contactSection.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className='bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300'
+              className='bg-amber-500 text-zinc-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-amber-400 transition'
             >
               {t('cta.button')}
             </motion.button>

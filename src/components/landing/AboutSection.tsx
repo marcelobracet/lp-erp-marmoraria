@@ -3,6 +3,7 @@
 import { Variants, motion } from 'framer-motion';
 import { CheckCircle, TrendingUp, Users, Clock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Skeleton from '@/components/ui/Skeleton';
 
 const AboutSection = () => {
   const t = useTranslations('about');
@@ -70,10 +71,7 @@ const AboutSection = () => {
   };
 
   return (
-    <section
-      id='about'
-      className='py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800'
-    >
+    <section id='about' className='py-20 bg-zinc-950'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <motion.div
           variants={containerVariants}
@@ -86,9 +84,7 @@ const AboutSection = () => {
             variants={itemVariants as Variants}
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
-            <span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>
-              {t('title.line1')}
-            </span>
+            <span className='text-amber-300'>{t('title.line1')}</span>
             <br />
             <span className='text-white'>{t('title.line2')}</span>
           </motion.h2>
@@ -113,9 +109,9 @@ const AboutSection = () => {
             <motion.div
               key={index}
               variants={itemVariants as Variants}
-              className='bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-blue-500/30 transition-all duration-300 group'
+              className='bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-amber-500/30 transition-all duration-300 group'
             >
-              <div className='w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300'>
+              <div className='w-12 h-12 bg-amber-500/15 rounded-xl flex items-center justify-center text-amber-200 mb-4 group-hover:scale-110 transition-transform duration-300 border border-amber-500/20'>
                 {feature.icon}
               </div>
               <h3 className='text-xl font-semibold text-white mb-3'>
@@ -134,7 +130,7 @@ const AboutSection = () => {
           initial='hidden'
           whileInView='visible'
           viewport={{ once: true, margin: '-100px' }}
-          className='bg-gradient-to-r from-blue-500/10 to-purple-600/10 rounded-3xl p-8 md:p-12 border border-white/10'
+          className='bg-white/5 rounded-3xl p-8 md:p-12 border border-white/10'
         >
           <motion.div
             variants={itemVariants as Variants}
@@ -178,15 +174,15 @@ const AboutSection = () => {
           <motion.div variants={itemVariants as Variants}>
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-6'>
               {t('problems.title')}{' '}
-              <span className='text-red-400'>
+              <span className='text-amber-300'>
                 {t('problems.titleHighlight')}
               </span>
             </h3>
             <div className='space-y-4 mb-8'>
               {(t.raw('problems.items') as string[]).map((item, index) => (
                 <div key={index} className='flex items-start gap-3'>
-                  <div className='w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                    <span className='text-white text-sm'>✗</span>
+                  <div className='w-6 h-6 bg-white/5 border border-white/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
+                    <span className='text-white/80 text-sm'>•</span>
                   </div>
                   <p className='text-gray-300'>{item}</p>
                 </div>
@@ -194,8 +190,18 @@ const AboutSection = () => {
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants as Variants}>
-            <div className='bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-3xl p-8 border border-blue-500/30'>
+          <motion.div variants={itemVariants as Variants} className='space-y-6'>
+            <div>
+              <div className='flex items-center justify-between mb-3'>
+                <p className='text-sm font-semibold text-white'>
+                  Sua marmoraria
+                </p>
+                <p className='text-xs text-white/60'>imagem (skeleton)</p>
+              </div>
+              <Skeleton className='aspect-[4/3] w-full rounded-3xl' />
+            </div>
+
+            <div className='bg-white/5 rounded-3xl p-8 border border-white/10'>
               <h4 className='text-2xl font-bold text-white mb-6'>
                 {t('solutions.title')}
               </h4>
@@ -207,8 +213,8 @@ const AboutSection = () => {
                   }>
                 ).map((item, index) => (
                   <div key={index} className='flex items-start gap-3'>
-                    <div className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                      <span className='text-white text-sm'>✓</span>
+                    <div className='w-6 h-6 bg-amber-500/15 border border-amber-500/25 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
+                      <span className='text-amber-200 text-sm'>✓</span>
                     </div>
                     <p className='text-gray-300'>
                       <strong className='text-white'>{item.title}</strong>{' '}
