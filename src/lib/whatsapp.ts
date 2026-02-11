@@ -5,7 +5,10 @@ export type WhatsAppOpenOptions = {
 
 const sanitizeE164 = (phoneE164: string) => phoneE164.replace(/\D/g, '');
 
-export const buildWhatsAppUrl = ({ phoneE164, message }: WhatsAppOpenOptions) => {
+export const buildWhatsAppUrl = ({
+  phoneE164,
+  message,
+}: WhatsAppOpenOptions) => {
   const phone = sanitizeE164(phoneE164);
   const text = encodeURIComponent(message);
   return `https://wa.me/${phone}?text=${text}`;
