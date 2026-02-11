@@ -3,9 +3,17 @@
 import { Variants, motion } from 'framer-motion';
 import { Check, Star, Zap, Crown } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { openWhatsApp } from '@/lib/whatsapp';
+
+const DEFAULT_PHONE_E164 = '5521992927712';
+const DEFAULT_SALES_NAME = 'Celso';
 
 const PricingSection = () => {
   const t = useTranslations('pricing');
+
+  const phoneE164 =
+    process.env.NEXT_PUBLIC_WHATSAPP_PHONE_E164 || DEFAULT_PHONE_E164;
+  const salesName = process.env.NEXT_PUBLIC_SALES_NAME || DEFAULT_SALES_NAME;
 
   const plans = [
     {
@@ -100,15 +108,15 @@ const PricingSection = () => {
           initial='hidden'
           whileInView='visible'
           viewport={{ once: true, margin: '-100px' }}
-          className='grid grid-cols-1 md:grid-cols-3 gap-8 mb-16'
+          className='grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 items-stretch'
         >
           {plans.map((plan, index) => (
             <motion.div
               key={index}
               variants={itemVariants as Variants}
-              className={`relative bg-gradient-to-br from-gray-900 to-black rounded-3xl p-8 border transition-all duration-300 ${
+              className={`relative bg-gradient-to-br from-gray-900 to-black rounded-3xl p-8 border transition-all duration-300 flex flex-col h-full ${
                 plan.popular
-                  ? 'border-purple-500/50 shadow-2xl shadow-purple-500/10 scale-105'
+                  ? 'border-purple-500/50 shadow-2xl shadow-purple-500/10'
                   : 'border-white/10 hover:border-blue-500/30'
               }`}
             >
@@ -156,12 +164,10 @@ const PricingSection = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
-                  const contactSection = document.querySelector('#contact');
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                  }
+                  const message = `Oi ${salesName}, vim pelo site e estou querendo saber mais sobre o plano ${plan.name}.`;
+                  openWhatsApp({ phoneE164, message });
                 }}
-                className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${
+                className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-300 mt-auto ${
                   plan.popular
                     ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:shadow-xl hover:shadow-purple-500/25'
                     : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:shadow-xl hover:shadow-blue-500/25'

@@ -51,9 +51,9 @@ const clientConfig: ClientConfig = {
     favicon: '/favicon.ico',
   },
   system: {
-    name: 'Marmoraria Landing',
+    name: 'On Marmoraria - Onsoftwares (BR)',
     version: '1.0.0',
-    copyrightText: '© 2024 Marmoraria Landing. Todos os direitos reservados.',
+    copyrightText: '© 2024 On Marmoraria. Todos os direitos reservados.',
   },
 };
 

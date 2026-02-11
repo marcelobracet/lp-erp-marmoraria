@@ -10,6 +10,7 @@ import FeaturesSection from '@/components/landing/FeaturesSection';
 import TestimonialsSection from '@/components/landing/TestimonialsSection';
 import PricingSection from '@/components/landing/PricingSection';
 import ContactForm from '@/components/landing/ContactForm';
+import FloatingWhatsAppButton from '@/components/landing/FloatingWhatsAppButton';
 
 export default function LandingPage() {
   const lenisRef = useRef<Lenis | null>(null);
@@ -48,6 +49,7 @@ export default function LandingPage() {
       <TestimonialsSection />
       <PricingSection />
       <ContactForm />
+      <FloatingWhatsAppButton />
     </div>
   );
 }

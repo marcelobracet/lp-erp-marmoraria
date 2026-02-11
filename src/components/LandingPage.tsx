@@ -35,7 +35,7 @@ export default function LandingPage() {
     <div className='min-h-screen bg-white'>
       <div className='fixed bottom-6 right-6 z-50'>
         <a
-          href='https://wa.me/5511123456789'
+          href='https://wa.me/5521992927712'
           target='_blank'
           rel='noopener noreferrer'
           className='flex items-center justify-center w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full shadow-lg transition-all duration-300 hover:scale-110 group'

@@ -281,7 +281,7 @@
     "plans": {
       "starter": {
         "name": "Starter",
-        "price": "$97",
+        "price": "$197",
         "period": "/month",
         "description": "Perfect for small stone businesses that are starting",
         "features": [
@@ -296,7 +296,7 @@
       },
       "professional": {
         "name": "Professional",
-        "price": "$197",
+        "price": "$297",
         "period": "/month",
         "description": "Ideal for growing stone businesses",
         "features": [

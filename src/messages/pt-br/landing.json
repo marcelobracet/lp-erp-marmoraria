@@ -1,7 +1,7 @@
 {
   "header": {
     "logo": {
-      "name": "ERPDASH",
+      "name": "ON Marmoraria",
       "subtitle": "sistema de gestão"
     },
     "navigation": {
@@ -281,7 +281,7 @@
     "plans": {
       "starter": {
         "name": "Starter",
-        "price": "R$ 97",
+        "price": "R$ 197",
         "period": "/mês",
         "description": "Perfeito para marmorarias pequenas que estão começando",
         "features": [
@@ -296,7 +296,7 @@
       },
       "professional": {
         "name": "Professional",
-        "price": "R$ 197",
+        "price": "R$ 297",
         "period": "/mês",
         "description": "Ideal para marmorarias em crescimento",
         "features": [
