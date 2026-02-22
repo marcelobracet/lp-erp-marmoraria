@@ -35,7 +35,7 @@ const LanguageSelector = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className='flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-white/10'
+        className='flex items-center gap-2 text-[#f4f6fc]/80 hover:text-[#f4f6fc] transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-[#f4f6fc]/10'
       >
         <Globe size={16} />
         <span className='text-sm font-medium'>{currentLanguage.flag}</span>
@@ -55,7 +55,7 @@ const LanguageSelector = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className='absolute top-full right-0 mt-2 bg-black/90 backdrop-blur-md border border-white/20 rounded-xl py-2 min-w-[160px] z-50'
+          className='absolute top-full right-0 mt-2 bg-[#050a30]/95 backdrop-blur-md border border-[#99dfec]/20 rounded-xl py-2 min-w-[160px] z-50'
         >
           {languages.map(language => (
             <motion.button
@@ -64,8 +64,8 @@ const LanguageSelector = () => {
               onClick={() => handleLanguageChange(language.code)}
               className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors duration-200 ${
                 language.code === locale
-                  ? 'text-blue-400 bg-blue-500/20'
-                  : 'text-white/80 hover:text-white'
+                  ? 'text-[#99dfec] bg-[#233dff]/20'
+                  : 'text-[#f4f6fc]/80 hover:text-[#f4f6fc]'
               }`}
             >
               <span>{language.flag}</span>

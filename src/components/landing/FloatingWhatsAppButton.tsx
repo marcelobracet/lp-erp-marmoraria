@@ -58,7 +58,7 @@ export default function FloatingWhatsAppButton() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.18 }}
-            className='w-[min(320px,calc(100vw-48px))] rounded-2xl border border-white/10 bg-black/80 backdrop-blur-xl p-3 shadow-2xl'
+            className='w-[min(320px,calc(100vw-48px))] rounded-2xl border border-[#99dfec]/15 bg-[#050a30]/85 backdrop-blur-xl p-3 shadow-2xl'
             role='dialog'
             aria-label='Contato via WhatsApp'
           >
@@ -76,7 +76,7 @@ export default function FloatingWhatsAppButton() {
                 <button
                   key={option.planName}
                   onClick={() => handlePlanClick(option.planName)}
-                  className='w-full rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-left text-sm text-white hover:bg-white/10 transition'
+                  className='w-full rounded-xl border border-[#99dfec]/15 bg-[#f4f6fc]/5 px-3 py-3 text-left text-sm text-white hover:bg-[#f4f6fc]/10 transition'
                 >
                   <span className='flex items-center justify-between gap-3'>
                     <span className='truncate'>{option.label}</span>

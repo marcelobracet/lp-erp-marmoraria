@@ -56,7 +56,7 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section id='gallery' className='py-20 bg-zinc-950'>
+    <section id='gallery' className='py-20 bg-[#050a30]'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <motion.div
           variants={containerVariants}
@@ -69,7 +69,7 @@ const TestimonialsSection = () => {
             variants={itemVariants as Variants}
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
-            <span className='text-amber-300'>{t('title.line1')}</span>
+            <span className='text-[#1ac8db]'>{t('title.line1')}</span>
             <br />
             <span className='text-white'>{t('title.line2')}</span>
           </motion.h2>
@@ -94,7 +94,7 @@ const TestimonialsSection = () => {
             <motion.div
               key={index}
               variants={itemVariants as Variants}
-              className='text-center bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10'
+              className='text-center bg-[#f4f6fc]/5 backdrop-blur-md rounded-2xl p-6 border border-[#99dfec]/15'
             >
               <div className='text-3xl md:text-4xl font-bold text-white mb-2'>
                 {stat.number}
@@ -116,10 +116,10 @@ const TestimonialsSection = () => {
             <motion.div
               key={index}
               variants={itemVariants as Variants}
-              className='bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-amber-500/30 transition-all duration-300 snap-start min-w-[85%] sm:min-w-[70%] md:min-w-0'
+              className='bg-[#f4f6fc]/5 backdrop-blur-md rounded-2xl p-6 border border-[#99dfec]/15 hover:border-[#1ac8db]/40 transition-all duration-300 snap-start min-w-[85%] sm:min-w-[70%] md:min-w-0'
             >
               {/* Quote Icon */}
-              <div className='w-12 h-12 bg-amber-500/15 border border-amber-500/20 rounded-xl flex items-center justify-center mb-4'>
+              <div className='w-12 h-12 bg-[#0292b7]/20 border border-[#0292b7]/30 rounded-xl flex items-center justify-center mb-4'>
                 <Quote size={20} className='text-white' />
               </div>
 
@@ -129,7 +129,7 @@ const TestimonialsSection = () => {
                   <Star
                     key={i}
                     size={16}
-                    className='text-yellow-400 fill-current'
+                    className='text-[#99dfec] fill-current'
                   />
                 ))}
               </div>
@@ -146,7 +146,7 @@ const TestimonialsSection = () => {
 
               {/* Author Info */}
               <div className='flex items-center gap-3'>
-                <div className='w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white font-bold'>
+                <div className='w-12 h-12 bg-[#f4f6fc]/5 border border-[#99dfec]/15 rounded-full flex items-center justify-center text-white font-bold'>
                   {testimonial.name.charAt(0)}
                 </div>
                 <div>
@@ -192,7 +192,7 @@ const TestimonialsSection = () => {
                   contactSection.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className='bg-amber-500 text-zinc-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-amber-400 transition'
+              className='bg-[#233dff] text-[#f4f6fc] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#1f34d9] transition'
             >
               {t('cta.button')}
             </motion.button>

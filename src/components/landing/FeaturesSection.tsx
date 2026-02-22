@@ -90,7 +90,7 @@ const FeaturesSection = () => {
   };
 
   return (
-    <section id='services' className='py-20 bg-zinc-950'>
+    <section id='services' className='py-20 bg-[#050a30]'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <motion.div
           variants={containerVariants}
@@ -103,7 +103,7 @@ const FeaturesSection = () => {
             variants={itemVariants as Variants}
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
-            <span className='text-amber-300'>{t('title.line1')}</span>
+            <span className='text-[#1ac8db]'>{t('title.line1')}</span>
             <br />
             <span className='text-white'>{t('title.line2')}</span>
           </motion.h2>
@@ -127,9 +127,9 @@ const FeaturesSection = () => {
             <motion.div
               key={index}
               variants={itemVariants as Variants}
-              className='bg-white/5 rounded-2xl p-6 border border-white/10 hover:border-amber-500/30 transition-all duration-300 group cursor-pointer snap-start min-w-[85%] sm:min-w-[70%] md:min-w-0'
+              className='bg-[#f4f6fc]/5 rounded-2xl p-6 border border-[#99dfec]/15 hover:border-[#1ac8db]/40 transition-all duration-300 group cursor-pointer snap-start min-w-[85%] sm:min-w-[70%] md:min-w-0'
             >
-              <div className='w-16 h-16 bg-amber-500/15 border border-amber-500/20 rounded-2xl flex items-center justify-center text-amber-200 mb-6 group-hover:scale-110 transition-transform duration-300'>
+              <div className='w-16 h-16 bg-[#0292b7]/20 border border-[#0292b7]/30 rounded-2xl flex items-center justify-center text-[#99dfec] mb-6 group-hover:scale-110 transition-transform duration-300'>
                 {feature.icon}
               </div>
 
@@ -144,7 +144,7 @@ const FeaturesSection = () => {
               <div className='space-y-3'>
                 {feature.benefits.map((benefit, benefitIndex) => (
                   <div key={benefitIndex} className='flex items-center gap-3'>
-                    <div className='w-2 h-2 bg-amber-400/80 rounded-full flex-shrink-0' />
+                    <div className='w-2 h-2 bg-[#1ac8db] rounded-full flex-shrink-0' />
                     <span className='text-gray-300 text-sm'>{benefit}</span>
                   </div>
                 ))}
@@ -180,7 +180,7 @@ const FeaturesSection = () => {
                   contactSection.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className='bg-amber-500 text-zinc-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-amber-400 transition'
+              className='bg-[#233dff] text-[#f4f6fc] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#1f34d9] transition'
             >
               {t('cta.button')}
             </motion.button>

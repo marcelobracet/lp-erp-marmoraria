@@ -25,7 +25,7 @@ const PricingSection = () => {
       features: t.raw('plans.starter.features') as string[],
       cta: t('plans.starter.cta'),
       popular: false,
-      color: 'bg-white/5 border-white/10 text-white',
+      color: 'bg-[#f4f6fc]/5 border-[#99dfec]/15 text-[#f4f6fc]',
     },
     {
       name: t('plans.professional.name'),
@@ -36,7 +36,7 @@ const PricingSection = () => {
       features: t.raw('plans.professional.features') as string[],
       cta: t('plans.professional.cta'),
       popular: true,
-      color: 'bg-amber-500/15 border-amber-500/25 text-amber-200',
+      color: 'bg-[#1ac8db]/15 border-[#1ac8db]/25 text-[#99dfec]',
     },
     {
       name: t('plans.enterprise.name'),
@@ -47,7 +47,7 @@ const PricingSection = () => {
       features: t.raw('plans.enterprise.features') as string[],
       cta: t('plans.enterprise.cta'),
       popular: false,
-      color: 'bg-white/5 border-white/10 text-white',
+      color: 'bg-[#f4f6fc]/5 border-[#99dfec]/15 text-[#f4f6fc]',
     },
   ];
 
@@ -75,7 +75,7 @@ const PricingSection = () => {
   };
 
   return (
-    <section id='pricing' className='py-20 bg-zinc-950'>
+    <section id='pricing' className='py-20 bg-[#050a30]'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <motion.div
           variants={containerVariants}
@@ -88,7 +88,7 @@ const PricingSection = () => {
             variants={itemVariants as Variants}
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
-            <span className='text-amber-300'>{t('title.line1')}</span>
+            <span className='text-[#1ac8db]'>{t('title.line1')}</span>
             <br />
             <span className='text-white'>{t('title.line2')}</span>
           </motion.h2>
@@ -114,13 +114,13 @@ const PricingSection = () => {
               variants={itemVariants as Variants}
               className={`relative bg-gradient-to-br from-gray-900 to-black rounded-3xl p-8 border transition-all duration-300 flex flex-col h-full ${
                 plan.popular
-                  ? 'border-amber-500/30 shadow-2xl shadow-black/40'
-                  : 'border-white/10 hover:border-amber-500/25'
+                  ? 'border-[#1ac8db]/35 shadow-2xl shadow-black/40'
+                  : 'border-[#99dfec]/15 hover:border-[#1ac8db]/30'
               }`}
             >
               {plan.popular && (
                 <div className='absolute -top-4 left-1/2 transform -translate-x-1/2'>
-                  <div className='bg-amber-500 text-zinc-950 px-6 py-2 rounded-full text-sm font-semibold'>
+                  <div className='bg-[#1ac8db] text-[#050a30] px-6 py-2 rounded-full text-sm font-semibold'>
                     Mais Popular
                   </div>
                 </div>
@@ -150,7 +150,7 @@ const PricingSection = () => {
               <div className='space-y-4 mb-8'>
                 {plan.features.map((feature, featureIndex) => (
                   <div key={featureIndex} className='flex items-center gap-3'>
-                    <div className='w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0'>
+                    <div className='w-5 h-5 bg-[#0292b7] rounded-full flex items-center justify-center flex-shrink-0'>
                       <Check size={12} className='text-white' />
                     </div>
                     <span className='text-gray-300'>{feature}</span>
@@ -167,8 +167,8 @@ const PricingSection = () => {
                 }}
                 className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-300 mt-auto ${
                   plan.popular
-                    ? 'bg-amber-500 text-zinc-950 hover:bg-amber-400'
-                    : 'bg-white/10 text-white hover:bg-white/15'
+                    ? 'bg-[#233dff] text-[#f4f6fc] hover:bg-[#1f34d9]'
+                    : 'bg-[#f4f6fc]/10 text-[#f4f6fc] hover:bg-[#f4f6fc]/15'
                 }`}
               >
                 {plan.cta}
@@ -186,7 +186,7 @@ const PricingSection = () => {
         >
           <motion.div
             variants={itemVariants as Variants}
-            className='bg-white/5 rounded-3xl p-8 md:p-12 border border-white/10'
+            className='bg-[#f4f6fc]/5 rounded-3xl p-8 md:p-12 border border-[#99dfec]/15'
           >
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-6'>
               {t('guarantee.title')}
@@ -198,7 +198,7 @@ const PricingSection = () => {
               {(t.raw('guarantee.features') as string[]).map(
                 (feature, index) => (
                   <div key={index} className='flex items-center gap-3'>
-                    <div className='w-12 h-12 bg-green-500 rounded-full flex items-center justify-center'>
+                    <div className='w-12 h-12 bg-[#0292b7] rounded-full flex items-center justify-center'>
                       <Check size={24} className='text-white' />
                     </div>
                     <span className='text-gray-300'>{feature}</span>
@@ -233,7 +233,7 @@ const PricingSection = () => {
               <motion.div
                 key={index}
                 variants={itemVariants as Variants}
-                className='bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10'
+                className='bg-[#f4f6fc]/5 backdrop-blur-md rounded-2xl p-6 border border-[#99dfec]/15'
               >
                 <h4 className='text-lg font-semibold text-white mb-3'>
                   {faq.question}

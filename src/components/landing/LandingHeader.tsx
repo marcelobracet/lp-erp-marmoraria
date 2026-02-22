@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import LanguageSelector from './LanguageSelector';
 
 const LandingHeader = () => {
@@ -44,7 +45,7 @@ const LandingHeader = () => {
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-black/90 backdrop-blur-md border-b border-white/10'
+          ? 'bg-[#050a30]/90 backdrop-blur-md border-b border-[#99dfec]/15'
           : 'bg-transparent'
       }`}
     >
@@ -57,17 +58,16 @@ const LandingHeader = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className='flex items-center space-x-3'
           >
-            <div className='w-9 h-9 rounded-lg border border-white/15 bg-white/5 backdrop-blur flex items-center justify-center'>
-              <div className='w-4 h-4 rounded-sm bg-amber-400/90'></div>
+            <div className='w-28 h-28 flex items-center justify-center overflow-hidden'>
+              <Image
+                src='/logo.svg'
+                alt={t('logo.name')}
+                className='h-full w-full object-contain'
+                width={32}
+                height={32}
+              />
             </div>
-            <div>
-              <h1 className='text-2xl font-bold text-white'>
-                {t('logo.name')}
-              </h1>
-              <p className='text-xs text-gray-300 -mt-1'>
-                {t('logo.subtitle')}
-              </p>
-            </div>
+            <div></div>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -84,11 +84,11 @@ const LandingHeader = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                 onClick={() => scrollToSection(item.href)}
-                className='text-white/80 hover:text-white transition-colors duration-300 text-sm font-medium relative group'
+                className='text-[#f4f6fc]/80 hover:text-[#f4f6fc] transition-colors duration-300 text-sm font-medium relative group'
               >
                 {item.name}
                 <motion.div
-                  className='absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400/90 group-hover:w-full transition-all duration-300'
+                  className='absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1ac8db] group-hover:w-full transition-all duration-300'
                   whileHover={{ width: '100%' }}
                 />
               </motion.button>
@@ -107,7 +107,7 @@ const LandingHeader = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollToSection('#contact')}
-              className='bg-amber-500 text-zinc-950 px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-amber-400 transition'
+              className='bg-[#233dff] text-[#f4f6fc] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#1f34d9] transition'
             >
               {t('cta')}
             </motion.button>
@@ -119,7 +119,7 @@ const LandingHeader = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.8 }}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className='md:hidden text-white p-2'
+            className='md:hidden text-[#f4f6fc] p-2'
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </motion.button>
@@ -133,7 +133,7 @@ const LandingHeader = () => {
             height: isMenuOpen ? 'auto' : 0,
           }}
           transition={{ duration: 0.3 }}
-          className='md:hidden overflow-hidden bg-black/95 backdrop-blur-md border-t border-white/10'
+          className='md:hidden overflow-hidden bg-[#050a30]/95 backdrop-blur-md border-t border-[#99dfec]/15'
         >
           <div className='py-4 space-y-4'>
             {menuItems.map((item, index) => (
@@ -146,7 +146,7 @@ const LandingHeader = () => {
                 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 onClick={() => scrollToSection(item.href)}
-                className='block w-full text-left text-white/80 hover:text-white transition-colors duration-300 py-2 px-4'
+                className='block w-full text-left text-[#f4f6fc]/80 hover:text-[#f4f6fc] transition-colors duration-300 py-2 px-4'
               >
                 {item.name}
               </motion.button>
@@ -159,7 +159,7 @@ const LandingHeader = () => {
               }}
               transition={{ duration: 0.3, delay: menuItems.length * 0.1 }}
               onClick={() => scrollToSection('#contact')}
-              className='block w-full bg-amber-500 text-zinc-950 px-6 py-3 rounded-full text-sm font-semibold mx-4 hover:bg-amber-400 transition'
+              className='block w-full bg-[#233dff] text-[#f4f6fc] px-6 py-3 rounded-full text-sm font-semibold mx-4 hover:bg-[#1f34d9] transition'
             >
               {t('cta')}
             </motion.button>

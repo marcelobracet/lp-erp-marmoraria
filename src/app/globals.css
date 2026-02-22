@@ -1,8 +1,17 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand palette (Feb/2026) */
+  --brand-navy: #050a30;
+  --brand-blue: #233dff;
+  --brand-teal: #0292b7;
+  --brand-cyan: #1ac8db;
+  --brand-ice: #99dfec;
+  --brand-stone: #8c756a;
+  --brand-offwhite: #f4f6fc;
+
+  --background: var(--brand-navy);
+  --foreground: var(--brand-offwhite);
 }
 
 @theme inline {
@@ -14,8 +23,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--brand-navy);
+    --foreground: var(--brand-offwhite);
   }
 }
 

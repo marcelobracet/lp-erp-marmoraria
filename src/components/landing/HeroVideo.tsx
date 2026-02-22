@@ -71,7 +71,7 @@ const HeroVideo = () => {
         </video>
 
         {/* Overlay para melhorar legibilidade do texto */}
-        <div className='absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/80' />
+        <div className='absolute inset-0 bg-gradient-to-b from-[#050a30]/70 via-[#050a30]/55 to-[#050a30]/80' />
       </div>
 
       {/* Content */}
@@ -91,7 +91,7 @@ const HeroVideo = () => {
                 className='text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.05]'
               >
                 <span className='block'>{t('title.line1')}</span>
-                <span className='block text-amber-300'>{t('title.line2')}</span>
+                <span className='block text-[#1ac8db]'>{t('title.line2')}</span>
               </motion.h1>
 
               <motion.p
@@ -113,7 +113,7 @@ const HeroVideo = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => scrollToNext()}
-                  className='bg-amber-500 text-zinc-950 px-8 py-4 rounded-full text-lg font-semibold hover:bg-amber-400 transition'
+                  className='bg-[#233dff] text-[#f4f6fc] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#1f34d9] transition'
                 >
                   {t('buttons.start')}
                 </motion.button>

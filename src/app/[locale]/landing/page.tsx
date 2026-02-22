@@ -16,18 +16,16 @@ export default function LandingPage() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis for smooth scrolling
     lenisRef.current = new Lenis({
-      duration: 1.2,
-      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.1,
       orientation: 'vertical',
       gestureOrientation: 'vertical',
-      touchMultiplier: 1,
+      touchMultiplier: 2,
       wheelMultiplier: 1,
       infinite: false,
     });
 
-    // Animation frame loop
+    // Animation frame lop
     function raf(time: number) {
       lenisRef.current?.raf(time);
       requestAnimationFrame(raf);
@@ -41,7 +39,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className='min-h-screen bg-black text-white overflow-x-hidden'>
+    <div className='min-h-screen bg-[#050a30] text-[#f4f6fc] overflow-x-hidden'>
       <LandingHeader />
       <HeroVideo />
       <AboutSection />

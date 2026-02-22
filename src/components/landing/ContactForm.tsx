@@ -116,7 +116,7 @@ const ContactForm = () => {
     >
       <motion.div variants={itemVariants} className='text-center mb-8 '>
         <h2 className='text-3xl font-bold text-white mb-4'>Entre em Contato</h2>
-        <p className='text-lg text-white'>
+        <p className='text-lg text-[#f4f6fc]/85'>
           Preencha o formulário abaixo e entraremos em contato em breve.
         </p>
       </motion.div>
@@ -140,7 +140,7 @@ const ContactForm = () => {
               name='name'
               value={formData.name}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 rounded-lg border bg-black/30 text-white placeholder:text-white/40 focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none ${
+              className={`w-full px-4 py-3 rounded-lg border bg-[#050a30]/40 text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#1ac8db] focus:border-transparent outline-none ${
                 errors.name ? 'border-red-500' : 'border-white/15'
               }`}
               placeholder='Seu nome completo'
@@ -163,7 +163,7 @@ const ContactForm = () => {
               name='email'
               value={formData.email}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 rounded-lg border bg-black/30 text-white placeholder:text-white/40 focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none ${
+              className={`w-full px-4 py-3 rounded-lg border bg-[#050a30]/40 text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#1ac8db] focus:border-transparent outline-none ${
                 errors.email ? 'border-red-500' : 'border-white/15'
               }`}
               placeholder='seu@email.com'
@@ -188,7 +188,7 @@ const ContactForm = () => {
               name='phone'
               value={formData.phone}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 rounded-lg border bg-black/30 text-white placeholder:text-white/40 focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none ${
+              className={`w-full px-4 py-3 rounded-lg border bg-[#050a30]/40 text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#1ac8db] focus:border-transparent outline-none ${
                 errors.phone ? 'border-red-500' : 'border-white/15'
               }`}
               placeholder='(11) 99999-9999'
@@ -211,7 +211,7 @@ const ContactForm = () => {
               name='company'
               value={formData.company}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 rounded-lg border bg-black/30 text-white placeholder:text-white/40 focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none ${
+              className={`w-full px-4 py-3 rounded-lg border bg-[#050a30]/40 text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#1ac8db] focus:border-transparent outline-none ${
                 errors.company ? 'border-red-500' : 'border-white/15'
               }`}
               placeholder='Nome da sua empresa'
@@ -235,7 +235,7 @@ const ContactForm = () => {
             rows={5}
             value={formData.message}
             onChange={handleInputChange}
-            className={`w-full px-4 py-3 rounded-lg border bg-black/30 text-white placeholder:text-white/40 focus:ring-2 focus:ring-amber-400 focus:border-transparent resize-none outline-none ${
+            className={`w-full px-4 py-3 rounded-lg border bg-[#050a30]/40 text-white placeholder:text-white/40 focus:ring-2 focus:ring-[#1ac8db] focus:border-transparent resize-none outline-none ${
               errors.message ? 'border-red-500' : 'border-white/15'
             }`}
             placeholder='Conte-nos sobre seu projeto...'
@@ -251,7 +251,7 @@ const ContactForm = () => {
           className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all duration-300 ${
             isSubmitting
               ? 'bg-white/10 cursor-not-allowed'
-              : 'bg-amber-500 text-zinc-950 hover:bg-amber-400 focus:ring-2 focus:ring-amber-400 focus:ring-offset-0'
+              : 'bg-[#233dff] text-[#f4f6fc] hover:bg-[#1f34d9] focus:ring-2 focus:ring-[#1ac8db] focus:ring-offset-0'
           }`}
           whileHover={!isSubmitting ? { scale: 1.02 } : {}}
           whileTap={!isSubmitting ? { scale: 0.98 } : {}}
@@ -280,7 +280,7 @@ const ContactForm = () => {
                 </svg>
               </div>
               <div className='ml-3'>
-                <p className='text-sm font-medium text-green-800'>
+                <p className='text-sm font-medium text-green-200'>
                   Mensagem enviada com sucesso! Entraremos em contato em breve.
                 </p>
               </div>
@@ -309,7 +309,7 @@ const ContactForm = () => {
                 </svg>
               </div>
               <div className='ml-3'>
-                <p className='text-sm font-medium text-red-800'>
+                <p className='text-sm font-medium text-red-200'>
                   Erro ao enviar mensagem. Tente novamente.
                 </p>
               </div>

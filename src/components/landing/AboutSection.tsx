@@ -71,7 +71,7 @@ const AboutSection = () => {
   };
 
   return (
-    <section id='about' className='py-20 bg-zinc-950'>
+    <section id='about' className='py-20 bg-[#050a30]'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <motion.div
           variants={containerVariants}
@@ -84,7 +84,7 @@ const AboutSection = () => {
             variants={itemVariants as Variants}
             className='text-4xl md:text-6xl font-bold text-white mb-6'
           >
-            <span className='text-amber-300'>{t('title.line1')}</span>
+            <span className='text-[#1ac8db]'>{t('title.line1')}</span>
             <br />
             <span className='text-white'>{t('title.line2')}</span>
           </motion.h2>
@@ -109,9 +109,9 @@ const AboutSection = () => {
             <motion.div
               key={index}
               variants={itemVariants as Variants}
-              className='bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-amber-500/30 transition-all duration-300 group'
+              className='bg-[#f4f6fc]/5 backdrop-blur-md rounded-2xl p-6 border border-[#99dfec]/15 hover:border-[#1ac8db]/40 transition-all duration-300 group'
             >
-              <div className='w-12 h-12 bg-amber-500/15 rounded-xl flex items-center justify-center text-amber-200 mb-4 group-hover:scale-110 transition-transform duration-300 border border-amber-500/20'>
+              <div className='w-12 h-12 bg-[#0292b7]/20 rounded-xl flex items-center justify-center text-[#99dfec] mb-4 group-hover:scale-110 transition-transform duration-300 border border-[#0292b7]/30'>
                 {feature.icon}
               </div>
               <h3 className='text-xl font-semibold text-white mb-3'>
@@ -174,14 +174,14 @@ const AboutSection = () => {
           <motion.div variants={itemVariants as Variants}>
             <h3 className='text-3xl md:text-4xl font-bold text-white mb-6'>
               {t('problems.title')}{' '}
-              <span className='text-amber-300'>
+              <span className='text-[#99dfec]'>
                 {t('problems.titleHighlight')}
               </span>
             </h3>
             <div className='space-y-4 mb-8'>
               {(t.raw('problems.items') as string[]).map((item, index) => (
                 <div key={index} className='flex items-start gap-3'>
-                  <div className='w-6 h-6 bg-white/5 border border-white/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
+                  <div className='w-6 h-6 bg-[#f4f6fc]/5 border border-[#99dfec]/15 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
                     <span className='text-white/80 text-sm'>•</span>
                   </div>
                   <p className='text-gray-300'>{item}</p>
@@ -213,8 +213,8 @@ const AboutSection = () => {
                   }>
                 ).map((item, index) => (
                   <div key={index} className='flex items-start gap-3'>
-                    <div className='w-6 h-6 bg-amber-500/15 border border-amber-500/25 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                      <span className='text-amber-200 text-sm'>✓</span>
+                    <div className='w-6 h-6 bg-[#1ac8db]/15 border border-[#1ac8db]/25 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
+                      <span className='text-[#99dfec] text-sm'>✓</span>
                     </div>
                     <p className='text-gray-300'>
                       <strong className='text-white'>{item.title}</strong>{' '}
