@@ -9,14 +9,14 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
+export default [
   ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
   {
-    plugins: ['prettier'],
+    plugins: {
+      prettier: require('eslint-plugin-prettier'),
+    },
     rules: {
       'prettier/prettier': 'error',
     },
   },
 ];
-
-export default eslintConfig;
