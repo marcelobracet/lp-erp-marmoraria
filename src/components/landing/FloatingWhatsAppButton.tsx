@@ -1,13 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, ArrowUpRight } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import { openWhatsApp } from '@/lib/whatsapp';
-
-const DEFAULT_PHONE_E164 = '5521992927712';
-const DEFAULT_SALES_NAME = 'Celso';
+import { DEFAULT_PHONE_E164, DEFAULT_SALES_NAME } from '../constants/info-data';
 
 type PlanOption = {
   planName: string;
@@ -15,27 +12,15 @@ type PlanOption = {
 };
 
 export default function FloatingWhatsAppButton() {
-  const t = useTranslations('pricing');
   const [isOpen, setIsOpen] = useState(false);
 
-  const phoneE164 =
-    process.env.NEXT_PUBLIC_WHATSAPP_PHONE_E164 || DEFAULT_PHONE_E164;
-  const salesName = process.env.NEXT_PUBLIC_SALES_NAME || DEFAULT_SALES_NAME;
+  const phoneE164 = DEFAULT_PHONE_E164;
+  const salesName = DEFAULT_SALES_NAME;
 
-  const planOptions = useMemo<PlanOption[]>(
-    () => [
-      { planName: t('plans.starter.name'), label: t('plans.starter.name') },
-      {
-        planName: t('plans.professional.name'),
-        label: t('plans.professional.name'),
-      },
-      {
-        planName: t('plans.enterprise.name'),
-        label: t('plans.enterprise.name'),
-      },
-    ],
-    [t]
-  );
+  const planOptions: PlanOption[] = [
+    { planName: 'Essencial', label: 'Essencial' },
+    { planName: 'Profissional', label: 'Profissional' },
+  ];
 
   const handlePlanClick = (planName: string) => {
     const message = `Oi ${salesName}! Cheguei até vocês pelo site e fiquei interessado no plano ${planName}. Pode me contar mais sobre como ele funciona?`;

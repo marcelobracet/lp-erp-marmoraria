@@ -274,16 +274,17 @@
   },
   "pricing": {
     "title": {
-      "line1": "Simple and",
-      "line2": "Transparent Plans"
+      "line1": "Special Price",
+      "line2": "For Early Adopters"
     },
-    "subtitle": "Choose the ideal plan for your stone business. All include a 14-day free trial, no commitment. Cancel whenever you want.",
+    "subtitle": "Limited spots for the launch phase. Lock in your launch price before all spots are gone.",
+    "urgencyBanner": "🔒 Launch pricing · Only 50 spots at this price",
     "plans": {
-      "starter": {
-        "name": "Starter",
+      "essencial": {
+        "name": "Essential",
         "price": "$197",
         "period": "/month",
-        "description": "Perfect for small stone businesses that are starting",
+        "description": "Perfect for stone businesses starting their growth",
         "features": [
           "Up to 100 customers",
           "Unlimited quotes",
@@ -292,13 +293,14 @@
           "Email support",
           "Automatic backup"
         ],
-        "cta": "Start Free Trial"
+        "cta": "Get Started Now",
+        "urgencyLabel": "⚡ Only 12 spots left"
       },
-      "professional": {
+      "profissional": {
         "name": "Professional",
         "price": "$297",
         "period": "/month",
-        "description": "Ideal for growing stone businesses",
+        "description": "Ideal for fast-growing stone businesses",
         "features": [
           "Up to 500 customers",
           "Complete CRM",
@@ -309,25 +311,8 @@
           "Personalized training",
           "Mobile dashboard"
         ],
-        "cta": "Most Popular"
-      },
-      "enterprise": {
-        "name": "Enterprise",
-        "price": "$397",
-        "period": "/month",
-        "description": "For large stone businesses with multiple locations",
-        "features": [
-          "Unlimited customers",
-          "Multiple locations",
-          "Complete API",
-          "Custom reports",
-          "Accounting integration",
-          "24/7 support",
-          "Dedicated account manager",
-          "Custom features",
-          "White-label option"
-        ],
-        "cta": "Talk to Sales"
+        "cta": "Get Professional",
+        "urgencyLabel": "🔥 Limited time offer"
       }
     },
     "trial": "14-day free trial",

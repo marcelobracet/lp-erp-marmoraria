@@ -115,7 +115,6 @@
         "title": "Orçamentos Inteligentes",
         "description": "Crie orçamentos profissionais em minutos. Sistema calcula automaticamente custos de materiais, mão de obra e margem de lucro.",
         "benefits": [
-          "Templates personalizáveis",
           "Cálculo automático de preços",
           "Aprovação digital do cliente",
           "Histórico completo de orçamentos"
@@ -137,8 +136,7 @@
         "benefits": [
           "Controle por tipo e cor",
           "Alertas de reposição",
-          "Movimentação detalhada",
-          "Integração com fornecedores"
+          "Movimentação detalhada"
         ]
       },
       "orders": {
@@ -167,7 +165,6 @@
         "benefits": [
           "Interface responsiva",
           "Sincronização automática",
-          "Acesso offline básico",
           "Notificações push"
         ]
       },
@@ -184,12 +181,7 @@
       "integration": {
         "title": "Integração Fácil",
         "description": "Conecte com ferramentas que você já usa. Importação de dados, APIs e integrações com sistemas contábeis.",
-        "benefits": [
-          "Importação de dados",
-          "APIs abertas",
-          "Integração contábil",
-          "Webhooks automáticos"
-        ]
+        "benefits": ["Importação de dados", "APIs abertas"]
       }
     },
     "cta": {
@@ -274,60 +266,42 @@
   },
   "pricing": {
     "title": {
-      "line1": "Planos Simples",
-      "line2": "e Transparentes"
+      "line1": "Preço Especial",
+      "line2": "Para os Primeiros Clientes"
     },
-    "subtitle": "Escolha o plano ideal para sua marmoraria. Todos incluem teste gratuito de 14 dias, sem compromisso. Cancele quando quiser.",
+    "subtitle": "Vagas limitadas para a fase inicial. Garanta agora o preço de lançamento antes que as vagas acabem.",
+    "urgencyBanner": "🔒 Preço de lançamento · Apenas 50 vagas nesta condição",
     "plans": {
-      "starter": {
-        "name": "Starter",
-        "price": "R$ 197",
-        "period": "/mês",
-        "description": "Perfeito para marmorarias pequenas que estão começando",
-        "features": [
-          "Até 100 clientes",
-          "Orçamentos ilimitados",
-          "Controle básico de estoque",
-          "Relatórios mensais",
-          "Suporte por email",
-          "Backup automático"
-        ],
-        "cta": "Começar Teste Grátis"
-      },
-      "professional": {
-        "name": "Professional",
+      "essencial": {
+        "name": "Essencial",
         "price": "R$ 297",
         "period": "/mês",
-        "description": "Ideal para marmorarias em crescimento",
+        "description": "Perfeito para marmorarias que estão começando a crescer",
         "features": [
-          "Até 500 clientes",
-          "CRM completo",
-          "Controle avançado de estoque",
-          "Relatórios em tempo real",
-          "Integração com WhatsApp",
-          "Suporte prioritário",
-          "Treinamento personalizado",
-          "Dashboard mobile"
+          "Até 2 usuários",
+          "Relatórios básicos",
+          "PDF padrão",
+          "Histórico até 6 meses",
+          "Suporte por email",
+          "Orçamentos ilimitados"
         ],
-        "cta": "Mais Popular"
+        "cta": "Começar Agora",
+        "urgencyLabel": "⚡ Apenas 12 vagas restantes"
       },
-      "enterprise": {
-        "name": "Enterprise",
+      "profissional": {
+        "name": "Profissional",
         "price": "R$ 397",
         "period": "/mês",
-        "description": "Para marmorarias grandes com múltiplas unidades",
+        "description": "Ideal para marmorarias em crescimento acelerado",
         "features": [
-          "Clientes ilimitados",
-          "Múltiplas unidades",
-          "API completa",
-          "Relatórios personalizados",
-          "Integração contábil",
-          "Suporte 24/7",
-          "Gerente de conta dedicado",
-          "Customizações",
-          "White-label"
+          "Até 10 usuários",
+          "Relatórios avançados",
+          "Exportação com branding personalizado",
+          "Histórico ilimitado",
+          "Suporte prioritário"
         ],
-        "cta": "Falar com Vendas"
+        "cta": "Quero o Profissional",
+        "urgencyLabel": "🔥 Oferta por tempo limitado"
       }
     },
     "trial": "Teste gratuito por 14 dias",

@@ -81,12 +81,6 @@ export default function LandingPage() {
               Funcionalidades
             </Link>
             <Link
-              href='#testimonials'
-              className='text-sm font-semibold leading-6 text-gray-900 hover:text-slate-700'
-            >
-              Depoimentos
-            </Link>
-            <Link
               href='#pricing'
               className='text-sm font-semibold leading-6 text-gray-900 hover:text-slate-700'
             >

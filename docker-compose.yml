@@ -7,6 +7,13 @@ services:
       - ./:/app
     command: sh -c "yarn install && yarn dev"
     ports:
-      - '3000:3000'
+      - "3001:3001"
     environment:
       - NODE_ENV=local
+      - MP_ACCESS_TOKEN=${MP_ACCESS_TOKEN}
+      - MP_WEBHOOK_SECRET=${MP_WEBHOOK_SECRET}
+      - MP_PLAN_ID_ESSENCIAL=${MP_PLAN_ID_ESSENCIAL}
+      - MP_PLAN_ID_PROFISSIONAL=${MP_PLAN_ID_PROFISSIONAL}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+      - ERP_API_URL=${ERP_API_URL}
+      - ERP_INTERNAL_SECRET=${ERP_INTERNAL_SECRET}

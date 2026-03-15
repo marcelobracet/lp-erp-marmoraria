@@ -1,18 +1,21 @@
-'use client';
-
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import LandingHeader from '@/components/landing/LandingHeader';
+import HeroVideo from '@/components/landing/HeroVideo';
+import AboutSection from '@/components/landing/AboutSection';
+import FeaturesSection from '@/components/landing/FeaturesSection';
+import PricingSection from '@/components/landing/PricingSection';
+import FloatingWhatsAppButton from '@/components/landing/FloatingWhatsAppButton';
+import Footer from '@/components/landing/Footer';
 
 export default function HomePage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace('/pt-br/landing');
-  }, [router]);
-
   return (
-    <div className='flex items-center justify-center min-h-screen'>
-      <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600'></div>
+    <div className='min-h-screen bg-[#050a30] text-[#f4f6fc] overflow-x-hidden'>
+      <LandingHeader />
+      <HeroVideo />
+      <AboutSection />
+      <FeaturesSection />
+      <PricingSection />
+      <FloatingWhatsAppButton />
+      <Footer />
     </div>
   );
 }

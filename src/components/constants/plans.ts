@@ -1,9 +1,11 @@
 export const plans = [
   {
-    name: 'Básico',
-    price: 'R$ 149',
+    name: 'Essencial',
+    price: 'R$ 279,00',
     period: '/mês',
     description: 'Perfeito para marmorarias pequenas',
+    mpPlanId: process.env.NEXT_PUBLIC_MP_PLAN_ID_ESSENCIAL,
+    planKey: 'essencial',
     features: [
       'Até 2 usuários',
       'Gestão de estoque básica',
@@ -15,9 +17,11 @@ export const plans = [
   },
   {
     name: 'Profissional',
-    price: 'R$ 299',
+    price: 'R$ 397,00',
     period: '/mês',
     description: 'Ideal para empresas em crescimento',
+    mpPlanId: process.env.NEXT_PUBLIC_MP_PLAN_ID_PROFISSIONAL,
+    planKey: 'profissional',
     features: [
       'Até 10 usuários',
       'Gestão completa de estoque',
@@ -27,21 +31,5 @@ export const plans = [
       'Integração com WhatsApp',
     ],
     popular: true,
-  },
-  {
-    name: 'Enterprise',
-    price: 'R$ 599',
-    period: '/mês',
-    description: 'Para grandes operações',
-    features: [
-      'Usuários ilimitados',
-      'Todos os recursos',
-      'Relatórios personalizados',
-      'API completa',
-      'Suporte 24/7',
-      'Treinamento incluso',
-      'Customizações',
-    ],
-    popular: false,
   },
 ];

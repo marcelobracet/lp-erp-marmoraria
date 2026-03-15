@@ -6,6 +6,7 @@ import TestimonialsSection from '@/components/landing/TestimonialsSection';
 import PricingSection from '@/components/landing/PricingSection';
 import ContactForm from '@/components/landing/ContactForm';
 import FloatingWhatsAppButton from '@/components/landing/FloatingWhatsAppButton';
+import Footer from '@/components/landing/Footer';
 
 export default function LandingPage() {
   return (
@@ -14,10 +15,11 @@ export default function LandingPage() {
       <HeroVideo />
       <AboutSection />
       <FeaturesSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       <PricingSection />
-      <ContactForm />
+      {/* <ContactForm /> */}
       <FloatingWhatsAppButton />
+      <Footer />
     </div>
   );
 }

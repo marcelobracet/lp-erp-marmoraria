@@ -3,13 +3,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Volume2, VolumeX } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import Skeleton from '@/components/ui/Skeleton';
+import DashboardPreview from '@/components/landing/DashboardPreview';
 
 const HeroVideo = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
-  const t = useTranslations('hero');
 
   const heroVideoUrl =
     process.env.NEXT_PUBLIC_HERO_VIDEO_URL || '/videos/hero-video.mp4';
@@ -90,8 +88,8 @@ const HeroVideo = () => {
                 transition={{ duration: 0.8, delay: 0.7 }}
                 className='text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.05]'
               >
-                <span className='block'>{t('title.line1')}</span>
-                <span className='block text-[#1ac8db]'>{t('title.line2')}</span>
+                <span className='block'>Sistema de</span>
+                <span className='block text-[#1ac8db]'>Gestão Completo</span>
               </motion.h1>
 
               <motion.p
@@ -100,7 +98,7 @@ const HeroVideo = () => {
                 transition={{ duration: 0.8, delay: 0.9 }}
                 className='text-lg md:text-xl text-zinc-200 mb-8 max-w-xl leading-relaxed'
               >
-                {t('subtitle')}
+                Gerencie sua marmoraria com eficiência. Controle de clientes, orçamentos, produtos e muito mais em uma única plataforma.
               </motion.p>
 
               <motion.div
@@ -115,18 +113,8 @@ const HeroVideo = () => {
                   onClick={() => scrollToNext()}
                   className='bg-[#233dff] text-[#f4f6fc] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#1f34d9] transition'
                 >
-                  {t('buttons.start')}
+                  Começar Agora
                 </motion.button>
-
-                <button
-                  onClick={toggleMute}
-                  className='inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 backdrop-blur px-4 py-3 text-white/90 hover:bg-black/55 transition'
-                >
-                  {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-                  <span className='text-sm font-medium'>
-                    {isMuted ? 'Ativar áudio' : 'Mutar'}
-                  </span>
-                </button>
               </motion.div>
 
               <p className='mt-6 text-sm text-white/60 max-w-xl'>
@@ -136,20 +124,7 @@ const HeroVideo = () => {
             </div>
 
             <div className='hidden lg:block'>
-              <div className='rounded-3xl border border-white/10 bg-black/35 backdrop-blur-xl p-4 shadow-2xl'>
-                <div className='flex items-center justify-between px-2 pb-3'>
-                  <div className='text-sm font-semibold text-white'>
-                    Prévia do Dashboard
-                  </div>
-                  <div className='text-xs text-white/60'>imagem (skeleton)</div>
-                </div>
-                <Skeleton className='aspect-[16/10] w-full rounded-2xl' />
-                <div className='mt-4 grid grid-cols-3 gap-3'>
-                  <Skeleton className='h-16 rounded-xl' />
-                  <Skeleton className='h-16 rounded-xl' />
-                  <Skeleton className='h-16 rounded-xl' />
-                </div>
-              </div>
+              <DashboardPreview />
             </div>
           </div>
         </motion.div>
