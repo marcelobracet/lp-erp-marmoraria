@@ -4,12 +4,19 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { X, Loader2, CreditCard, ShieldCheck } from 'lucide-react';
+import { X, Loader2, Sparkles, ShieldCheck } from 'lucide-react';
+import {
+  provisionTenant,
+  redirectToAppWithTokens,
+} from '@/lib/erp-provision';
 
 const checkoutSchema = z.object({
   companyName: z.string().min(2, 'Nome da empresa deve ter ao menos 2 caracteres'),
   adminName: z.string().min(2, 'Seu nome deve ter ao menos 2 caracteres'),
   adminEmail: z.string().email('E-mail inválido'),
+  adminPassword: z
+    .string()
+    .min(8, 'Senha deve ter ao menos 8 caracteres'),
 });
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
@@ -33,9 +40,9 @@ export function CheckoutModal({
     formState: { errors, isSubmitting },
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
+    defaultValues: { adminPassword: '' },
   });
 
-  // Fecha com ESC
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -44,7 +51,6 @@ export function CheckoutModal({
     return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  // Bloqueia scroll do body enquanto modal aberto
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -53,26 +59,26 @@ export function CheckoutModal({
   }, []);
 
   async function onSubmit(data: CheckoutFormData) {
-    const res = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        planKey,
-        companyName: data.companyName,
-        adminName: data.adminName,
-        adminEmail: data.adminEmail,
-      }),
-    });
+    const plan =
+      planKey === 'profissional' ? ('profissional' as const) : ('essencial' as const);
 
-    const json = await res.json();
+    try {
+      const result = await provisionTenant({
+        company_name: data.companyName,
+        admin_name: data.adminName,
+        admin_email: data.adminEmail,
+        admin_password: data.adminPassword,
+        plan,
+      });
 
-    if (!res.ok || json.error) {
-      alert('Erro ao iniciar pagamento: ' + (json.error ?? 'Tente novamente.'));
-      return;
+      redirectToAppWithTokens(
+        result.auth.access_token,
+        result.auth.refresh_token ?? ''
+      );
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : 'Tente novamente.';
+      alert('Não foi possível criar a conta: ' + msg);
     }
-
-    // Redireciona para o checkout do Mercado Pago
-    window.location.href = json.url;
   }
 
   return (
@@ -84,12 +90,14 @@ export function CheckoutModal({
         className='bg-[#050a30] border border-[#1ac8db]/25 rounded-2xl w-full max-w-md shadow-2xl shadow-black/60'
         onClick={e => e.stopPropagation()}
       >
-        {/* Header */}
         <div className='flex items-center justify-between p-6 border-b border-[#99dfec]/15'>
           <div>
-            <h2 className='text-xl font-bold text-white'>Assinar plano</h2>
+            <h2 className='text-xl font-bold text-white'>Criar conta</h2>
             <p className='text-[#1ac8db] font-semibold mt-0.5'>
               {planName} — {planPrice}/mês
+            </p>
+            <p className='text-gray-400 text-sm mt-2'>
+              Teste gratuito; depois você ativa a assinatura dentro do app.
             </p>
           </div>
           <button
@@ -100,7 +108,6 @@ export function CheckoutModal({
           </button>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className='p-6 flex flex-col gap-4'>
           <div>
             <label className='block text-sm font-medium text-gray-300 mb-1.5'>
@@ -109,6 +116,7 @@ export function CheckoutModal({
             <input
               {...register('companyName')}
               placeholder='Marmoraria Silva Ltda'
+              autoComplete='organization'
               className='w-full bg-white/5 border border-[#99dfec]/20 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#1ac8db]/60 focus:ring-1 focus:ring-[#1ac8db]/30 transition-colors'
             />
             {errors.companyName && (
@@ -123,6 +131,7 @@ export function CheckoutModal({
             <input
               {...register('adminName')}
               placeholder='João Silva'
+              autoComplete='name'
               className='w-full bg-white/5 border border-[#99dfec]/20 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#1ac8db]/60 focus:ring-1 focus:ring-[#1ac8db]/30 transition-colors'
             />
             {errors.adminName && (
@@ -132,16 +141,32 @@ export function CheckoutModal({
 
           <div>
             <label className='block text-sm font-medium text-gray-300 mb-1.5'>
-              E-mail *
+              E-mail (login) *
             </label>
             <input
               {...register('adminEmail')}
               type='email'
               placeholder='joao@marmorariasilva.com.br'
+              autoComplete='email'
               className='w-full bg-white/5 border border-[#99dfec]/20 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#1ac8db]/60 focus:ring-1 focus:ring-[#1ac8db]/30 transition-colors'
             />
             {errors.adminEmail && (
               <p className='text-red-400 text-xs mt-1'>{errors.adminEmail.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label className='block text-sm font-medium text-gray-300 mb-1.5'>
+              Senha (mín. 8 caracteres) *
+            </label>
+            <input
+              {...register('adminPassword')}
+              type='password'
+              autoComplete='new-password'
+              className='w-full bg-white/5 border border-[#99dfec]/20 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#1ac8db]/60 focus:ring-1 focus:ring-[#1ac8db]/30 transition-colors'
+            />
+            {errors.adminPassword && (
+              <p className='text-red-400 text-xs mt-1'>{errors.adminPassword.message}</p>
             )}
           </div>
 
@@ -153,21 +178,22 @@ export function CheckoutModal({
             {isSubmitting ? (
               <>
                 <Loader2 size={18} className='animate-spin' />
-                Aguarde...
+                Criando conta…
               </>
             ) : (
               <>
-                <CreditCard size={18} />
-                Ir para pagamento
+                <Sparkles size={18} />
+                Começar teste gratuito
               </>
             )}
           </button>
         </form>
 
-        {/* Footer */}
-        <div className='px-6 pb-5 flex items-center justify-center gap-2 text-gray-500 text-xs'>
-          <ShieldCheck size={14} />
-          <span>Pagamento seguro via Mercado Pago</span>
+        <div className='px-6 pb-5 flex items-center justify-center gap-2 text-gray-500 text-xs text-center'>
+          <ShieldCheck size={14} className='shrink-0' />
+          <span>
+            Cobrança via AbacatePay após o período de teste, dentro do aplicativo.
+          </span>
         </div>
       </div>
     </div>

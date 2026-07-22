@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { supabase } from '@/lib/supabase';
+import { submitWaitlist } from '@/lib/erp-waitlist';
 
 // ─── Máscara WhatsApp ─────────────────────────────────────────
 const maskWhatsApp = (value: string) => {
@@ -57,30 +57,27 @@ const WaitlistForm = () => {
     setStatus('loading');
     setErrorMsg('');
 
-    const { error } = await supabase.from('waitlist').insert([
-      {
+    try {
+      await submitWaitlist({
         name: data.name,
         whatsapp: data.whatsapp,
         state: data.state.toUpperCase(),
         company_size: data.company_size,
         quotes_avg: data.quotes_avg,
-      },
-    ]);
-
-    if (error) {
-      // Erro de duplicata (mesmo WhatsApp já cadastrado)
-      if (error.code === '23505') {
-        setErrorMsg('Este WhatsApp já está na lista de espera. 🎉');
+        source: 'landing',
+      });
+      setStatus('success');
+      reset();
+      setWhatsappDisplay('');
+    } catch (err) {
+      const e = err as Error & { code?: string };
+      if (e.code === 'DUPLICATE') {
+        setErrorMsg(e.message || 'Este WhatsApp já está na lista de espera. 🎉');
       } else {
-        setErrorMsg('Ocorreu um erro. Tente novamente em instantes.');
+        setErrorMsg(e.message || 'Ocorreu um erro. Tente novamente em instantes.');
       }
       setStatus('error');
-      return;
     }
-
-    setStatus('success');
-    reset();
-    setWhatsappDisplay('');
   };
 
   // ── Estado de sucesso ──────────────────────────────────────
